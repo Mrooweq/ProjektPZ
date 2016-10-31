@@ -23,10 +23,5 @@ task wrapper(type: org.gradle.api.tasks.wrapper.Wrapper) {
 
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
- //   testCompile 'junit:junit:4.12'
-    
-    compile 'com.google.dagger:dagger:2.0.2'
-    compile 'org.greenrobot:eventbus:3.0.0'
 }
 
