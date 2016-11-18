@@ -1,9 +1,10 @@
 package com.malinki.pz;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -41,11 +42,16 @@ public class Application {
 		
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
-			User user = session.selectOne("mapper.test");
-			User user2 = session.selectOne("mapper.test2", "12:0");              
+			User user = session.selectOne("mapper.test");              
+			System.out.println("lol1: " + user.getFirstName());		
+			
+			
+			
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("id", "12:0");
 
-			System.out.println("lol1: " + user.getUserId());
-			System.out.println("lol2: " + user2.getUserId());
+			User user2 = session.selectOne("mapper.test2", params);
+			System.out.println("lol2: " + user2.getFirstName());			
 		} finally {
 			session.close();
 		}

@@ -10,17 +10,13 @@
 		<result column="image_uri" property="imageUri" />
 	</resultMap>
 
-	<select id="selectBlog" resultType="User">
-		select * from User where @rid
-		= #{id}
-	</select>
-
 	<select id="test" resultMap="usermap">
 		select * from User where @rid =
 		#12:3
 	</select>
 
-	<select id="test2" resultMap="usermap" parameterType="String">
-		select * from User where @rid = #{id}
+	<select id="test2" resultMap="usermap" parameterType="map">
+		select *
+		from User where @rid = ${id}
 	</select>
 </mapper>
