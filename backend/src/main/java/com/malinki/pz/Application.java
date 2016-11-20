@@ -36,20 +36,19 @@ public class Application {
 		
 		try {			
 			Mapper mapper = session.getMapper(Mapper.class);
-			Animal animal = mapper.getAnimal(2);
-			System.out.println("lol: " + animal.getId());
-			System.out.println("lol: " + animal.getName());
-			System.out.println("lol: " + animal.getAge());
-			
-			////
 		
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("id", "3");
+			params.put("id", 1);
 			params.put("name", "Wydra");
 			params.put("age", 5);
 						
 			mapper.addAnimal(params);
 			mapper.commit();
+			
+			Animal animal = mapper.getAnimal(1);
+			System.out.println("lol: " + animal.getId());
+			System.out.println("lol: " + animal.getName());
+			System.out.println("lol: " + animal.getAge());
 
 		} finally {
 			session.close();
