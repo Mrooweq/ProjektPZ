@@ -1,5 +1,7 @@
 package com.malinki.pz.controller;
 
+import org.apache.ibatis.type.Alias;
+
 public class Animal {
 
 	private String name;

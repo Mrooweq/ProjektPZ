@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.malinki.pz.Mapper">
+
+	<resultMap type="User" id="usermap">
+		<id column="PID" property="id" />
+		<result column="NAME" property="NAME" />
+	</resultMap>
+
+	<select id="test" resultMap="usermap">
+		select * from User where PID = 1
+	</select>
+
+	<select id="test2" resultMap="usermap" parameterType="map">
+		select * from User where @rid = ${id}
+	</select>
+</mapper>

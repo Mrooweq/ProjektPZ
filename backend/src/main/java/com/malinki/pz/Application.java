@@ -1,59 +1,56 @@
 package com.malinki.pz;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.malinki.pz.controller.User;
+
 @SpringBootApplication
 public class Application {
-
-	private static final String CLASS_NAME = "oracle.jdbc.driver.OracleDriver";
-	private static final String CONNECTION_ARGUMENT = "jdbc:oracle:thin:testuser/testpass@localhost";
-	private static final String ADD_RECORD = "INSERT INTO person VALUES (4, '%s')";
+	
+	private static final String CONFIG_FILE_NAME = "mybatis-config.xml";
+	private static final String DZIALA = "DZIAŁA";
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		System.out.println("Gosh, it's working!");
+		System.out.println(DZIALA);
 
+		InputStream inputStream = null;
 		try {
-			Class.forName(CLASS_NAME);
-		}
-		catch (ClassNotFoundException e) {}
-		
-		addArgument("Cebula :p");
-	}
-
-
-
-	private static void addArgument(String arg)
-	{
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-
-		try {
-			con = DriverManager.getConnection(CONNECTION_ARGUMENT);
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(String.format(ADD_RECORD, arg));
-		}  catch (SQLException e) {
+			inputStream = Resources.getResourceAsStream(CONFIG_FILE_NAME);
+		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(rs != null)
-					rs.close();
-				stmt.close();
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			catch (NullPointerException e) {
-				e.printStackTrace();
-			}
 		}
+		
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);	
+		SqlSession session = sqlSessionFactory.openSession();
+		
+		try {			
+			Mapper mapper = session.getMapper(Mapper.class);
+			User user = mapper.getUser(1);
+			
+			
+			
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("PID", "10");
+			params.put("NAME", "Element");
+			
+			
+			mapper.addUser(params);
+			mapper.commit();
+
+		} finally {
+			session.close();
+		}
+
 	}
 }
