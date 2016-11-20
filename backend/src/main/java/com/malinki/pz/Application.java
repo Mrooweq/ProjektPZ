@@ -42,19 +42,13 @@ public class Application {
 		
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
-			User user = session.selectOne("mapper.test");              
-			System.out.println("lol1: " + user.getFirstName());		
-			
-			
-			
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("id", "12:0");
-
-			User user2 = session.selectOne("mapper.test2", params);
-			System.out.println("lol2: " + user2.getFirstName());			
+			Mapper mapper = session.getMapper(Mapper.class);
+			User user = mapper.selectUser("12:0");
+			System.out.println("lolxD: " + user);			
 		} finally {
 			session.close();
 		}
+
 	}
 
 }
