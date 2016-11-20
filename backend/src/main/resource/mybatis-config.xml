@@ -3,7 +3,7 @@
 <configuration>
 
 	<typeAliases>
-		<typeAlias alias="User" type="com.malinki.pz.controller.User" />
+		<typeAlias alias="Animal" type="com.malinki.pz.controller.Animal" />
 	</typeAliases>
 
 	<environments default="development">
