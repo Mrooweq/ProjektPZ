@@ -13,8 +13,9 @@ public class AnimalController {
 	@RequestMapping("/animals")
 	public List<Animal> getAnimals() {
 		ArrayList<Animal> animals = new ArrayList<>();
-		animals.add(new Animal("Lion", 12));
-		animals.add(new Animal("Elephant", 120));
+		animals.add(new Animal("Pies", 12));
+		animals.add(new Animal("Koala", 120));
+		
 		return animals;
 	}
 }
