@@ -20,6 +20,9 @@ public interface Mapper {
 	@Select("INSERT INTO Animal VALUES (${id}, '${name}', ${age})")
 	Animal addAnimal(Map<String, Object> params);
 
+	@Select("DELETE Animal")
+	void deleteAllAnimals();
+	
 	@Select("commit")
 	void commit();
 }
