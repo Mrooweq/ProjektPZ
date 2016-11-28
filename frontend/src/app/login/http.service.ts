@@ -5,15 +5,15 @@ import {Observable} from "rxjs";
 
 @Injectable()
 export class HttpService {
-  private httpUrl = 'api/animals';
+  private httpUrl = 'api/login';
 
   constructor(private http: Http) {
   }
 
-  loginAuthorization(username:string,password:string){
+  loginAuthorization(login:string,password:string){
     var headers = new Headers();
     headers.append('Authorization', 'login');
-    let body = JSON.stringify({ "username":username,"password":password});
+    let body = JSON.stringify({ "login":login,"password":password});
 
     return this.http.post(this.httpUrl, body , {headers: headers})
       .map(res => res.json())

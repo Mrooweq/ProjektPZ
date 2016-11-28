@@ -2,8 +2,12 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+	<settings>
+		<setting name="logImpl" value="LOG4J" />
+	</settings>
+
 	<typeAliases>
-		<typeAlias alias="Animal" type="com.malinki.pz.controller.Animal" />
+		<typeAlias alias="User" type="com.malinki.pz.controller.User" />
 	</typeAliases>
 
 	<environments default="development">
@@ -21,4 +25,5 @@
 	<mappers>
 		<mapper resource="mapper.xml" />
 	</mappers>
+
 </configuration>
