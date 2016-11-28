@@ -1,7 +1,7 @@
 <ul>
   <li *ngFor="let animal of animals" [routerLink]="['/animals/detail', animal.id]">
     Name: {{animal.name}}
-    <button (click)="delete(animal); $event.stopPropagation()">Delete</button>
+    <button class="btn btn-danger" (click)="delete(animal); $event.stopPropagation()">Delete</button>
   </li>
   <br>
   <label>Click on animal to see details</label>

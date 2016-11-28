@@ -10,6 +10,8 @@ import { AnimalComponent } from './animal/animal.component';
 import { AnimalDetailComponent } from './animal/animal-detail.component';
 import { AnimalService } from './animal/animal.service';
 import {AnimalFormComponent} from "./animal/animal-form.component";
+import {HttpService} from "./login/http.service";
+import {LoginForm} from "./login/login-form.component";
 
 @NgModule({
   imports: [
@@ -22,9 +24,10 @@ import {AnimalFormComponent} from "./animal/animal-form.component";
     AppComponent,
     AnimalComponent,
     AnimalDetailComponent,
-    AnimalFormComponent
+    AnimalFormComponent,
+    LoginForm
   ],
-  providers: [AnimalService],
+  providers: [AnimalService,HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
