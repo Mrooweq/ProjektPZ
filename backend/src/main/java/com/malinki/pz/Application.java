@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -23,84 +26,58 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.malinki.pz.controller.Animal;
+import com.malinki.pz.controller.User;
 
 @SpringBootApplication
 public class Application {
 
-	private static final String CONFIG_FILE_NAME = "mybatis-config.xml";
+	public static final String CONFIG_FILE_NAME = "mybatis-config.xml";
+	
 	private static final String DZIALA = "DZIAŁA";
-
-	private static String URL = "http://localhost:8080/api/animals";
+	private static final String LOGIN_PATTERN = "login=%s&password=%s";
+	private static String URL = "http://localhost:8080/api";
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 		System.out.println(DZIALA);
 
-
-
-		InputStream inputStream = null;
-		try {
-			inputStream = Resources.getResourceAsStream(CONFIG_FILE_NAME);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);	
-		SqlSession session = sqlSessionFactory.openSession();
-
-		try {			
-			Mapper mapper = session.getMapper(Mapper.class);
-
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("id", 1);
-			params.put("name", "Wydra");
-			params.put("age", 5);
-
-			mapper.deleteAllAnimals(); ////////////
-			mapper.addAnimal(params);
-			mapper.commit();
-
-			Animal animal = mapper.getAnimal(1);
-			System.out.println("lol: " + animal.getId());
-			System.out.println("lol: " + animal.getName());
-			System.out.println("lol: " + animal.getAge());
-
-
-			///////////
-
-			sendPost();
-
-
-		} finally {
-			session.close();
-		}
-
+		sendPost();
 	}
 
 	private static void sendPost(){
 		try{
 
 			URL url = new URL(URL);
-			URLConnection conn = url.openConnection();
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
 
-			writer.write("value=1&anotherValue=10");
+			String login = "login";
+			String password = "password";
+			
+			String loginParameters = String.format(LOGIN_PATTERN, login, password);
+
+			writer.write(loginParameters);
 			writer.close();
 
-			String line;
-			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			while ((line = reader.readLine()) != null) {
-				System.out.println("xD: " + line);
-			}
+			if(conn.getResponseCode() == 200)
+			{
+				System.out.println("ODPOWIEDZ");
+				String line;
+				BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				while ((line = reader.readLine()) != null) {
+					System.out.println("xD: " + line);
+				}
 
-			reader.close();
+				reader.close();	
+			}
 
 		} catch(Exception e){}
 	}
 
-	private void sendGet(){
+
+
+	private static void sendGet(){
 		URIBuilder b = null;
 		try {
 			b = new URIBuilder(URL);

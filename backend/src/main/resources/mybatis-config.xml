@@ -7,7 +7,7 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias alias="Animal" type="com.malinki.pz.controller.Animal" />
+		<typeAlias alias="User" type="com.malinki.pz.controller.User" />
 	</typeAliases>
 
 	<environments default="development">

@@ -6,23 +6,23 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
-import com.malinki.pz.controller.Animal;
+import com.malinki.pz.controller.User;
 
 public interface Mapper {
-	@Select("SELECT * FROM Animal where id = #{id}")
+	@Select("SELECT * FROM \"USER\" where id = #{id}")
 	@Results({
-		@Result(property = "id", column = "id"),
-		@Result(property = "name", column = "name"),
-		@Result(property = "age", column = "age")
+		@Result(property = "id", column = "ID"),
+		@Result(property = "login", column = "LOGIN"),
+		@Result(property = "password", column = "PASSWORD")
 	})
-	Animal getAnimal(int id);
+	User getUser(int id);
 
-	@Select("INSERT INTO Animal VALUES (${id}, '${name}', ${age})")
-	Animal addAnimal(Map<String, Object> params);
+	@Select("INSERT INTO \"USER\" VALUES (${id}, '${login}', '${password}')")
+	User addUser(Map<String, Object> params);
 
-	@Select("DELETE Animal")
-	void deleteAllAnimals();
+	@Select("DELETE \"USER\"")
+	void deleteAllUsers();
 	
-	@Select("commit")
+	@Select("COMMIT")
 	void commit();
 }
