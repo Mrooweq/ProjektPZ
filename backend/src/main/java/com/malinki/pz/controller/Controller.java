@@ -21,6 +21,8 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +34,19 @@ import com.malinki.pz.Mapper;
 @RequestMapping(value="/api")            
 public class Controller {
 
-	@RequestMapping			//@RequestMapping("/animals")
+	@RequestMapping(value = "/login")
+	public void login(@RequestBody String request) {		
+		JSONObject jsonObject = new JSONObject(request);
+        String login = jsonObject.getString("login");		
+        String password = jsonObject.getString("password");	
+        
+		System.out.println("lol1: " + login);
+		System.out.println("lol2: " + password);
+	}
+	
+	
+	
+	@RequestMapping			
 	public List<User> getLol(HttpServletRequest request, HttpServletResponse response) {					
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
@@ -91,22 +105,5 @@ public class Controller {
 		users.add(user);
 
 		return users;
-	}
-
-
-	private void doGet(HttpServletRequest request){
-		request.getParameter("param");
-	}
-
-	private void doPost(HttpServletRequest request, HttpServletResponse response){
-		try {
-			OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream());
-			writer.write("Mam 5 gram");
-			writer.flush();
-			writer.close();
-		} catch (Exception e){}
-
-		request.getParameter("login");
-		request.getParameter("password");
 	}
 }

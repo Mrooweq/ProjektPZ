@@ -1,0 +1,6 @@
+<label>Name: </label>
+<input #newName placeholder="name" >
+<label>Age: </label>
+<input #newAge placeholder="age" (keyup.enter)="addAnimal(newName.value,newAge.value);
+ newName.value=''; newAge.value='' ">
+<button (click)="addAnimal(newName.value,newAge.value); newName.value='' ; newAge.value='' ">Add</button>

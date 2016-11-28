@@ -1,25 +1,23 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 
-import {Animal} from './animal';
 import {Observable} from "rxjs";
 
 @Injectable()
-export class AnimalService {
-  private url = 'api/animals'
+export class HttpService {
+  private httpUrl = 'api/login';
 
   constructor(private http: Http) {
   }
 
-  getAnimals(): Observable<Animal[]> {
-    return this.http.get(this.url)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
+  loginAuthorization(login:string,password:string){
+    var headers = new Headers();
+    headers.append('Authorization', 'login');
+    let body = JSON.stringify({ "login":login,"password":password});
 
-  private extractData(res: Response) {
-    let data = res.json();
-    return data || [];
+    return this.http.post(this.httpUrl, body , {headers: headers})
+      .map(res => res.json())
+      .catch(this.handleError);
   }
 
   private handleError(error: Response | any) {

@@ -1,8 +1,10 @@
-<h1>
+<h1 class="logo">
   {{title}}
 </h1>
-<ul>
-    <li *ngFor="let animal of animals">
-        Name: {{animal.name}}, Age: {{animal.age}}
-    </li>
-</ul>
+<br>
+<nav>
+  <a routerLink="/animals">Display animals</a>
+  <a routerLink="/newAnimal">Add new animal</a>
+  <a routerLink="/login">Login</a>
+</nav>
+<router-outlet></router-outlet>
