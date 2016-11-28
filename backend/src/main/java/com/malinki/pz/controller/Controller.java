@@ -28,7 +28,6 @@ import com.malinki.pz.Application;
 import com.malinki.pz.Mapper;
 
 
-@WebServlet
 @RestController
 @RequestMapping(value="/api")            
 public class Controller {
@@ -38,11 +37,7 @@ public class Controller {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 
-
-		////////
-		
-		System.out.println("ZZZZZZZZZZZZZZZZZZZZZ");
-		
+			
 		InputStream inputStream = null;
 		try {
 			inputStream = Resources.getResourceAsStream(Application.CONFIG_FILE_NAME);
@@ -70,27 +65,26 @@ public class Controller {
 			user = mapper.getUser(1);
 			
 			try {
+				response.setStatus(HttpServletResponse.SC_OK);
+				
 				OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream());
 				writer.write("Zarejestrowano uzytkownika");
-				response.setStatus(HttpServletResponse.SC_OK);
 				writer.flush();
 				writer.close();
 			} catch (Exception e){}
 			
 		} catch(Exception e){
 			try {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				
 				OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream());
 				writer.write("Nie udalo sie zarejestrowac");
-				response.setStatus(HttpServletResponse.SC_OK);
 				writer.flush();
 				writer.close();
 			} catch (Exception e2){}
 		} finally {
 			session.close();
 		}
-
-
-		//////
 
 
 		ArrayList<User> users = new ArrayList<>();
@@ -101,10 +95,10 @@ public class Controller {
 
 
 	private void doGet(HttpServletRequest request){
-		System.out.println("lolXXXXXXXX: " + request.getParameter("param"));
+		request.getParameter("param");
 	}
 
-	private HashMap doPost(HttpServletRequest request, HttpServletResponse response){
+	private void doPost(HttpServletRequest request, HttpServletResponse response){
 		try {
 			OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream());
 			writer.write("Mam 5 gram");
@@ -112,10 +106,7 @@ public class Controller {
 			writer.close();
 		} catch (Exception e){}
 
-		HashMap <String, String> map = new HashMap <String, String>();
-		map.put("login", request.getParameter("login"));
-		map.put("password", request.getParameter("password"));
-
-		return map;
+		request.getParameter("login");
+		request.getParameter("password");
 	}
 }

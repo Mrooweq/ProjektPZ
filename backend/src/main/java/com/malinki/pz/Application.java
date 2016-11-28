@@ -33,13 +33,11 @@ public class Application {
 
 	public static final String CONFIG_FILE_NAME = "mybatis-config.xml";
 	
-	private static final String DZIALA = "DZIAŁA";
 	private static final String LOGIN_PATTERN = "login=%s&password=%s";
 	private static String URL = "http://localhost:8080/api";
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		System.out.println(DZIALA);
 
 		sendPost();
 	}
@@ -62,7 +60,6 @@ public class Application {
 
 			if(conn.getResponseCode() == 200)
 			{
-				System.out.println("ODPOWIEDZ");
 				String line;
 				BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				while ((line = reader.readLine()) != null) {
