@@ -41,7 +41,7 @@ public class AnimalController {
 
 	}
 
-	@RequestMapping(value = "/animals/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/animals/{id}", method = RequestMethod.DELETE, headers="authorization=delete")
 	public void remove(@PathVariable("id") int animalId) {
 		int index = returnAnimalIndex(animalId);
 		if (index != -1)

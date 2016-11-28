@@ -13,10 +13,17 @@ export class AnimalService {
   constructor(private http: Http) {
   }
 
-  delete(id: number): Observable<void> {
-    const url = `${this.animalUrl}/${id}`;
+  // createAuthorizationHeader(headers: Headers) {
+  //   headers.append('Authorization', 'delete');
+  // }
 
-    return this.http.delete(url, this.options).map(() => null)
+    delete(id: number): Observable<void> {
+    const url = `${this.animalUrl}/${id}`;
+    let headers = new Headers();
+    headers.append('Authorization', 'delete');
+    //this.createAuthorizationHeader(headers);
+
+    return this.http.delete(url, {headers: headers}).map(() => null)
       .catch(this.handleError);
   }
 
@@ -25,7 +32,7 @@ export class AnimalService {
     let animalString = JSON.stringify(animal);
 
     return this.http
-      .put(url, animalString, this.options).map(() => animal)
+      .put(url, animalString, {headers: this.headers} ).map(() => animal)
       .catch(this.handleError);
   }
 

@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AnimalComponent }  from './animal/animal.component';
 import {AnimalDetailComponent} from "./animal/animal-detail.component";
 import {AnimalFormComponent} from "./animal/animal-form.component";
+import {AppComponent} from "./app.component";
 
 const routes: Routes = [
   { path: 'animals', component: AnimalComponent },
