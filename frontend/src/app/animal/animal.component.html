@@ -1,0 +1,9 @@
+<ul>
+  <li *ngFor="let animal of animals" [routerLink]="['/animals/detail', animal.id]">
+    Id:{{animal.id}} Name: {{animal.name}}
+  </li>
+  <br>
+  <label>Add new Animal</label>
+  <input placeholder="name">
+  <button (click)="addAnimal()">Add</button>
+</ul>
