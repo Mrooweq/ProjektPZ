@@ -1,8 +1,13 @@
 package com.malinki.pz;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +20,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.apache.log4j.xml.DOMConfigurator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -31,18 +32,13 @@ public class Application {
 	private static final String DZIALA = "DZIAŁA";
 
 	private static String URL = "http://localhost:8080/api/animals";
-	
-	final static Logger logger = Logger.getLogger(Application.class);
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 		System.out.println(DZIALA);
 
-		logger.error("LOLLLLLL");
-		
-		
-		
-		
+
+
 		InputStream inputStream = null;
 		try {
 			inputStream = Resources.getResourceAsStream(CONFIG_FILE_NAME);
@@ -73,28 +69,55 @@ public class Application {
 
 			///////////
 
-			URIBuilder b = null;
-			try {
-				b = new URIBuilder(URL);
-			} catch (URISyntaxException e1) {
-				e1.printStackTrace();
-			}
-			b.addParameter("param", "xD");
+			sendPost();
 
-
-			HttpClient client = HttpClientBuilder.create().build();
-			HttpGet request = new HttpGet(b.toString());
-			try {
-				client.execute(request);
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}	
 
 		} finally {
 			session.close();
 		}
 
+	}
+
+	private static void sendPost(){
+		try{
+
+			URL url = new URL(URL);
+			URLConnection conn = url.openConnection();
+			conn.setDoOutput(true);
+			OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+
+			writer.write("value=1&anotherValue=10");
+			writer.close();
+
+			String line;
+			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			while ((line = reader.readLine()) != null) {
+				System.out.println("xD: " + line);
+			}
+
+			reader.close();
+
+		} catch(Exception e){}
+	}
+
+	private void sendGet(){
+		URIBuilder b = null;
+		try {
+			b = new URIBuilder(URL);
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
+		}
+
+		b.addParameter("param", "xD");
+
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpGet request = new HttpGet(b.toString());
+		try {
+			client.execute(request);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
