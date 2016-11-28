@@ -1,9 +1,8 @@
 <ul>
   <li *ngFor="let animal of animals" [routerLink]="['/animals/detail', animal.id]">
-    Id:{{animal.id}} Name: {{animal.name}}
+    Name: {{animal.name}}
+    <button (click)="delete(animal); $event.stopPropagation()">Delete</button>
   </li>
   <br>
-  <label>Add new Animal</label>
-  <input placeholder="name">
-  <button (click)="addAnimal()">Add</button>
+  <label>Click on animal to see details</label>
 </ul>

@@ -1,12 +1,12 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AnimalService } from './animal.service';
 import { Animal } from './animal'
 
 @Component({
   selector: 'my-animal',
-  templateUrl: './animal.component.html'
+  templateUrl: 'animal.component.html'
 })
-export class AnimalComponent {
+export class AnimalComponent implements OnInit{
   errorMessage: string;
   animals: Animal[];
 
@@ -19,11 +19,10 @@ export class AnimalComponent {
       error => this.errorMessage = <any>error);
   }
 
-  addAnimal(){
-    this.animalService.addAnimal(3,'Kurczak',20)
-      .subscribe(
-        animal  => this.animals.push(animal),
-        error =>  this.errorMessage = <any>error);
+  delete(animal: Animal){
+    this.animalService.delete(animal.id).subscribe(() => {
+      this.animals = this.animals.filter(h => h !== animal);
+    });
   }
 
   ngOnInit(): void {

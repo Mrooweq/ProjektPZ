@@ -1,8 +1,9 @@
 <h1>
   {{title}}
 </h1>
-<ul>
-    <li *ngFor="let animal of animals">
-        Name: {{animal.name}}, Age: {{animal.age}}
-    </li>
-</ul>
+<br>
+<nav>
+  <a routerLink="/animals">Display animals</a>
+  <a routerLink="/newAnimal">Add new animal</a>
+</nav>
+<router-outlet></router-outlet>

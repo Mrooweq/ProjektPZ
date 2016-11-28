@@ -37,13 +37,13 @@ public class Application {
 		try {			
 			Mapper mapper = session.getMapper(Mapper.class);
 		
-			Map<String, Object> params = new HashMap<String, Object>();
+			/*Map<String, Object> params = new HashMap<String, Object>();
 			params.put("id", 1);
 			params.put("name", "Wydra");
 			params.put("age", 5);
 						
 			mapper.addAnimal(params);
-			mapper.commit();
+			mapper.commit();*/
 			
 			Animal animal = mapper.getAnimal(1);
 			System.out.println("lol: " + animal.getId());

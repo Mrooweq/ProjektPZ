@@ -7,16 +7,32 @@ import {Observable} from "rxjs";
 @Injectable()
 export class AnimalService {
   private animalUrl = 'api/animals';
+  private headers = new Headers({ 'Content-Type': 'application/json' });
+  private options = new RequestOptions({ headers: this.headers });
 
   constructor(private http: Http) {
   }
 
-  addAnimal(id:number, name: string, age:number): Observable<Animal> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+  delete(id: number): Observable<void> {
+    const url = `${this.animalUrl}/${id}`;
+
+    return this.http.delete(url, this.options).map(() => null)
+      .catch(this.handleError);
+  }
+
+  update(animal: Animal): Observable<Animal> {
+    const url = `${this.animalUrl}/${animal.id}`;
+    let animalString = JSON.stringify(animal);
+
+    return this.http
+      .put(url, animalString, this.options).map(() => animal)
+      .catch(this.handleError);
+  }
+
+  addAnimal(id:number,name: string, age:number): Observable<Animal> {
     let animalString = JSON.stringify(new Animal(id,name,age));
 
-    return this.http.post(this.animalUrl, animalString, options)
+    return this.http.post(this.animalUrl, animalString, this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }

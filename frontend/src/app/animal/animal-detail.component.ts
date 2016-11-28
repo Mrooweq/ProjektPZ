@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Animal } from './animal'
 
-import { ActivatedRoute, Params } from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import { Location } from '@angular/common';
 import {AnimalService} from "./animal.service";
 import 'rxjs/add/operator/switchMap';
-import {AnimalComponent} from "./animal.component";
 
 
 @Component({
   selector: 'my-animal-detail',
-  templateUrl: './animal-detail.component.html'
+  templateUrl: 'animal-detail.component.html'
 })
 
 export class AnimalDetailComponent implements OnInit{
@@ -25,6 +24,11 @@ export class AnimalDetailComponent implements OnInit{
 
   goBack(): void {
     this.location.back();
+  }
+
+  save(): void {
+    this.animalService.update(this.animal).subscribe(
+      ()=> this.goBack() );
   }
 
   ngOnInit():void {
