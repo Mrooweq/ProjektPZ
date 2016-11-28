@@ -1,5 +1,7 @@
-<input #username placeholder="username">
-<input #password placeholder="password">
-<button (click)="login(username.value,password.value);
+<input  #username placeholder="username"  placement="right" ngbTooltip="Insert your username">
+<br>
+<input #password type="password" placeholder="password">
+<br>
+<button  class="btn btn-primary" (click)="login(username.value,password.value);
 username.value='';
 password.value=''">Login</button>
