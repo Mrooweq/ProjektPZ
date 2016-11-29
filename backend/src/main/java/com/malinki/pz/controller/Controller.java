@@ -55,13 +55,8 @@ public class Controller {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {				
-			Mapper mapper = session.getMapper(Mapper.class);
-
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("login", login);
-			params.put("password", password);
-			
-			mapper.addUser(params);
+			Mapper mapper = session.getMapper(Mapper.class);			
+			mapper.addUser(login, password);
 			mapper.commit();
 			
 			isActionFinishedSuccesfully = true;
@@ -78,13 +73,15 @@ public class Controller {
 
 
 	private void setResponse(HttpServletResponse response, boolean isActionFinishedSuccesfully){
+		OutputStreamWriter writer = null;
+		
 		try{
 			if(isActionFinishedSuccesfully)
 				response.setStatus(HttpServletResponse.SC_OK);
 			else
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-			OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream());
+			writer = new OutputStreamWriter(response.getOutputStream());
 
 			if(isActionFinishedSuccesfully)
 				writer.write("Zarejestrowano uzytkownika");
@@ -92,9 +89,15 @@ public class Controller {
 				writer.write("Nie udalo sie zarejestrowac");
 
 			writer.flush();
-			writer.close();
 		} catch(IOException e){
 			logger.log(Level.ERROR, e.toString());
+		}
+		finally{
+			try {
+				writer.close();
+			} catch (IOException e) {
+				logger.log(Level.ERROR, e.toString());
+			}
 		}
 	}
 
