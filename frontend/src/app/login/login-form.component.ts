@@ -16,7 +16,7 @@ export class LoginForm {
   login(username: string, password: string):void{
     this.httpService.loginAuthorization(username,password).subscribe(
       error =>  this.errorMessage = <any>error,
-      ()=> this.router.navigate(['/animals'])
+      ()=> this.router.navigate(['/login'])
     );
   }
 }
