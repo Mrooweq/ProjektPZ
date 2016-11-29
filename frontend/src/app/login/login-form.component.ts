@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import { HttpService } from './http.service';
 import {Router} from "@angular/router";
 
 @Component({
   selector: 'login',
-  templateUrl: 'login-form.component.html'
+  templateUrl: 'login-form.component.html',
+  styleUrls: ['login-form.component.css']
 })
 export class LoginForm{
   errorMessage: string;
@@ -13,11 +14,14 @@ export class LoginForm{
     private router: Router,
     private httpService: HttpService) {
   }
+  goBack(): void {
+    this.router.navigate(['/']);
+  }
 
   login(username: string, password: string):void{
     this.httpService.loginAuthorization(username,password).subscribe(
       error =>  this.errorMessage = <any>error,
-      ()=> this.router.navigate(['/animals'])
+      ()=>this.goBack()
     );
   }
 }

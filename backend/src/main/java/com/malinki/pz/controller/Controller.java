@@ -40,8 +40,8 @@ public class Controller {
         String login = jsonObject.getString("login");		
         String password = jsonObject.getString("password");	
         
-		System.out.println("lol1: " + login);
-		System.out.println("lol2: " + password);
+		System.out.println("login: " + login);
+		System.out.println("password: " + password);
 	}
 	
 	

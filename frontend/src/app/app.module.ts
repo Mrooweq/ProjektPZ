@@ -9,12 +9,9 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule }   from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { AnimalComponent } from './animal/animal.component';
-import { AnimalDetailComponent } from './animal/animal-detail.component';
-import { AnimalService } from './animal/animal.service';
-import {AnimalFormComponent} from "./animal/animal-form.component";
 import {HttpService} from "./login/http.service";
 import {LoginForm} from "./login/login-form.component";
+import {Home} from "./home/home.component";
 
 @NgModule({
   imports: [
@@ -27,12 +24,10 @@ import {LoginForm} from "./login/login-form.component";
   ],
   declarations: [
     AppComponent,
-    AnimalComponent,
-    AnimalDetailComponent,
-    AnimalFormComponent,
-    LoginForm
+    LoginForm,
+    Home
   ],
-  providers: [AnimalService,HttpService],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
