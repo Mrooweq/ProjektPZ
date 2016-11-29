@@ -32,14 +32,12 @@ public class Controller {
 	private Logger logger = Logger.getLogger(ClassName.class.getName());
 	
 	@RequestMapping(value = "/login")
-
 	public void login(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {		
 		JSONObject jsonObject = new JSONObject(requestBody);
 		String login = jsonObject.getString("login");		
 		String password = jsonObject.getString("password");	
 
 		boolean isActionFinishedSuccesfully = registerUser(login, password);
-		System.out.println("lol: " + isActionFinishedSuccesfully);
 		setResponse(response, isActionFinishedSuccesfully);
 	}
 	
