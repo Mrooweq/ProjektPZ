@@ -1,20 +1,16 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AnimalComponent }  from './animal/animal.component';
-import {AnimalDetailComponent} from "./animal/animal-detail.component";
-import {AnimalFormComponent} from "./animal/animal-form.component";
-import {AppComponent} from "./app.component";
 import {LoginForm} from "./login/login-form.component";
+import {AppComponent} from "./app.component";
+import {Home} from "./home/home.component";
 
 const routes: Routes = [
-  { path: 'animals', component: AnimalComponent },
-  { path: 'animals/detail/:id', component: AnimalDetailComponent },
-  { path: 'newAnimal', component: AnimalFormComponent },
-  { path: 'login', component:LoginForm }
+  { path: 'login', component:LoginForm },
+  { path: '', component: Home }
 ];
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [ RouterModule.forRoot(routes, {useHash:true}) ],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule {}
