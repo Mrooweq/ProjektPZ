@@ -14,7 +14,7 @@
 					value="oracle.jdbc.driver.OracleDriver" />
 				<property name="url" value="jdbc:oracle:thin:testuser/testpass@localhost"/>
 				<property name="username" value="testuser" />
-				<property name="password" value="testpass" />
+				<property name="password" value="testuserpas" />
 			</dataSource>
 		</environment>
 	</environments>
