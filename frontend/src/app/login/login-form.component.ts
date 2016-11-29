@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import { HttpService } from './http.service';
 import {Router} from "@angular/router";
+import {NgbTooltipConfig} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'login',
@@ -12,8 +13,9 @@ export class LoginForm{
 
   constructor(
     private router: Router,
-    private httpService: HttpService) {
+    private httpService: HttpService,) {
   }
+
   goBack(): void {
     this.router.navigate(['/']);
   }
