@@ -4,7 +4,7 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable} from "rxjs";
 
 @Injectable()
-export class HttpService {
+export class UserService {
   private httpUrl = 'api/login';
 
   constructor(private http: Http) {

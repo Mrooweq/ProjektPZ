@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
-import { HttpService } from './http.service';
+import { UserService } from '../user/user.service';
 import {Router} from "@angular/router";
-import {NgbTooltipConfig} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'login',
@@ -13,7 +12,7 @@ export class LoginForm{
 
   constructor(
     private router: Router,
-    private httpService: HttpService,) {
+    private userService: UserService,) {
   }
 
   goBack(): void {
@@ -21,7 +20,7 @@ export class LoginForm{
   }
 
   login(username: string, password: string):void{
-    this.httpService.loginAuthorization(username,password).subscribe(
+    this.userService.loginAuthorization(username,password).subscribe(
       error =>  this.errorMessage = <any>error,
       ()=>this.goBack()
     );

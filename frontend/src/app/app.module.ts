@@ -9,7 +9,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule }   from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import {HttpService} from "./login/http.service";
+import {UserService} from "./user/user.service";
 import {LoginForm} from "./login/login-form.component";
 import {Home} from "./home/home.component";
 
@@ -27,7 +27,7 @@ import {Home} from "./home/home.component";
     LoginForm,
     Home
   ],
-  providers: [HttpService],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
