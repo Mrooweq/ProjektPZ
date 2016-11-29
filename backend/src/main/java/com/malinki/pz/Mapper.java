@@ -19,4 +19,9 @@ public interface Mapper {
 	
 	@Select("COMMIT")
 	void commit();
+	
+///
+	
+	@Select("SELECT * FROM \"USER\" where id = ( select count(*) from \"USER\")")
+	User getLastUser();
 }

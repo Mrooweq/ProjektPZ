@@ -1,59 +1,27 @@
-package com.malinki.pz.controller;
+package com.malinki.pz;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.javassist.bytecode.stackmap.TypeData.ClassName;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.malinki.pz.Application;
-import com.malinki.pz.Mapper;
+import com.malinki.pz.controller.Controller;
 
-
-@RestController
-@RequestMapping(value="/api")            
-public class Controller {
-
-	private Logger logger = Logger.getLogger(ClassName.class.getName());
+public class UserRepository {
+	private Logger logger = Logger.getLogger(Controller.class);
 	
-	@RequestMapping(value = "/login")
-
-	public void login(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {		
-		JSONObject jsonObject = new JSONObject(requestBody);
-		String login = jsonObject.getString("login");		
-		String password = jsonObject.getString("password");	
-
-		boolean isActionFinishedSuccesfully = registerUser(login, password);
-		setResponse(response, isActionFinishedSuccesfully);
-	}
-	
-	private boolean registerUser(String login, String password) {
-		InputStream inputStream = null;
+	public void registerUser(HttpServletResponse response, String login, String password) {
+		InputStream inputStream = openInputStream();
+		SqlSession session = establishSession(inputStream);
 		boolean isActionFinishedSuccesfully = false;
-		
-		try {
-			inputStream = Resources.getResourceAsStream(Application.CONFIG_FILE_NAME);
-		} catch (IOException e) {
-			logger.log(Level.ERROR, e.toString());
-		}
-
-		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);	
-		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {				
 			Mapper mapper = session.getMapper(Mapper.class);			
@@ -68,9 +36,25 @@ public class Controller {
 			closeInputStream(inputStream);
 		}
 		
-		return isActionFinishedSuccesfully;
+		setResponse(response, isActionFinishedSuccesfully);
+	}
+	
+	private SqlSession establishSession(InputStream inputStream){
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);	
+		return sqlSessionFactory.openSession();
 	}
 
+	private InputStream openInputStream(){
+		InputStream inputStream = null;
+		
+		try {
+			inputStream = Resources.getResourceAsStream(Application.MYBATIS_CONFIG_FILE_NAME);
+		} catch (IOException e) {
+			logger.log(Level.ERROR, e.toString());
+		}
+		
+		return inputStream;
+	}
 
 
 	private void setResponse(HttpServletResponse response, boolean isActionFinishedSuccesfully){
