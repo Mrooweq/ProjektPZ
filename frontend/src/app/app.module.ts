@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import {UserService} from "./user/user.service";
 import {LoginForm} from "./login/login-form.component";
 import {Home} from "./home/home.component";
+import {SignUp} from "./signUp/signup-form.component";
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import {Home} from "./home/home.component";
   declarations: [
     AppComponent,
     LoginForm,
+    SignUp,
     Home
   ],
   providers: [UserService],
