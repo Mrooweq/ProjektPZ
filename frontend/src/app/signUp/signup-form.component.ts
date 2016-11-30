@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
-import { UserService } from '../user/user.service';
 import {Router} from "@angular/router";
+import {UserService} from "../user/user.service";
 
 @Component({
-  selector: 'login',
-  templateUrl: 'login-form.component.html',
-  styleUrls: ['login-form.component.css']
+  selector: 'singin-form',
+  templateUrl: 'signup-form.component.html',
+  styleUrls: ['signup-form.component.css']
 })
-export class LoginForm{
+export class SignUp {
   errorMessage: string;
 
   constructor(
@@ -19,10 +19,10 @@ export class LoginForm{
     this.router.navigate(['/']);
   }
 
-  login(username: string, password: string):void{
+  createNewUser(username: string, password: string):void{
     this.userService.loginAuthorization(username,password).subscribe(
       error =>  this.errorMessage = <any>error,
-      ()=> this.router.navigate(['/login'])
+      ()=>this.goBack()
     );
   }
 }

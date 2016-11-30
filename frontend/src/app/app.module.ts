@@ -9,9 +9,10 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule }   from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import {HttpService} from "./login/http.service";
+import {UserService} from "./user/user.service";
 import {LoginForm} from "./login/login-form.component";
 import {Home} from "./home/home.component";
+import {SignUp} from "./signUp/signup-form.component";
 
 @NgModule({
   imports: [
@@ -25,9 +26,10 @@ import {Home} from "./home/home.component";
   declarations: [
     AppComponent,
     LoginForm,
+    SignUp,
     Home
   ],
-  providers: [HttpService],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

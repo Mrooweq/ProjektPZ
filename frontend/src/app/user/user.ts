@@ -1,9 +1,10 @@
 export class User {
-    public login: string;
-    public password: string;
+  username: string;
+  password: string;
+
 
   constructor(login: string, password:string) {
-    this.login = login;
+    this.username = login;
     this.password = password;
   }
 }

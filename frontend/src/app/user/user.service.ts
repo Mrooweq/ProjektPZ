@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {Http, Response, Headers} from '@angular/http';
 
 import {Observable} from "rxjs";
+import {User} from "./user";
 
 @Injectable()
-export class HttpService {
+export class UserService {
   private httpUrl = 'api/login';
 
   constructor(private http: Http) {
@@ -18,6 +19,17 @@ export class HttpService {
     return this.http.post(this.httpUrl, body , {headers: headers})
       .map(res => res.json())
       .catch(this.handleError);
+  }
+
+  createNewUser(login:string,password:string){
+    var headers = new Headers();
+    headers.append('Authorization', 'login');
+    let body = JSON.stringify(new User(login,password));
+
+    return this.http.post(this.httpUrl, body , {headers: headers})
+      .map(res => res.json())
+      .catch(this.handleError);
+
   }
 
   private handleError(error: Response | any) {
