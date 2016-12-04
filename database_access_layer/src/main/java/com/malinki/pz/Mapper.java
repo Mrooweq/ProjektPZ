@@ -5,7 +5,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.malinki.pz.controller.User;
+import com.malinki.pz.domain.User;
 
 public interface Mapper {
 	@Select("SELECT * FROM \"USER\" where id = #{id}")

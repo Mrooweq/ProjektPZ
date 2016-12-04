@@ -13,12 +13,10 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.malinki.pz.controller.UserController;
-
 import constants.Strings;
 
 public abstract class AbstractUserRepository {
-	private Logger logger = Logger.getLogger(UserController.class);
+	private Logger logger = Logger.getLogger(AbstractUserRepository.class);
 
 	public void performAction(HttpServletResponse response){
 		InputStream inputStream = openInputStream();
@@ -51,7 +49,7 @@ public abstract class AbstractUserRepository {
 		InputStream inputStream = null;
 		
 		try {
-			inputStream = Resources.getResourceAsStream(Application.MYBATIS_CONFIG_FILE_NAME);
+			inputStream = Resources.getResourceAsStream(Strings.MYBATIS_CONFIG_FILE_NAME);
 		} catch (IOException e) {
 			logger.log(Level.ERROR, e.toString());
 		}

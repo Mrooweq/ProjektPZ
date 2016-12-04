@@ -5,7 +5,7 @@
 	<resultMap type="User" id="usermap">
 		<id column="ID" property="id" />
 		<result column="LOGIN" property="login" />
-				<result column="PASSWORD" property="password" />
+		<result column="PASSWORD" property="password" />
 	</resultMap>
 
 	<select id="test" resultMap="usermap">
@@ -13,12 +13,12 @@
 	</select>
 
 	<select id="test2" resultMap="usermap" parameterType="map">
-		select * from User where id = ${id}
+		select *
+		from User where id = ${id}
 	</select>
-	
-	
-	
-		<select id="test3" resultMap="usermap" parameterType="map">
-		select * from User where id = ${id}
+
+	<select id="test3" resultMap="usermap" parameterType="map">
+		select *
+		from User where id = ${id}
 	</select>
 </mapper>

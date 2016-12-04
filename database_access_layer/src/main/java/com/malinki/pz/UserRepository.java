@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class UserRepository {
 
-
 	public void registerUser(HttpServletResponse response, String login, String password) {
 		new AbstractUserRepository() {
 			@Override

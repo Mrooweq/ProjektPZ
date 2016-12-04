@@ -1,4 +1,4 @@
-package com.malinki.pz.controller;
+package com.malinki.pz.domain;
 
 public class User {
 
