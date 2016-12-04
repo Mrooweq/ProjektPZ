@@ -1,4 +1,4 @@
-package com.malinki.pz;
+package com.malinki.pz.bll;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

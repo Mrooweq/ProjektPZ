@@ -1,11 +1,10 @@
-package com.malinki.pz;
+package com.malinki.pz.bll;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import constants.Strings;
-
+import com.malinki.pz.bll.constants.Strings;
 
 @SpringBootApplication
 public class Application {

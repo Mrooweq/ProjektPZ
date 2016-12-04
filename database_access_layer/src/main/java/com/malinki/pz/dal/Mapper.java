@@ -1,11 +1,11 @@
-package com.malinki.pz;
+package com.malinki.pz.dal;
 
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.malinki.pz.domain.User;
+import com.malinki.pz.dal.domain.User;
 
 public interface Mapper {
 	@Select("SELECT * FROM \"USER\" where id = #{id}")

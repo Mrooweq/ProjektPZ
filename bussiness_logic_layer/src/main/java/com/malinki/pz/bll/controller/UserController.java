@@ -1,21 +1,22 @@
-package com.malinki.pz.controller;
+package com.malinki.pz.bll.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.malinki.pz.ApplicationContextProvider;
-import com.malinki.pz.UserRepository;
+import com.malinki.pz.bll.ApplicationContextProvider;
+import com.malinki.pz.bll.constants.BeanNamesEnum;
+import com.malinki.pz.bll.constants.ParamNamesEnum;
+import com.malinki.pz.dal.UserRepository;
 
-import constants.BeanNamesEnum;
-import constants.ParamNamesEnum;
 
 
 @RestController
-@RequestMapping(value="/api")            
+@RequestMapping(value="/api")   
 public class UserController {
 		
 	public UserRepository repository;

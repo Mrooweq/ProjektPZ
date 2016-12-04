@@ -1,4 +1,4 @@
-package com.malinki.pz;
+package com.malinki.pz.dal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +13,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import constants.Strings;
+import com.malinki.pz.dal.constants.Strings;
+
+
 
 public abstract class AbstractUserRepository {
 	private Logger logger = Logger.getLogger(AbstractUserRepository.class);

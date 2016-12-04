@@ -1,6 +1,8 @@
-package com.malinki.pz;
+package com.malinki.pz.dal;
 
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserRepository {
 

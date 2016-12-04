@@ -1,4 +1,4 @@
-package com.malinki.pz.domain;
+package com.malinki.pz.dal.domain;
 
 public class User {
 

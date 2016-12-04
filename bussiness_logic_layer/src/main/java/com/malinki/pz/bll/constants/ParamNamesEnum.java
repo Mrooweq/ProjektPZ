@@ -1,4 +1,4 @@
-package constants;
+package com.malinki.pz.bll.constants;
 
 public enum ParamNamesEnum {
 	LOGIN("login"),
