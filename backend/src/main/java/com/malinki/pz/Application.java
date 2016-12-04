@@ -10,6 +10,7 @@ public class Application {
 	public static final String MYBATIS_CONFIG_FILE_NAME = "mybatis-config.xml";
 	public static final String SPRING_CONFIG_FILE_NAME = "configuration.xml";
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 		new ClassPathXmlApplicationContext(SPRING_CONFIG_FILE_NAME);

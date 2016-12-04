@@ -1,4 +1,4 @@
-package com.malinki.pz;
+package constants;
 
 public enum BeanNamesEnum {
 	
