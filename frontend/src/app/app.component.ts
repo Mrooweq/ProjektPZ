@@ -1,27 +1,10 @@
-import { Component } from '@angular/core';
-import { AnimalService } from './animal.service';
-import { Animal } from './animal'
+import { Component} from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'my-app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [AnimalService]
+  styleUrls: ['app.component.css']
 })
 export class AppComponent {
-  errorMessage: string;
   title = 'App works!';
-  animals: Animal[];
-
-  constructor(private animalService: AnimalService) { }
-
-  getAnimals(): void {
-    this.animalService.getAnimals().subscribe(
-      animals => this.animals = animals,
-      error => this.errorMessage = <any>error);
-  }
-
-  ngOnInit(): void {
-    this.getAnimals();
-  }
 }
