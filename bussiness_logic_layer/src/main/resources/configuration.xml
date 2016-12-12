@@ -5,5 +5,6 @@
 
 	<bean id="userrepository" class="com.malinki.pz.dal.UserRepository" />
 	<bean id="applicationContextProvder" class="com.malinki.pz.bll.ApplicationContextProvider" />
+	<bean id="temp" class="com.malinki.pz.dao.Temp" />
 
 </beans>

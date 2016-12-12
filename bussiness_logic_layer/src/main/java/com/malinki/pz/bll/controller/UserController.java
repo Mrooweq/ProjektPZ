@@ -12,6 +12,7 @@ import com.malinki.pz.bll.ApplicationContextProvider;
 import com.malinki.pz.bll.constants.BeanNamesEnum;
 import com.malinki.pz.bll.constants.ParamNamesEnum;
 import com.malinki.pz.dal.UserRepository;
+import com.malinki.pz.dao.Temp;
 
 
 
@@ -19,15 +20,15 @@ import com.malinki.pz.dal.UserRepository;
 @RequestMapping(value="/api")   
 public class UserController {
 		
-	public UserRepository repository;
+	public Temp temp;
 	
 	@RequestMapping(value = "/login")
 	public void login(@RequestBody String requestBody, HttpServletResponse response) {		
 		JSONObject jsonObject = new JSONObject(requestBody);
 		String login = jsonObject.getString(ParamNamesEnum.LOGIN.getName());		
 		String password = jsonObject.getString(ParamNamesEnum.PASSWORD.getName());	
-
-		repository = ApplicationContextProvider.getApplicationContext().getBean(BeanNamesEnum.USER_REPOSITORY.getName(), UserRepository.class);
-		repository.registerUser(response, login, password);
+		
+		temp = ApplicationContextProvider.getApplicationContext().getBean(BeanNamesEnum.TEMP.getName(), Temp.class);
+		temp.registerUser(response, login, password);
 	}
 }

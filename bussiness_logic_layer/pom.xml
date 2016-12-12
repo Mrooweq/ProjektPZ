@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.malinki.pz</groupId>
-	<artifactId>bussiness_logic_layer</artifactId>
+	<artifactId>dao</artifactId>
 	<version>0.1.0</version>
 
 	<parent>
