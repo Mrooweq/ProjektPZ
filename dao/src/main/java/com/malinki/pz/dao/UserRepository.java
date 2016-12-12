@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.malinki.pz.dal.Temp;
+import com.malinki.pz.dal.domain.User;
 
 @Service
 public class UserRepository implements IUserRepository {
@@ -14,7 +15,7 @@ public class UserRepository implements IUserRepository {
 	public Temp temp;
 		
 	@Override
-	public void registerUser(HttpServletResponse response, String login, String password) {
-		temp.registerUser(response, login, password);
+	public void registerUser(HttpServletResponse response, User user) {
+		temp.registerUser(response, user);
 	}
 }
