@@ -2,28 +2,45 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 
 import {Observable} from "rxjs";
-import {User} from "./user";
+import {User} from "../_mocks/user";
 
 @Injectable()
 export class UserService {
   private httpUrl = 'api/login';
+  private loggedIn = false;
 
   constructor(private http: Http) {
   }
 
-  loginAuthorization(login:string,password:string){
+  login(login:string, password:string){
     var headers = new Headers();
     headers.append('Authorization', 'login');
     let body = JSON.stringify({ "login":login,"password":password});
 
     return this.http.post(this.httpUrl, body , {headers: headers})
       .map(res => res.json())
+      .map((res) => {
+        if (res.success) {
+          this.loggedIn = true;
+          console.log('yupi');
+        }
+        return res.success;
+      })
       .catch(this.handleError);
+
+  }
+
+  isLogged(){
+    return this.loggedIn;
+  }
+
+  logout() {
+    this.loggedIn = false;
   }
 
   createNewUser(login:string,password:string){
     var headers = new Headers();
-    headers.append('Authorization', 'login');
+    headers.append('Authorization', 'register');
     let body = JSON.stringify(new User(login,password));
 
     return this.http.post(this.httpUrl, body , {headers: headers})
