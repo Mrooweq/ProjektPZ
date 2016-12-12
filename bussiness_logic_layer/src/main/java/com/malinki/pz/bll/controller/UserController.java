@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.malinki.pz.bll.ApplicationContextProvider;
 import com.malinki.pz.bll.constants.BeanNamesEnum;
 import com.malinki.pz.bll.constants.ParamNamesEnum;
-import com.malinki.pz.dal.UserRepository;
-import com.malinki.pz.dao.Temp;
+import com.malinki.pz.dal.Temp;
+import com.malinki.pz.dao.UserRepository;
 
 
 
@@ -20,7 +20,7 @@ import com.malinki.pz.dao.Temp;
 @RequestMapping(value="/api")   
 public class UserController {
 		
-	public Temp temp;
+	public UserRepository userRepository;
 	
 	@RequestMapping(value = "/login")
 	public void login(@RequestBody String requestBody, HttpServletResponse response) {		
@@ -28,7 +28,7 @@ public class UserController {
 		String login = jsonObject.getString(ParamNamesEnum.LOGIN.getName());		
 		String password = jsonObject.getString(ParamNamesEnum.PASSWORD.getName());	
 		
-		temp = ApplicationContextProvider.getApplicationContext().getBean(BeanNamesEnum.TEMP.getName(), Temp.class);
-		temp.registerUser(response, login, password);
+		userRepository = ApplicationContextProvider.getApplicationContext().getBean(BeanNamesEnum.USER_REPOSITORY.getName(), UserRepository.class);
+		userRepository.registerUser(response, login, password);
 	}
 }

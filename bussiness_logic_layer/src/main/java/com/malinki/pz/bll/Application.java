@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.malinki.pz.bll.constants.Strings;
-import com.malinki.pz.dal.UserRepository;
+import com.malinki.pz.dal.Temp;
 
 @SpringBootApplication
 public class Application {

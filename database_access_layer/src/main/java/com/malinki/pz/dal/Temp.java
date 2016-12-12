@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UserRepository {
+public class Temp{
 
 	public void registerUser(HttpServletResponse response, String login, String password) {
 		new AbstractUserRepository() {
