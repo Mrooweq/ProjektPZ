@@ -3,16 +3,12 @@
 }
 
 .form-bordered {
-  border: 2px solid black;
+  border: 2px solid;
   border-color: #f4f4f4 #d0d0d0 #d0d0d0 #f4f4f4;
   padding: 10px;
   -webkit-box-shadow: 8px 8px 9px -7px rgba(51, 51, 51, 1);
   -moz-box-shadow: 8px 8px 9px -7px rgba(51, 51, 51, 1);
   box-shadow: 8px 8px 9px -7px rgba(51, 51, 51, 1);
-}
-
-#formHeader {
-  padding-bottom: 15px;
 }
 
 .pointer {
@@ -26,5 +22,20 @@
 }
 
 .registration-background {
-  background: black url(../app/components/_css/registration-form.background.png);
+  background: #9483a1 url(../app/components/registration/registration-form.background.png);
+}
+
+#formHeader {
+  padding-bottom: 15px;
+}
+
+.ng-invalid:not(form).ng-touched, .ng-invalid:not(form).ng-dirty{
+  border-left: 6px solid #a94442;
+}
+
+.ng-valid.ng-dirty:not(form) {
+  border-left: 6px solid #42A948;
+}
+.error{
+  color: #a94442;
 }

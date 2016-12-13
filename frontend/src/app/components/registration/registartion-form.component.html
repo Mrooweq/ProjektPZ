@@ -6,55 +6,94 @@
       <a (click)="goBack()" class="pointer float-xs-right close"></a>
       <div style="padding: 35px">
         <h1 id="#formHeader">Sign Up</h1>
-
-        <form (ngSubmit)="createNewUser('ala','kot')" #loginForm="ngForm">
+        <form novalidate (ngSubmit)="onSubmit(registrationForm.value)" [formGroup]="registrationForm">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="firstname">First name: </label>
-                <input type="text" class="form-control" id="firstname" required #firstname>
+                <label>First name: </label>
+                <input type="text" class="form-control" [formControl]="registrationForm.controls['firstname']">
+                <div class="error"
+                     *ngIf="registrationForm.get('firstname').hasError('required') && registrationForm.get('firstname').touched">
+                  Name is required
+                </div>
+                <div class="error"
+                     *ngIf="registrationForm.get('firstname').hasError('pattern') && registrationForm.get('firstname').dirty">
+                  Name is invalid. Example: John
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="lastname">Last name: </label>
-                <input type="text" class="form-control" id="lastname" required #lastname>
+                <label>Last name: </label>
+                <input type="text" class="form-control" [formControl]="registrationForm.controls['lastname']">
+                <div class="error"
+                     *ngIf="registrationForm.get('lastname').hasError('required') && registrationForm.get('lastname').touched">
+                  Last name is required
+                </div>
+                <div class="error"
+                     *ngIf="registrationForm.get('lastname').hasError('pattern') && registrationForm.get('lastname').dirty">
+                  Last name is invalid. Example: Deer
+                </div>
               </div>
             </div>
           </div>
-
-          <div class="form-group">
-            <label for="username">Username: </label>
-            <input type="text" class="form-control" id="username" required #username>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Username: </label>
+                <input type="text" class="form-control" [formControl]="registrationForm.controls['username']">
+                <div class="error"
+                     *ngIf="registrationForm.get('username').hasError('required') && registrationForm.get('username').touched">
+                  Username is required
+                </div>
+              </div>
+            </div>
           </div>
-
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="password">Password: </label>
-                <input type="password" class="form-control" id="password" required  #password>
+                <label>Password: </label>
+                <input type="password" class="form-control" [maxlength]="12" [formControl]="registrationForm.controls['password']">
+                <div class="error"
+                     *ngIf="registrationForm.get('password').hasError('required') && registrationForm.get('password').touched">
+                  Password is required
+                </div>
+                <div class="error"
+                     *ngIf="registrationForm.get('password').hasError('minlength') && registrationForm.get('password').dirty">
+                 Password minimum length: 6
+                </div>
               </div>
               <div class="form-group">
-                <label for="conpassword">Confirm password: </label>
-                <input type="password" class="form-control" id="conpassword" required #conpassword>
+                <label>Confirm password: </label>
+                <input type="password" class="form-control" [formControl]="registrationForm.controls['conpassword']">
+              </div>
+              <div class="error"
+                   *ngIf="registrationForm.get('conpassword').hasError('pattern') && registrationForm.get('password').dirty">
+                Passwords must match!!
               </div>
             </div>
-
             <div class="col-md-6">
               <div class="form-group">
-                <label for="email">Email: </label>
-                <input type="text" class="form-control" id="email" #email>
+                <label>Email: </label>
+                <input type="text" class="form-control" [formControl]="registrationForm.controls['email']">
+                <div class="error"
+                     *ngIf="registrationForm.get('email').hasError('required') && registrationForm.get('email').touched">
+                  Email is required
+                </div>
               </div>
               <div class="form-group">
-                <label for="conemail">Confirm email: </label>
-                <input type="text" class="form-control" id="conemail" #conemail>
+                <label>Confirm email: </label>
+                <input type="text" class="form-control" [formControl]="registrationForm.controls['conemail']">
+                <div class="error"
+                     *ngIf="registrationForm.get('conemail').hasError('pattern') && registrationForm.get('conemail').dirty">
+                  Emails must match!!
+                </div>
               </div>
             </div>
           </div>
-
-          <button type="submit" class="btn btn-secondary float-xs-right" [disabled]="!loginForm.form.valid">Submit</button>
+          <button type="submit" class="btn btn-secondary float-xs-right" [disabled]="!registrationForm.valid">Submit
+          </button>
         </form>
-
       </div>
     </div>
   </div>

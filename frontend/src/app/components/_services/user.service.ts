@@ -8,7 +8,6 @@ import {User} from "../_mocks/user";
 export class UserService {
   private httpUrl = 'api/login';
   private loggedIn = false;
-  private user = new User('Monika', '1234');
 
   constructor(private http: Http) {
   }
