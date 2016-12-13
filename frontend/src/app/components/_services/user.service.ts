@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, Headers} from '@angular/http';
+import {Http, Headers} from '@angular/http';
 
 import {Observable} from "rxjs";
 import {User} from "../_mocks/user";
@@ -8,29 +8,40 @@ import {User} from "../_mocks/user";
 export class UserService {
   private httpUrl = 'api/login';
   private loggedIn = false;
+  private user = new User('Monika', '1234');
 
   constructor(private http: Http) {
   }
 
-  login(login:string, password:string){
-    var headers = new Headers();
+  login(login: string, password: string) {
+    let headers = new Headers();
     headers.append('Authorization', 'login');
-    let body = JSON.stringify({ "login":login,"password":password});
+    let body = JSON.stringify({"login": login, "password": password});
 
-    return this.http.post(this.httpUrl, body , {headers: headers})
+    return this.http.post(this.httpUrl, body, {headers: headers})
       .map(res => res.json())
       .map((res) => {
         if (res.success) {
           this.loggedIn = true;
-          console.log('yupi');
+          console.log('logged in');
         }
         return res.success;
       })
       .catch(this.handleError);
+  }
+
+  createNewUser(login: string, password: string) {
+    let headers = new Headers();
+    headers.append('Authorization', 'register');
+    let body = JSON.stringify(new User(login, password));
+
+    return this.http.post(this.httpUrl, body, {headers: headers})
+      .map(res => res.json())
+      .catch(this.handleError);
 
   }
 
-  isLogged(){
+  isLogged() {
     return this.loggedIn;
   }
 
@@ -38,29 +49,16 @@ export class UserService {
     this.loggedIn = false;
   }
 
-  createNewUser(login:string,password:string){
-    var headers = new Headers();
-    headers.append('Authorization', 'register');
-    let body = JSON.stringify(new User(login,password));
-
-    return this.http.post(this.httpUrl, body , {headers: headers})
-      .map(res => res.json())
-      .catch(this.handleError);
-
-  }
-
-  private handleError(error: Response | any) {
-    // In a real world app, we might use a remote logging infrastructure
-    let errMsg: string;
-    if (error instanceof Response) {
-      const data = error.json() || '';
-      const err = data.error || JSON.stringify(data);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+  private handleError(error: any) {
+    let errorMsg;
+    if (error.status === 500) {
+      errorMsg = error.message ||
+        error.status + ` Internal Server Error`
     } else {
-      errMsg = error.message ? error.message : error.toString();
+      errorMsg = error.message ||
+        error.status + `Oops!`
     }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
+    // throw an application level error
+    return Observable.throw(errorMsg);
   }
-
 }

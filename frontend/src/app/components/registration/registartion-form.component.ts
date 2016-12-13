@@ -20,7 +20,7 @@ export class Registration {
   }
 
   createNewUser(username: string, password: string):void{
-    this.userService.login(username,password).subscribe(
+    this.userService.createNewUser(username,password).subscribe(
       error =>  this.errorMessage = <any>error,
       ()=>this.goBack()
     );
