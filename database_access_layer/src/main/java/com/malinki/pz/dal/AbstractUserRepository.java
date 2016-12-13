@@ -15,8 +15,6 @@ import org.apache.log4j.Logger;
 
 import com.malinki.pz.dal.constants.Strings;
 
-
-
 public abstract class AbstractUserRepository {
 	private Logger logger = Logger.getLogger(AbstractUserRepository.class);
 
@@ -24,13 +22,13 @@ public abstract class AbstractUserRepository {
 		InputStream inputStream = openInputStream();
 		SqlSession session = establishSession(inputStream);
 		boolean isActionFinishedSuccesfully = false;
-		
+
 		Mapper mapper = session.getMapper(Mapper.class);	
-		
+
 		try {				
 			mainAction(mapper);
 			logger.log(Level.INFO, String.format(Strings.USER_ADDED_PROPERLY_INFO, mapper.getLastUser().getLogin()));
-			
+
 			isActionFinishedSuccesfully = true;
 		} catch(Exception e){
 			logger.log(Level.ERROR, e.toString());
@@ -38,10 +36,10 @@ public abstract class AbstractUserRepository {
 			session.close();
 			closeInputStream(inputStream);
 		}
-		
+
 		setResponse(response, isActionFinishedSuccesfully);
 	}	
-	
+
 	private SqlSession establishSession(InputStream inputStream){
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);	
 		return sqlSessionFactory.openSession();
@@ -49,32 +47,31 @@ public abstract class AbstractUserRepository {
 
 	private InputStream openInputStream(){
 		InputStream inputStream = null;
-		
+
 		try {
 			inputStream = Resources.getResourceAsStream(Strings.MYBATIS_CONFIG_FILE_NAME);
 		} catch (IOException e) {
 			logger.log(Level.ERROR, e.toString());
 		}
-		
+
 		return inputStream;
 	}
 
 
 	private void setResponse(HttpServletResponse response, boolean isActionFinishedSuccesfully){
 		OutputStreamWriter writer = null;
-		
-		try{
-			if(isActionFinishedSuccesfully)
-				response.setStatus(HttpServletResponse.SC_OK);
-			else
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
+		try{
 			writer = new OutputStreamWriter(response.getOutputStream());
 
-			if(isActionFinishedSuccesfully)
+			if(isActionFinishedSuccesfully){
+				response.setStatus(HttpServletResponse.SC_OK);
 				writer.write(Strings.USER_ADDED_PROPERLY);
-			else
+			}
+			else{
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				writer.write(Strings.USER__NOT_ADDED_PROPERLY);
+			}
 
 			writer.flush();
 		} catch(IOException e){
@@ -96,6 +93,6 @@ public abstract class AbstractUserRepository {
 			logger.log(Level.ERROR, e.toString());
 		}
 	}
-	
+
 	abstract public void mainAction(Mapper mapper);
 }
