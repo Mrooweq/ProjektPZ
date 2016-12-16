@@ -16,8 +16,8 @@ export class LoginForm {
               private router: Router,
               private userService: UserService) {
     this.loginForm = fb.group({
-      'username': ['', Validators.required],
-      'password': ['', Validators.required]
+      'username': [null, Validators.required],
+      'password': [null, Validators.required]
     });
   }
 

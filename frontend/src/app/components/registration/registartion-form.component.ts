@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {UserService} from "../_services/user.service";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {EmailValidator} from "../_validators/email-validator";
+import {MatchingValidator} from "../_validators/maching-validator";
 
 @Component({
   selector: 'registartion-form',
@@ -18,14 +20,17 @@ export class Registration {
               private router: Router,
               private userService: UserService) {
     this.registrationForm = fb.group({
-      'firstname': ['', [Validators.required, Validators.pattern('[A-Z][a-z]*')]],
-      'lastname': ['', [Validators.required, Validators.pattern('[A-Z][a-z]*')]],
-      'username': ['', Validators.required],
-      'password': ['', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]],
-      'conpassword': [''],
-      'email': ['', Validators.required],
-      'conemail': ['']
-    })
+      'firstname': [null, [Validators.required, Validators.pattern('[A-Z][a-z]*')]],
+      'lastname': [null, [Validators.required, Validators.pattern('[A-Z][a-z]*')]],
+      'username': [null, [Validators.required, Validators.minLength(6), Validators.pattern('[A-Za-z0-9]{6,}')]],
+      'password': [null, [Validators.required, Validators.minLength(6), Validators.maxLength(16), Validators.pattern('([a-zA-Z0-9]*[0-9]+[a-zA-Z0-9]*[A-Z]+[a-zA-Z0-9]*' +
+        '|[a-zA-Z0-9]*[A-Z]+[a-zA-Z0-9]*[0-9]+[a-zA-Z0-9]*)$')]],
+      'conpassword': [null, Validators.required],
+      'email': [null, [Validators.required, EmailValidator.emailValidator]],
+      'conemail': [null, Validators.required]
+    }, {
+      validator: MatchingValidator.matchValues('email', 'conemail')
+    });
   }
 
   goBack(): void {

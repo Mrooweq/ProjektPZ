@@ -11,28 +11,30 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>First name: </label>
-                <input type="text" class="form-control" [formControl]="registrationForm.controls['firstname']">
-                <div class="error"
-                     *ngIf="registrationForm.get('firstname').hasError('required') && registrationForm.get('firstname').touched">
-                  Name is required
-                </div>
-                <div class="error"
-                     *ngIf="registrationForm.get('firstname').hasError('pattern') && registrationForm.get('firstname').dirty">
-                  Name is invalid. Example: John
+                <input type="text" class="form-control" [formControl]="registrationForm.controls['firstname']"
+                       placeholder="John">
+                <div class="error">
+                  <p
+                    *ngIf="registrationForm.get('firstname').hasError('required') && registrationForm.get('firstname').touched">
+                    Name is required</p>
+                  <p
+                    *ngIf="registrationForm.get('firstname').hasError('pattern') && registrationForm.get('firstname').dirty">
+                    Name is invalid</p>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Last name: </label>
-                <input type="text" class="form-control" [formControl]="registrationForm.controls['lastname']">
-                <div class="error"
-                     *ngIf="registrationForm.get('lastname').hasError('required') && registrationForm.get('lastname').touched">
-                  Last name is required
-                </div>
-                <div class="error"
-                     *ngIf="registrationForm.get('lastname').hasError('pattern') && registrationForm.get('lastname').dirty">
-                  Last name is invalid. Example: Deer
+                <input type="text" class="form-control" [formControl]="registrationForm.controls['lastname']"
+                       placeholder="Deer">
+                <div class="error">
+                  <p
+                    *ngIf="registrationForm.get('lastname').hasError('required') && registrationForm.get('lastname').touched">
+                    Last name is required</p>
+                  <p
+                    *ngIf="registrationForm.get('lastname').hasError('pattern') && registrationForm.get('lastname').dirty">
+                    Last name is invalid</p>
                 </div>
               </div>
             </div>
@@ -42,9 +44,18 @@
               <div class="form-group">
                 <label>Username: </label>
                 <input type="text" class="form-control" [formControl]="registrationForm.controls['username']">
-                <div class="error"
-                     *ngIf="registrationForm.get('username').hasError('required') && registrationForm.get('username').touched">
-                  Username is required
+                <div class="error">
+                  <p
+                    *ngIf="registrationForm.get('username').hasError('required') && registrationForm.get('username').touched">
+                    Username is required</p>
+                  <p
+                    *ngIf="registrationForm.get('username').hasError('minlength') && registrationForm.get('username').dirty">
+                    Username minimum length: 6
+                  </p>
+                  <p
+                    *ngIf="registrationForm.get('username').hasError('pattern') && registrationForm.get('username').dirty && !registrationForm.get('username').hasError('minlength')">
+                    Invalid username
+                  </p>
                 </div>
               </div>
             </div>
@@ -53,19 +64,25 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Password: </label>
-                <input type="password" class="form-control" [maxlength]="12" [formControl]="registrationForm.controls['password']">
-                <div class="error"
-                     *ngIf="registrationForm.get('password').hasError('required') && registrationForm.get('password').touched">
-                  Password is required
-                </div>
-                <div class="error"
-                     *ngIf="registrationForm.get('password').hasError('minlength') && registrationForm.get('password').dirty">
-                 Password minimum length: 6
+                <input type="password" class="form-control" [maxlength]="16"
+                       [formControl]="registrationForm.controls['password']">
+                <div class="error">
+                  <p
+                    *ngIf="registrationForm.get('password').hasError('required') && registrationForm.get('password').touched">
+                    Password is required</p>
+                  <p
+                    *ngIf="registrationForm.get('password').hasError('minlength') && registrationForm.get('password').dirty">
+                    Password minimum length: 6</p>
+                  <p
+                    *ngIf="registrationForm.get('password').hasError('pattern') && registrationForm.get('password').dirty">
+                    Password must contain at least one digit and uppercase character
+                  </p>
                 </div>
               </div>
               <div class="form-group">
                 <label>Confirm password: </label>
-                <input type="password" class="form-control" [formControl]="registrationForm.controls['conpassword']">
+                <input type="password" class="form-control" [formControl]="registrationForm.controls['conpassword']"
+                       [maxlength]="16">
               </div>
               <div class="error"
                    *ngIf="registrationForm.get('conpassword').hasError('pattern') && registrationForm.get('password').dirty">
@@ -75,18 +92,29 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Email: </label>
-                <input type="text" class="form-control" [formControl]="registrationForm.controls['email']">
-                <div class="error"
-                     *ngIf="registrationForm.get('email').hasError('required') && registrationForm.get('email').touched">
-                  Email is required
+                <input type="text" class="form-control" [formControl]="registrationForm.controls['email']"
+                       placeholder="john.deer@example.com">
+                <div class="error">
+                  <p
+                    *ngIf="registrationForm.get('email').hasError('required') && registrationForm.get('email').touched">
+                    Email is required</p>
+                  <p
+                    *ngIf="registrationForm.get('email').hasError('invalidEmail')&& registrationForm.get('email').dirty
+                    && !registrationForm.get('email').hasError('required')">
+                    Invalid email</p>
                 </div>
               </div>
               <div class="form-group">
                 <label>Confirm email: </label>
                 <input type="text" class="form-control" [formControl]="registrationForm.controls['conemail']">
-                <div class="error"
-                     *ngIf="registrationForm.get('conemail').hasError('pattern') && registrationForm.get('conemail').dirty">
-                  Emails must match!!
+                <div class="error">
+                  <p
+                    *ngIf="registrationForm.get('email').hasError('required') && registrationForm.get('email').touched">
+                    Email confirmation is required
+                  </p>
+                  <p
+                    *ngIf="registrationForm.get('conemail').hasError('notEquivalent') && (registrationForm.get('conemail').dirty)">
+                    Email addresses don't match</p>
                 </div>
               </div>
             </div>
