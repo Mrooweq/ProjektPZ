@@ -3,7 +3,6 @@ import {Router} from "@angular/router";
 import {UserService} from "../_services/user.service";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {EmailValidator} from "../_validators/email-validator";
-import {MatchingValidator} from "../_validators/maching-validator";
 
 @Component({
   selector: 'registartion-form',
@@ -28,8 +27,6 @@ export class Registration {
       'conpassword': [null, Validators.required],
       'email': [null, [Validators.required, EmailValidator.emailValidator]],
       'conemail': [null, Validators.required]
-    }, {
-      validator: MatchingValidator.matchValues('email', 'conemail')
     });
   }
 

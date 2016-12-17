@@ -12,6 +12,7 @@ import {UserService} from "./components/_services/user.service";
 import {LoginForm} from "./components/login/login-form.component";
 import {Home} from "./components/home/home.component";
 import {Registration} from "./components/registration/registartion-form.component";
+import {EqualValidator} from "./components/_validators/equal-validator.directive";
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {Registration} from "./components/registration/registartion-form.componen
     AppComponent,
     LoginForm,
     Registration,
-    Home
+    Home,
+    EqualValidator
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
