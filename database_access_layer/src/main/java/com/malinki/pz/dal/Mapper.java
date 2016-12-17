@@ -5,14 +5,14 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.malinki.pz.dal.domain.User;
+import com.malinki.pz.dal.domain.UserDTO;
 
 public interface Mapper {
 	@Select("SELECT * FROM \"USER\" where id = #{id}")
-	User getUser(int id);
+	UserDTO getUser(int id);
 
 	@Select("INSERT INTO \"USER\" VALUES (getMinID, #{login}, #{password})")
-	User addUser(@Param("login") String login, @Param("password") String password);
+	UserDTO addUser(@Param("login") String login, @Param("password") String password);
 
 	@Select("DELETE \"USER\"")
 	void deleteAllUsers();
@@ -23,5 +23,5 @@ public interface Mapper {
 ///
 	
 	@Select("SELECT * FROM \"USER\" where id = ( select count(*) from \"USER\")")
-	User getLastUser();
+	UserDTO getLastUser();
 }

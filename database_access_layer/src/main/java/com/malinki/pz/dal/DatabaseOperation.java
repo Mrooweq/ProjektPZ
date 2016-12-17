@@ -15,8 +15,8 @@ import org.apache.log4j.Logger;
 
 import com.malinki.pz.dal.constants.Strings;
 
-public abstract class AbstractUserRepository {
-	private Logger logger = Logger.getLogger(AbstractUserRepository.class);
+public abstract class DatabaseOperation {
+	private Logger logger = Logger.getLogger(DatabaseOperation.class);
 
 	public void performAction(HttpServletResponse response) {		
 		InputStream inputStream = openInputStream();
@@ -94,5 +94,5 @@ public abstract class AbstractUserRepository {
 		}
 	}
 
-	abstract public void mainAction(Mapper mapper);
+	abstract protected void mainAction(Mapper mapper);
 }

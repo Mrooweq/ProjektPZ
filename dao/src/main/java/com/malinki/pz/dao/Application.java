@@ -1,4 +1,4 @@
-package com.malinki.pz.bll;
+package com.malinki.pz.dao;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

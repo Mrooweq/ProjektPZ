@@ -7,7 +7,7 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias alias="User" type="com.malinki.pz.dal.domain.User" />
+		<typeAlias alias="User" type="com.malinki.pz.dal.domain.UserDTO" />
 	</typeAliases>
 
 	<environments default="development">

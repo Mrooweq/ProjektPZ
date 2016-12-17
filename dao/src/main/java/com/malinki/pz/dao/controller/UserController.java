@@ -1,4 +1,4 @@
-package com.malinki.pz.bll.controller;
+package com.malinki.pz.dao.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,20 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.malinki.pz.bll.domain.JSONTranslator;
-import com.malinki.pz.dal.domain.User;
-import com.malinki.pz.dao.UserRepository;
+import com.malinki.pz.bll.UserOperations;
+import com.malinki.pz.dal.domain.UserDTO;
+import com.malinki.pz.dao.JSONDeserializer;
 
 @RestController
 @RequestMapping(value="/api")   
 public class UserController {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserOperations userOperations;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(@RequestBody String requestBody, HttpServletResponse response) {		
-		User user = JSONTranslator.parseToUser(requestBody);
-		userRepository.registerUser(response, user);
+		UserDTO user = JSONDeserializer.parseToUser(requestBody);
+		userOperations.registerUser(response, user);
 	}
 }

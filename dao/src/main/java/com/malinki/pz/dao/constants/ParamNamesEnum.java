@@ -1,4 +1,4 @@
-package com.malinki.pz.bll.constants;
+package com.malinki.pz.dao.constants;
 
 public enum ParamNamesEnum {
 	LOGIN("login"),

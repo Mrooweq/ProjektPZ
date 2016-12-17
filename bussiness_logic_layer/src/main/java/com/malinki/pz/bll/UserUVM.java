@@ -1,13 +1,12 @@
-package com.malinki.pz.dal.domain;
+package com.malinki.pz.bll;
 
-public class User {
-
+public class UserUVM {
 	private String login;
 	private String password;
 	
-	public User(){}
+	public UserUVM(){}
 
-	public User(String login, String password) {
+	public UserUVM(String login, String password) {
 		this.login = login;
 		this.password = password;
 	}
