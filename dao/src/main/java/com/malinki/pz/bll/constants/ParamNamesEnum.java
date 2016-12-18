@@ -2,7 +2,17 @@ package com.malinki.pz.bll.constants;
 
 public enum ParamNamesEnum {
 	LOGIN("login"),
-	PASSWORD("password");
+	PASSWORD("password"),
+	NAME("name"),
+	SURNAME("surname"),
+	NRIDCARD("nrIDCard"),
+	EMAIL("email"),
+	CLASSTRAVEL("class"),
+	PRICE("price"),
+	SOURCEAIRPORT("sourceAirport"),
+	DESTINYAIRPORT("destinyAirport"),
+	FLYDATE("flyDate");
+	
 
 	private String name;
 
