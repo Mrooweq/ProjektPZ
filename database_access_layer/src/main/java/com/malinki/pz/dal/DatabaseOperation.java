@@ -18,7 +18,7 @@ import com.malinki.pz.dal.constants.Strings;
 public abstract class DatabaseOperation {
 	private Logger logger = Logger.getLogger(DatabaseOperation.class);
 
-	public void performAction(HttpServletResponse response) {		
+	public void performAction(HttpServletResponse response) {	
 		InputStream inputStream = openInputStream();
 		SqlSession session = establishSession(inputStream);
 		boolean isActionFinishedSuccesfully = false;

@@ -6,16 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.malinki.pz.dal.UserRepository;
-import com.malinki.pz.dal.domain.UserDTO;
 
 @Service
 public class UserOperations implements IUserRepository {
-		
+	
 	@Autowired
 	public UserRepository userRepository;
-		
+			
 	@Override
-	public void registerUser(HttpServletResponse response, UserDTO user) {
-		userRepository.registerUser(response, user);
+	public void registerUser(HttpServletResponse response, UserUVM user) {	
+		userRepository.registerUser(response, UserUVMtoUserDTO.parse(user));
 	}
 }

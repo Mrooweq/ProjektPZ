@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.malinki.pz.bll.UserOperations;
-import com.malinki.pz.dal.domain.UserDTO;
+import com.malinki.pz.bll.UserUVM;
 import com.malinki.pz.dao.JSONDeserializer;
 
 @RestController
@@ -21,7 +21,7 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(@RequestBody String requestBody, HttpServletResponse response) {		
-		UserDTO user = JSONDeserializer.parseToUser(requestBody);
+		UserUVM user = JSONDeserializer.parseToUser(requestBody);
 		userOperations.registerUser(response, user);
 	}
 }

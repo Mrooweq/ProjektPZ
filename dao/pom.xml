@@ -8,45 +8,27 @@
 	<version>0.1.0</version>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
+		<groupId>com.malinki.pz</groupId>
+		<artifactId>Glowny</artifactId>
 		<version>1.4.1.RELEASE</version>
+		<relativePath>../Glowny/pom.xml</relativePath>
 	</parent>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-
-
-		
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20160810</version>
 		</dependency>
-	</dependencies>
 
-	<repositories>
-		<repository>
-			<id>codelds</id>
-			<url>https://code.lds.org/nexus/content/groups/main-repo</url>
-		</repository>
-	</repositories>
+		<dependency>
+			<groupId>com.malinki.pz</groupId>
+			<artifactId>bussiness_logic_layer</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+	</dependencies>
 
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>

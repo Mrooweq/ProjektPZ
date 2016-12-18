@@ -8,14 +8,14 @@ import com.malinki.pz.dal.UserRepository;
 
 @Configuration
 public class AppConfig {
-	    
-    @Bean
-    public UserRepository userRepository() {
-        return new UserRepository();
-    }
     
     @Bean
     public UserOperations userOperations() {
         return new UserOperations();
+    }
+    
+    @Bean
+    public UserRepository userRepository() {
+        return new UserRepository();
     }
 }
