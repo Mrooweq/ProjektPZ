@@ -24,8 +24,8 @@ public class JSONTranslator {
 		String surname = jsonObject.getString(ParamNamesEnum.SURNAME.getName());
 		String email = jsonObject.getString(ParamNamesEnum.EMAIL.getName());	
 		String nrIDCard = jsonObject.getString(ParamNamesEnum.NRIDCARD.getName());
-		int classTravel = Integer.parseInt(jsonObject.getString(ParamNamesEnum.CLASSTRAVEL.getName()));	
-		double price = Double.parseDouble(jsonObject.getString(ParamNamesEnum.PRICE.getName()));
+		int classTravel = jsonObject.getInt(ParamNamesEnum.CLASSTRAVEL.getName());	
+		double price = jsonObject.getDouble(ParamNamesEnum.PRICE.getName());
 		String sourceAirport = jsonObject.getString(ParamNamesEnum.SOURCEAIRPORT.getName());	
 		String destinyAirport = jsonObject.getString(ParamNamesEnum.DESTINYAIRPORT.getName());
 		String flyDate = jsonObject.getString(ParamNamesEnum.FLYDATE.getName());
