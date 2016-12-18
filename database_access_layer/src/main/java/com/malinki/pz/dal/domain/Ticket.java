@@ -11,10 +11,10 @@ public class Ticket{
 	private double price;
 	private String suroceAirport;
 	private String destinyAirport;
-	private Date flyDate;
+	private String flyDate;
 	
 	public Ticket(String name, String surname, String nrIDCard, String email, int classTravel, double price,
-			String suroceAirport, String destinyAirport, Date flyDate) {
+			String suroceAirport, String destinyAirport, String flyDate) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -39,10 +39,10 @@ public class Ticket{
 	public void setDestinyAirport(String destinyAirport) {
 		this.destinyAirport = destinyAirport;
 	}
-	public Date getFlyDate() {
+	public String getFlyDate() {
 		return flyDate;
 	}
-	public void setFlyDate(Date flyDate) {
+	public void setFlyDate(String flyDate) {
 		this.flyDate = flyDate;
 	}
 	public String getName() {

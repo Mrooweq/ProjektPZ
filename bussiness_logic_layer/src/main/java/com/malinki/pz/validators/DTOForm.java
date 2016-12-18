@@ -2,6 +2,7 @@ package com.malinki.pz.validators;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -29,9 +30,17 @@ public class DTOForm {
     @Email
     private String email;
     
-    @NotEmpty
-    @Min((long)0.0)
+    @NotNull
     private double price;
+    
+    @NotEmpty
+    private String sourceAirport;
+    
+    @NotEmpty
+    private String destinyAirport;
+    
+    @NotEmpty
+    private String flyDate;
 
 
     //gettery i settery

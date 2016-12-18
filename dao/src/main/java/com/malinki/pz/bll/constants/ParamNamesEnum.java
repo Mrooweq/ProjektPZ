@@ -7,7 +7,7 @@ public enum ParamNamesEnum {
 	SURNAME("surname"),
 	NRIDCARD("nrIDCard"),
 	EMAIL("email"),
-	CLASSTRAVEL("class"),
+	CLASSTRAVEL("classTravel"),
 	PRICE("price"),
 	SOURCEAIRPORT("sourceAirport"),
 	DESTINYAIRPORT("destinyAirport"),

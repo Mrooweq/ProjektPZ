@@ -28,7 +28,7 @@ public class JSONTranslator {
 		double price = Double.parseDouble(jsonObject.getString(ParamNamesEnum.PRICE.getName()));
 		String sourceAirport = jsonObject.getString(ParamNamesEnum.SOURCEAIRPORT.getName());	
 		String destinyAirport = jsonObject.getString(ParamNamesEnum.DESTINYAIRPORT.getName());
-		Date flyDate = Date.valueOf(jsonObject.getString(ParamNamesEnum.FLYDATE.getName()));
+		String flyDate = jsonObject.getString(ParamNamesEnum.FLYDATE.getName());
 		return new Ticket(name, surname, nrIDCard, email, classTravel, price, sourceAirport, destinyAirport, flyDate);
 	}
 }
