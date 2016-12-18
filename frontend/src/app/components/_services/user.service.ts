@@ -29,15 +29,14 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  createNewUser(login: string, password: string) {
+  createNewUser(user: User) {
     let headers = new Headers();
     headers.append('Authorization', 'register');
-    let body = JSON.stringify(new User(login, password));
+    let body = JSON.stringify(user);
 
     return this.http.post(this.httpUrl, body, {headers: headers})
       .map(res => res.json())
       .catch(this.handleError);
-
   }
 
   isLogged() {

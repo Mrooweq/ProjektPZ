@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {UserService} from "../_services/user.service";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {EmailValidator} from "../_validators/email-validator";
+import {User} from "../_mocks/user";
 
 @Component({
   selector: 'registartion-form',
@@ -14,6 +15,7 @@ export class Registration {
   errorMessage: string;
   succesMessage: string;
   registrationForm: FormGroup;
+  user: User;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -34,8 +36,9 @@ export class Registration {
     this.router.navigate(['/']);
   }
 
-  createNewUser(username: string, password: string): void {
-    this.userService.createNewUser(username, password).subscribe(
+  createNewUser(model: User): void {
+    this.user = new User(model.firstname, model.lastname, model.username, model.email, model.password);
+    this.userService.createNewUser(this.user).subscribe(
       () => {
         this.succesMessage = 'Rejestracja przebiegla pomyslnie';
       },
@@ -44,10 +47,5 @@ export class Registration {
         this.registrationForm.reset();
       }
     );
-  }
-
-  onSubmit(value: Object) {
-    console.log(value);
-    this.registrationForm.reset();
   }
 }

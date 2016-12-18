@@ -6,6 +6,7 @@ import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 @Component({
   selector: 'login',
   templateUrl: 'login-form.component.html',
+  //templateUrl: 'login-modal_form.html',
   styleUrls: ['login-form.component.css']
 })
 export class LoginForm {
@@ -16,8 +17,8 @@ export class LoginForm {
               private router: Router,
               private userService: UserService) {
     this.loginForm = fb.group({
-      'username': [null, Validators.required],
-      'password': [null, Validators.required]
+      'username': [null, [Validators.required, Validators.pattern('[a-zA-Z0-9)]+')]],
+      'password': [null, [Validators.required, Validators.pattern('[a-zA-Z0-9)]+')]]
     });
   }
 

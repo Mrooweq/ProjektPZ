@@ -6,7 +6,7 @@
       <a (click)="goBack()" class="pointer float-xs-right close"></a>
       <div style="padding: 35px">
         <h1 id="#formHeader">Sign Up</h1>
-        <form novalidate (ngSubmit)="onSubmit(registrationForm.value)" [formGroup]="registrationForm">
+        <form novalidate (ngSubmit)="createNewUser(registrationForm.value)" [formGroup]="registrationForm">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -27,7 +27,7 @@
               <div class="form-group">
                 <label>Last name: </label>
                 <input type="text" class="form-control" [formControl]="registrationForm.controls['lastname']"
-                       placeholder="Deer" [maxlength]="25">
+                       placeholder="Doe" [maxlength]="25">
                 <div class="error">
                   <p
                     *ngIf="registrationForm.get('lastname').hasError('required') && registrationForm.get('lastname').touched">
@@ -85,19 +85,16 @@
                 <input type="password" class="form-control" [formControl]="registrationForm.controls['conpassword']"
                        [maxlength]="16" validateEqual="password" reverse="false">
               </div>
-              <div class="error" *ngIf="!registrationForm.get('conpassword').valid">
-                <p
-                  *ngIf="registrationForm.get('conpassword').hasError('required')&& registrationForm.get('conpassword').touched">
-                  Password confirmation is required</p>
-                <p *ngIf="registrationForm.get('conpassword').dirty
-                    &&!registrationForm.get('conpassword').hasError('required')"> Passwords don't match</p>
+              <div class="error"
+                   *ngIf="!registrationForm.get('conpassword').valid && registrationForm.get('conpassword').dirty">
+                Passwords don't match
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Email: </label>
                 <input type="text" class="form-control" [formControl]="registrationForm.controls['email']"
-                       placeholder="john.deer@example.com" validateEqual="conemail" reverse="true">
+                       placeholder="john.doe@example.com" validateEqual="conemail" reverse="true">
                 <div class="error">
                   <p
                     *ngIf="registrationForm.get('email').hasError('required') && registrationForm.get('email').touched">
@@ -112,15 +109,9 @@
                 <label>Confirm email: </label>
                 <input type="text" class="form-control" [formControl]="registrationForm.controls['conemail']"
                        validateEqual="email" reverse="false">
-                <div class="error" *ngIf="!registrationForm.get('conemail').valid">
-                  <p
-                    *ngIf="registrationForm.get('conemail').hasError('required') && registrationForm.get('conemail').touched">
-                    Email confirmation is required
-                  </p>
-                  <p
-                    *ngIf="registrationForm.get('conemail').dirty
-                    &&!registrationForm.get('conemail').hasError('required')">
-                    Email addresses don't match</p>
+                <div class="error"
+                     *ngIf="registrationForm.get('conemail').invalid && registrationForm.get('conemail').dirty">
+                  Email addresses don't match
                 </div>
               </div>
             </div>
