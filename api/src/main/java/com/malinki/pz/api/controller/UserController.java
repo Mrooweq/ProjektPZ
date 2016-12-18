@@ -1,4 +1,4 @@
-package com.malinki.pz.dao.controller;
+package com.malinki.pz.api.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.malinki.pz.api.JSONDeserializer;
 import com.malinki.pz.bll.UserOperations;
 import com.malinki.pz.bll.UserUVM;
-import com.malinki.pz.dao.JSONDeserializer;
 
 @RestController
 @RequestMapping(value="/api")   

@@ -10,7 +10,7 @@
 
 	<modules>
 		<module>../bussiness_logic_layer</module>
-		<module>../dao</module>
+		<module>../api</module>
 		<module>../database_access_layer</module>
 	</modules>
 

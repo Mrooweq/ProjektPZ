@@ -13,31 +13,34 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 import com.malinki.pz.dal.constants.Strings;
 
 public abstract class DatabaseOperation {
 	private Logger logger = Logger.getLogger(DatabaseOperation.class);
+	protected Mapper mapper;
+	protected HttpServletResponse response;
+	protected DatabaseOperationResultEnum databaseOperationResultEnum;
+	
+	public DatabaseOperation(HttpServletResponse response){
+		this.response = response;
+	}
 
-	public void performAction(HttpServletResponse response) {	
+	public void performAction() {	
 		InputStream inputStream = openInputStream();
 		SqlSession session = establishSession(inputStream);
-		boolean isActionFinishedSuccesfully = false;
-
-		Mapper mapper = session.getMapper(Mapper.class);	
+		mapper = session.getMapper(Mapper.class);
 
 		try {				
-			mainAction(mapper);
-			logger.log(Level.INFO, String.format(Strings.USER_ADDED_PROPERLY_INFO, mapper.getLastUser().getLogin()));
-
-			isActionFinishedSuccesfully = true;
+			mainAction();
 		} catch(Exception e){
 			logger.log(Level.ERROR, e.toString());
+			databaseOperationResultEnum = DatabaseOperationResultEnum.USER_ADD_ATTEMPT_FAILED_DUE_TO_ERROR;
 		} finally {
+			setResponse();
 			session.close();
 			closeInputStream(inputStream);
 		}
-
-		setResponse(response, isActionFinishedSuccesfully);
 	}	
 
 	private SqlSession establishSession(InputStream inputStream){
@@ -58,21 +61,25 @@ public abstract class DatabaseOperation {
 	}
 
 
-	private void setResponse(HttpServletResponse response, boolean isActionFinishedSuccesfully){
+	private void setResponse() {
 		OutputStreamWriter writer = null;
 
 		try{
 			writer = new OutputStreamWriter(response.getOutputStream());
 
-			if(isActionFinishedSuccesfully){
+			if(databaseOperationResultEnum == DatabaseOperationResultEnum.USER_ADDED_PROPERLY) {
+				logger.log(Level.INFO, String.format(Strings.USER_ADDED_PROPERLY_INFO, mapper.getLastAddedUser().getLogin()));
 				response.setStatus(HttpServletResponse.SC_OK);
-				writer.write(Strings.USER_ADDED_PROPERLY);
 			}
-			else{
+			else if(databaseOperationResultEnum == DatabaseOperationResultEnum.USER_ALREADY_EXIST) {
+				logger.log(Level.INFO, String.format(Strings.USER_ALREADY_EXISTS, mapper.getLastAddedUser().getLogin()));
+				response.setStatus(HttpServletResponse.SC_CONFLICT);
+			}
+			else if(databaseOperationResultEnum == DatabaseOperationResultEnum.USER_ADD_ATTEMPT_FAILED_DUE_TO_ERROR) {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				writer.write(Strings.USER__NOT_ADDED_PROPERLY);
 			}
-
+			
+			writer.write(databaseOperationResultEnum.getName());
 			writer.flush();
 		} catch(IOException e){
 			logger.log(Level.ERROR, e.toString());
@@ -94,5 +101,5 @@ public abstract class DatabaseOperation {
 		}
 	}
 
-	abstract protected void mainAction(Mapper mapper);
+	abstract protected void mainAction();
 }

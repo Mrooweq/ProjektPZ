@@ -6,4 +6,5 @@ import com.malinki.pz.dal.domain.UserDTO;
 
 public interface IUserRepository {
 	public void registerUser(HttpServletResponse response, UserUVM user);
+	public void loginUser(HttpServletResponse response, UserUVM user);
 }

@@ -1,9 +1,9 @@
-package com.malinki.pz.dao;
+package com.malinki.pz.api;
 
 import org.json.JSONObject;
 
+import com.malinki.pz.api.constants.ParamNamesEnum;
 import com.malinki.pz.bll.UserUVM;
-import com.malinki.pz.dao.constants.ParamNamesEnum;
 
 public class JSONDeserializer {
 		

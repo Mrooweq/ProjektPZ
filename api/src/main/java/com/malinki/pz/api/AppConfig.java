@@ -1,4 +1,4 @@
-package com.malinki.pz.dao;
+package com.malinki.pz.api;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
