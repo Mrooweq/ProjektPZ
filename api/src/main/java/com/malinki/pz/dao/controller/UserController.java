@@ -21,7 +21,7 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(@RequestBody String requestBody, HttpServletResponse response) {		
-		UserUVM user = JSONDeserializer.parseToUser(requestBody);
+		UserUVM user = JSONDeserializer.parseToUserUVM(requestBody);
 		userOperations.registerUser(response, user);
 	}
 }

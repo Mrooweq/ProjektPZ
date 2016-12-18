@@ -20,8 +20,6 @@ public interface Mapper {
 	@Select("COMMIT")
 	void commit();
 	
-///
-	
-	@Select("SELECT * FROM \"USER\" where id = ( select count(*) from \"USER\")")
+	@Select("SELECT * FROM \"USER\" where id = ( select count(*) from \"USER\")") //sluzy tylko do celow testowych
 	UserDTO getLastUser();
 }

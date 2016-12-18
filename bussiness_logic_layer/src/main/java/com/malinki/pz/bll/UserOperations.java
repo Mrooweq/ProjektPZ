@@ -15,6 +15,6 @@ public class UserOperations implements IUserRepository {
 			
 	@Override
 	public void registerUser(HttpServletResponse response, UserUVM user) {	
-		userRepository.registerUser(response, UserUVMtoUserDTO.parse(user));
+		userRepository.registerUser(response, UserConverter.fromUserUVMToUserDTO(user));
 	}
 }

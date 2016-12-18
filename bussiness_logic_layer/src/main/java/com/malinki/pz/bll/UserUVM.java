@@ -6,10 +6,10 @@ public class UserUVM {
 	
 	public UserUVM(){}
 
-	public UserUVM(String login, String password) {
-		this.login = login;
-		this.password = password;
-	}
+    private UserUVM(UserUVMBuilder builder) {
+        this.login = builder.login;
+        this.password = builder.password;
+    }
 
 	public String getLogin() {
 		return login;
@@ -25,5 +25,25 @@ public class UserUVM {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	
+	public static class UserUVMBuilder {
+		private String login;
+		private String password;
+
+	    public UserUVMBuilder login(String login) {
+	        this.login = login;
+	        return this;
+	    }
+
+	    public UserUVMBuilder password(String password) {
+	        this.password = password;
+	        return this;
+	    }
+
+	    public UserUVM build() {
+	        return new UserUVM(this);
+	    }
 	}
 }

@@ -7,10 +7,10 @@ public class UserDTO {
 	
 	public UserDTO(){}
 
-	public UserDTO(String login, String password) {
-		this.login = login;
-		this.password = password;
-	}
+    private UserDTO(UserDTOBuilder builder) {
+        this.login = builder.login;
+        this.password = builder.password;
+    }
 
 	public String getLogin() {
 		return login;
@@ -26,5 +26,25 @@ public class UserDTO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	
+	public static class UserDTOBuilder {
+		private String login;
+		private String password;
+
+	    public UserDTOBuilder login(String login) {
+	        this.login = login;
+	        return this;
+	    }
+
+	    public UserDTOBuilder password(String password) {
+	        this.password = password;
+	        return this;
+	    }
+
+	    public UserDTO build() {
+	        return new UserDTO(this);
+	    }
 	}
 }
