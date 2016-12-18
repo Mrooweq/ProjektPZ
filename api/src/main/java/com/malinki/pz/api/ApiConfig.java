@@ -2,20 +2,17 @@ package com.malinki.pz.api;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
+import com.malinki.pz.bll.BllConfig;
 import com.malinki.pz.bll.UserOperations;
-import com.malinki.pz.dal.UserRepository;
 
 @Configuration
-public class AppConfig {
+@Import(BllConfig.class)
+public class ApiConfig {
     
     @Bean
     public UserOperations userOperations() {
         return new UserOperations();
-    }
-    
-    @Bean
-    public UserRepository userRepository() {
-        return new UserRepository();
     }
 }
