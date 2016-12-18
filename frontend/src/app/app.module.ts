@@ -4,15 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule }   from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import {UserService} from "./user/user.service";
-import {LoginForm} from "./login/login-form.component";
-import {Home} from "./home/home.component";
-import {SignUp} from "./signUp/signup-form.component";
+import {UserService} from "./components/_services/user.service";
+import {LoginForm} from "./components/login/login-form.component";
+import {Home} from "./components/home/home.component";
+import {Registration} from "./components/registration/registartion-form.component";
+import {EqualValidator} from "./components/_validators/equal-validator.directive";
 
 @NgModule({
   imports: [
@@ -26,8 +26,9 @@ import {SignUp} from "./signUp/signup-form.component";
   declarations: [
     AppComponent,
     LoginForm,
-    SignUp,
-    Home
+    Registration,
+    Home,
+    EqualValidator
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
