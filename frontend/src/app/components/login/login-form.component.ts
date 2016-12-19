@@ -27,10 +27,11 @@ export class LoginForm {
   }
 
   login(loginFormValue: any): void {
+    this.errorMessage = null;
     this.userService.login(loginFormValue.username, loginFormValue.password)
       .subscribe(
         data => {
-          console.log(data);
+          console.log('Data: ' + data);
           this.loginForm.reset();
           this.goBack();
         },

@@ -1,5 +1,8 @@
+target
+.idea
+*.iml
 .settings/
+msc/
+target/
 .project
 .classpath
-target/
-msc/
