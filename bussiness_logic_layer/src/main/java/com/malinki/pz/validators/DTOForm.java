@@ -41,7 +41,9 @@ public class DTOForm {
     
     @NotEmpty
     private String flyDate;
+    
+    @NotEmpty
+    private String airlineName;
 
 
-    //gettery i settery
 }

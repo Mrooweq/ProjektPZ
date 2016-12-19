@@ -24,13 +24,14 @@ public class UserRepository implements IUserRepository {
 	
 	@Override
 	public void saveBoughtTicket(HttpServletResponse response, Ticket ticket) {
-		TicketPDFCreator creator = new TicketPDFCreator();
+		temp.saveBoughtTicket(response, ticket);
+		
+		TicketPDFCreator creator = new TicketPDFCreator(ticket);
 		try {
 			creator.generatePDF(response);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		temp.saveBoughtTicket(response, ticket);
 	}
 }

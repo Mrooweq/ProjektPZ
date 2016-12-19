@@ -22,4 +22,11 @@ public interface Mapper {
 	
 	@Select("SELECT * FROM \"USER\" where id = ( select count(*) from \"USER\")")
 	User getLastUser();
+
+	//TODO uzupelnic zapytanie i wpisac pamaetry funkcji
+	@Select("INSERT INTO \"USER\" VALUES (getMinID, #{name}, #{lastName})")
+	void addTicket();
+	
+	@Select("SELECT * FROM \"AIRLINE\" where name = #{name}")
+	String getAirline(@Param("name") String name);
 }

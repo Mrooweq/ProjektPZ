@@ -18,7 +18,14 @@ public class Temp {
 	}
 
 	public void saveBoughtTicket(HttpServletResponse response, Ticket ticket) {
-		// TODO Auto-generated method stub
+//		AbstractUserRepository abstractUserRepository = new AbstractUserRepository() {
+//			@Override
+//			public void mainAction(Mapper mapper) {
+//				//TODO uzupelnic addTicket o niezbedne parametry
+//				mapper.addTicket();
+//				mapper.commit();
+//			}};
+//		abstractUserRepository.performAction(response);
 		
 	}
 }

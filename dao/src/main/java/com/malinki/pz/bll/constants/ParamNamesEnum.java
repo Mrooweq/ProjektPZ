@@ -11,7 +11,8 @@ public enum ParamNamesEnum {
 	PRICE("price"),
 	SOURCEAIRPORT("sourceAirport"),
 	DESTINYAIRPORT("destinyAirport"),
-	FLYDATE("flyDate");
+	FLYDATE("flyDate"),
+	AIRLINENAME("airlineName");
 	
 
 	private String name;
