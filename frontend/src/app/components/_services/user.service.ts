@@ -6,7 +6,8 @@ import {User} from "../_mocks/user";
 
 @Injectable()
 export class UserService {
-  private httpUrl = 'api/login';
+  private httpLoginUrl = 'api/login';
+  private httpRegisterUrl = 'api/register';
   private loggedIn = false;
 
   constructor(private http: Http) {
@@ -15,9 +16,9 @@ export class UserService {
   login(login: string, password: string) {
     let headers = new Headers();
     headers.append('Authorization', 'login');
-    let body = JSON.stringify({"login": login, "password": password});
+    let body = JSON.stringify({'username': login, 'password': password});
 
-    return this.http.post(this.httpUrl, body, {headers: headers})
+    return this.http.post(this.httpLoginUrl, body, {headers: headers})
       .map(res => res.json())
       .map((res) => {
         if (res.success) {
@@ -29,15 +30,14 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  createNewUser(login: string, password: string) {
+  createNewUser(user: User) {
     let headers = new Headers();
     headers.append('Authorization', 'register');
-    let body = JSON.stringify(new User(login, password));
+    let body = JSON.stringify(user);
 
-    return this.http.post(this.httpUrl, body, {headers: headers})
+    return this.http.post(this.httpRegisterUrl, body, {headers: headers})
       .map(res => res.json())
       .catch(this.handleError);
-
   }
 
   isLogged() {
@@ -55,7 +55,7 @@ export class UserService {
         error.status + ` Internal Server Error`
     } else {
       errorMsg = error.message ||
-        error.status + `Oops!`
+        `Oops! Error status: ` + error.status
     }
     // throw an application level error
     return Observable.throw(errorMsg);
