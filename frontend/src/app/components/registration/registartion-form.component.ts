@@ -33,17 +33,18 @@ export class Registration {
   }
 
   goBack(): void {
- 
+    this.router.navigate(['/']);
   }
 
   createNewUser(model: User): void {
     this.user = new User(model.firstname, model.lastname, model.username, model.email, model.password);
     this.userService.createNewUser(this.user).subscribe(
       () => {
-       
+        this.succesMessage = 'Rejestracja przebiegla pomyslnie';
       },
       error => {
- 
+        this.errorMessage = <any>error;
+        this.registrationForm.reset();
       }
     );
   }

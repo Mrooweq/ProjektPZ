@@ -32,10 +32,12 @@ export class LoginForm {
       .subscribe(
         data => {
           console.log('Data: ' + data);
-
+          this.loginForm.reset();
+          this.goBack();
         },
         error => {
- 
+          this.errorMessage = error;
+          this.loginForm.reset();
         });
   }
 

@@ -16,7 +16,7 @@ export class UserService {
   login(login: string, password: string) {
     let headers = new Headers();
     headers.append('Authorization', 'login');
-    let body = JSON.stringify({'username': login, 'password': password});
+    let body = JSON.stringify({'login': login, 'password': password});
 
     return this.http.post(this.httpLoginUrl, body, {headers: headers})
       .map(res => res.json())
