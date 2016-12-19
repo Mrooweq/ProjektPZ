@@ -13,10 +13,10 @@ export class UserService {
   constructor(private http: Http) {
   }
 
-  login(login: string, password: string) {
+  login(username: string, password: string) {
     let headers = new Headers();
     headers.append('Authorization', 'login');
-    let body = JSON.stringify({'login': login, 'password': password});
+    let body = JSON.stringify({'username': username, 'password': password});
 
     return this.http.post(this.httpLoginUrl, body, {headers: headers})
       .map(res => res.json())
