@@ -21,7 +21,7 @@ public class DTOForm {
     @NotEmpty
     private String nrIDcard;
     
-    @NotEmpty
+    @NotNull
     @Min(1)
     @Max(4)
     private Integer classTravel;
