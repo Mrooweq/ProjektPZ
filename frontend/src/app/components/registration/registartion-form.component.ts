@@ -37,7 +37,6 @@ export class Registration {
   }
 
   createNewUser(model: User): void {
-    // this.user = new User(model.firstname, model.lastname, model.username, model.email, model.password);
     this.user = model;
     this.userService.createNewUser(this.user).subscribe(
       () => {
