@@ -1,0 +1,67 @@
+create table "USER"(id integer primary key, username varchar2(50), "password" varchar2(50), firstname varchar2(50), lastname varchar2(50), email varchar2(50));
+
+------------------------
+
+create or replace FUNCTION getMinUserID 
+return number is 
+
+cnt number := 0;
+v_flag integer := 1;
+
+begin 
+
+loop 
+
+cnt := cnt + 1;
+
+SELECT 
+   CASE WHEN EXISTS(SELECT 1 FROM "USER" where id = cnt)  
+     THEN 1  
+     ELSE 0  
+   END  
+into v_flag FROM dual;
+
+
+EXIT when v_flag = 0;                     
+end loop;
+ 
+return cnt; 
+end; 
+
+------------------
+
+create or replace FUNCTION isLoginAlreadyUsed (str IN VARCHAR2)
+return integer is
+
+v_flag integer := 0;
+
+begin
+
+SELECT
+   CASE WHEN EXISTS(SELECT 1 FROM "USER" where username = str)  
+     THEN 1  
+     ELSE 0  
+   END  
+into v_flag FROM dual;
+
+return v_flag;
+end;
+
+-------------------
+
+create or replace FUNCTION isUsernameAndPasswordCorrect (v_username IN VARCHAR2, v_password IN VARCHAR2)
+return integer is
+
+v_flag integer := 0;
+
+begin
+  
+SELECT
+   CASE WHEN EXISTS(SELECT 1 FROM "USER" where username = v_username and "password" = v_password)  
+     THEN 1  
+     ELSE 0  
+   END  
+into v_flag FROM dual;
+
+return v_flag;
+end;

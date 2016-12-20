@@ -1,0 +1,56 @@
+ <form [ngFormModel]="registrationForm" (ngSubmit)="createNewUser('ala','kot')">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>First name: </label>
+                <input type="text" class="form-control" [ngFormControl]="registrationForm.controls['firstname']">
+                <div class="alert alert-danger" *ngIf="!registrationForm.controls['firstname'].valid
+                &&registrationForm.controls['firstname'].touched">Username is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Last name: </label>
+                <input type="text" class="form-control" [ngFormControl]="registrationForm.controls['lastname']">
+                <div class="alert alert-danger" *ngIf="!registrationForm.controls['lastname'].valid
+                &&registrationForm.controls['lastname'].touched">Username is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Username: </label>
+            <input type="text" class="form-control" [ngFormControl]="registrationForm.controls['username']">
+            <div class="alert alert-danger" *ngIf="!registrationForm.controls['username'].valid
+            &&registrationForm.controls['username'].touched">Username is required.
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Password: </label>
+                <input type="password" class="form-control" [ngFormControl]="registrationForm.controls['password']">
+                <div class="alert alert-danger" *ngIf="!registrationForm.controls['password'].valid
+                &&registrationForm.controls['password'].touched">Password is required.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Confirm password: </label>
+                <input type="password" class="form-control" [ngFormControl]="registrationForm.controls['conpassword']">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Email: </label>
+                <input type="text" class="form-control" [ngFormControl]="registrationForm.controls['eamil']">
+              </div>
+              <div class="form-group">
+                <label>Confirm email: </label>
+                <input type="text" class="form-control" [ngFormControl]="registrationForm.controls['conemail']">
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-secondary float-xs-right" [disabled]="!loginForm.form.valid">Submit
+          </button>
+        </form>

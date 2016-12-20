@@ -10,12 +10,15 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 import com.malinki.pz.dal.constants.Strings;
+import com.malinki.pz.dal.domain.UserDTO;
 
 public abstract class DatabaseOperation {
-//	private Logger logger = Logger.getLogger(DatabaseOperation.class);
+	private Logger logger = Logger.getLogger(DatabaseOperation.class);
 	protected Mapper mapper;
 	protected HttpServletResponse response;
 	protected DatabaseOperationResultEnum databaseOperationResultEnum;
@@ -31,9 +34,6 @@ public abstract class DatabaseOperation {
 
 		try {				
 			mainAction();
-		} catch(Exception e){
-//			logger.log(Level.ERROR, e.toString());
-			databaseOperationResultEnum = DatabaseOperationResultEnum.USER_ADD_ATTEMPT_FAILED_DUE_TO_ERROR;
 		} finally {
 			setResponse();
 			session.close();
@@ -52,7 +52,7 @@ public abstract class DatabaseOperation {
 		try {
 			inputStream = Resources.getResourceAsStream(Strings.MYBATIS_CONFIG_FILE_NAME);
 		} catch (IOException e) {
-//			logger.log(Level.ERROR, e.toString());
+			logger.log(Level.ERROR, e.toString());
 		}
 
 		return inputStream;
@@ -64,30 +64,43 @@ public abstract class DatabaseOperation {
 
 		try{
 			writer = new OutputStreamWriter(response.getOutputStream());
-
-			if(databaseOperationResultEnum == DatabaseOperationResultEnum.USER_ADDED_PROPERLY) {
-//				logger.log(Level.INFO, String.format(Strings.USER_ADDED_PROPERLY_INFO, mapper.getLastAddedUser().getLogin()));
-				response.setStatus(HttpServletResponse.SC_OK);
-			}
-			else if(databaseOperationResultEnum == DatabaseOperationResultEnum.USER_ALREADY_EXIST) {
-//				logger.log(Level.INFO, String.format(Strings.USER_ALREADY_EXISTS, mapper.getLastAddedUser().getLogin()));
-				response.setStatus(HttpServletResponse.SC_CONFLICT);
-			}
-			else if(databaseOperationResultEnum == DatabaseOperationResultEnum.USER_ADD_ATTEMPT_FAILED_DUE_TO_ERROR) {
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			}
+			logResponse();
 			
-			writer.write(databaseOperationResultEnum.getName());
+			writer.write(String.format(Strings.JSON_RESPONSE, databaseOperationResultEnum.getName()));
 			writer.flush();
 		} catch(IOException e){
-//			logger.log(Level.ERROR, e.toString());
+			logger.log(Level.ERROR, e.toString());
 		}
 		finally{
 			try {
 				writer.close();
 			} catch (IOException e) {
-//				logger.log(Level.ERROR, e.toString());
+				logger.log(Level.ERROR, e.toString());
 			}
+		}
+	}
+	
+	private void logResponse() {
+		switch (databaseOperationResultEnum){
+		case USER_ALREADY_EXIST:
+			logger.log(Level.INFO, String.format(Strings.USER_ALREADY_EXISTS, mapper.getLastAddedUser().getUsername()));
+			response.setStatus(HttpServletResponse.SC_CONFLICT);
+			break;
+		case USER_LOGGED_IN_SUCCESSFULLY:			
+			break;
+		case USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR:
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			break;
+		case USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_WRONG_USERNAME_OR_PASSWORD:
+			break;
+		case USER_REGISTERED_PROPERLY:
+			logger.log(Level.INFO, String.format(Strings.USER_ADDED_PROPERLY_INFO, mapper.getLastAddedUser().getUsername()));
+			response.setStatus(HttpServletResponse.SC_OK);
+			break;
+		case USER_REGISTER_ATTEMPT_FAILED_DUE_TO_ERROR:
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -95,8 +108,15 @@ public abstract class DatabaseOperation {
 		try {
 			inputStream.close();
 		} catch (IOException e) {
-//			logger.log(Level.ERROR, e.toString());
+			logger.log(Level.ERROR, e.toString());
 		}
+	}
+	
+	protected boolean getBoolean(int dual){
+		if(dual == 1)
+			return true;
+		else
+			return false;
 	}
 
 	abstract protected void mainAction();

@@ -27,9 +27,14 @@ public class UserController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(@RequestBody String requestBody, HttpServletResponse response) {		
-		userOperations.registerUser(response, parseToUserUVM(requestBody));
+		userOperations.loginUser(response, parseToUserUVM(requestBody));
 	}
 	
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public void register(@RequestBody String requestBody, HttpServletResponse response) {			
+		userOperations.registerUser(response, parseToUserUVM(requestBody));
+	}
+		
 	public UserUVM parseToUserUVM(String requestBody) {			
 		ObjectMapper mapper = new ObjectMapper();
 		UserUVM user = null;

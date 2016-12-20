@@ -6,15 +6,21 @@ public class UserConverter {
 
 	public static UserDTO fromUserUVMToUserDTO(UserUVM p) {
 		return new UserDTO.UserDTOBuilder()
-				.login(p.getLogin())
+				.username(p.getUsername())
 				.password(p.getPassword())
+				.firstname(p.getFirstname())
+				.lastname(p.getLastname())
+				.email(p.getEmail())
 				.build();
 	}
 	
 	public static UserUVM fromUserDTOToUserUVM(UserDTO p) {
 		return new UserUVM.UserUVMBuilder()
-				.login(p.getLogin())
+				.username(p.getUsername())
 				.password(p.getPassword())
+				.firstname(p.getFirstname())
+				.lastname(p.getLastname())
+				.email(p.getEmail())
 				.build();
 	}
 }

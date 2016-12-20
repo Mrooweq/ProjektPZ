@@ -1,0 +1,13 @@
+.bg-inverse {
+  border-radius: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  background-color: #4f5457;
+  border-bottom:4px solid #78315f;
+
+}
+.nav-item {
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
