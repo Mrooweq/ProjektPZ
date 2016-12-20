@@ -66,7 +66,7 @@ public abstract class DatabaseOperation {
 			writer = new OutputStreamWriter(response.getOutputStream());
 			logResponse();
 			
-			writer.write(databaseOperationResultEnum.getName());
+			writer.write(String.format(Strings.JSON_RESPONSE, databaseOperationResultEnum.getName()));
 			writer.flush();
 		} catch(IOException e){
 			logger.log(Level.ERROR, e.toString());
