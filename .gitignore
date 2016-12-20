@@ -9,3 +9,7 @@ target/
 api/.settings/
 bll/.settings/
 dal/.settings/
+
+api/.classpath/
+bll/.classpath/
+dal/.classpath/
