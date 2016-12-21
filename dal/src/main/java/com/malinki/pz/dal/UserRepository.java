@@ -8,13 +8,13 @@ import com.malinki.pz.dal.operations.UserRegistration;
 
 public class UserRepository {
 
-	public void registerUser(HttpServletResponse response, UserDTO user) {
+	public boolean registerUser(HttpServletResponse response, UserDTO user) {
 		UserRegistration userRegistration = new UserRegistration(response, user);
-		userRegistration.performAction();
+		return userRegistration.performAction();
 	}
 	
-	public void loginUser(HttpServletResponse response, UserDTO user) {
+	public boolean loginUser(HttpServletResponse response, UserDTO user) {
 		UserLogin userLogin = new UserLogin(response, user);
-		userLogin.performAction();
+		return userLogin.performAction();
 	}
 }

@@ -20,7 +20,7 @@ public class UserRegistration extends DatabaseOperation{
 	}
 
 	@Override
-	protected void mainAction() {
+	protected boolean mainAction() {
 		boolean isUserPositivelyValidated = false;
 		boolean hasErrorOccured = false;
 
@@ -35,7 +35,7 @@ public class UserRegistration extends DatabaseOperation{
 			try{
 				mapper.registerUser(user.getUsername(), user.getPassword(), user.getFirstname(), user.getLastname(), user.getEmail());
 				mapper.commit();	
-				databaseOperationResultEnum = DatabaseOperationResultEnum.USER_REGISTERED_PROPERLY;
+				databaseOperationResultEnum = DatabaseOperationResultEnum.USER_REGISTERED_SUCCESSFULLY;
 			} catch (Exception e){
 				logger.log(Level.ERROR, e.toString());
 				databaseOperationResultEnum = DatabaseOperationResultEnum.USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR;
@@ -45,6 +45,8 @@ public class UserRegistration extends DatabaseOperation{
 			databaseOperationResultEnum = DatabaseOperationResultEnum.USER_ALREADY_EXIST;
 		else
 			databaseOperationResultEnum = DatabaseOperationResultEnum.USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR;
+		
+		return databaseOperationResultEnum == DatabaseOperationResultEnum.USER_REGISTERED_SUCCESSFULLY;
 	}
 
 	private boolean isUserPositivelyValidated(UserDTO user) {

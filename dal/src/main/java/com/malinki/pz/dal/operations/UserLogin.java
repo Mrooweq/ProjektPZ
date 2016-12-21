@@ -20,7 +20,7 @@ public class UserLogin extends DatabaseOperation{
 	}
 
 	@Override
-	protected void mainAction() {
+	protected boolean mainAction() {
 		boolean isUsernameAndPasswordCorrect = false;
 		boolean hasErrorOccured = false;
 		
@@ -47,5 +47,7 @@ public class UserLogin extends DatabaseOperation{
 			databaseOperationResultEnum = DatabaseOperationResultEnum.USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_WRONG_USERNAME_OR_PASSWORD;
 		else
 			databaseOperationResultEnum = DatabaseOperationResultEnum.USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR;
+		
+		return databaseOperationResultEnum == DatabaseOperationResultEnum.USER_LOGGED_IN_SUCCESSFULLY;
 	}
 }

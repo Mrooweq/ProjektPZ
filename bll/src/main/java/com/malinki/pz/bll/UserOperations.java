@@ -11,7 +11,10 @@ import com.malinki.pz.dal.UserRepository;
 public class UserOperations implements IUserRepository {
 	
 	@Autowired
-	public UserRepository userRepository;
+	private UserRepository userRepository;
+	
+	@Autowired
+	private UserContext userContext;
 			
 	@Override
 	public void registerUser(HttpServletResponse response, UserUVM user) {	
@@ -20,6 +23,9 @@ public class UserOperations implements IUserRepository {
 
 	@Override
 	public void loginUser(HttpServletResponse response, UserUVM user) {
-		userRepository.loginUser(response, UserConverter.fromUserUVMToUserDTO(user));
+		boolean ifUserHasBeenLoggedInSuccessfully = userRepository.loginUser(response, UserConverter.fromUserUVMToUserDTO(user));
+		
+		if(ifUserHasBeenLoggedInSuccessfully)
+			userContext.setCurrentUser(user);
 	}
 }
