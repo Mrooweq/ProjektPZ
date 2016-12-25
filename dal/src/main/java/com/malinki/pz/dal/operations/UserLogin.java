@@ -14,8 +14,7 @@ public class UserLogin extends DatabaseOperation{
 	private UserDTO userForLoginValidation;
 	private Logger logger = Logger.getLogger(UserLogin.class);
 
-	public UserLogin(HttpServletResponse response, UserDTO user) {
-		super(response);
+	public UserLogin(UserDTO user) {
 		this.userForLoginValidation = user;
 	}
 
@@ -25,7 +24,9 @@ public class UserLogin extends DatabaseOperation{
 		boolean hasErrorOccured = false;
 		
 		try{
-			isUsernameAndPasswordCorrect = getBoolean(mapper.isUsernameAndPasswordCorrect(userForLoginValidation.getUsername(), userForLoginValidation.getPassword()));
+			isUsernameAndPasswordCorrect = getBoolean(
+					mapper.isUsernameAndPasswordCorrect(userForLoginValidation.getUsername(),
+					userForLoginValidation.getPassword()));
 		} catch (Exception e){
 			logger.log(Level.ERROR, e.toString());
 			hasErrorOccured = true;
@@ -33,7 +34,6 @@ public class UserLogin extends DatabaseOperation{
 		
 		if(isUsernameAndPasswordCorrect && !hasErrorOccured){
 			UserDTO user = null;
-			// TODO
 			
 			try{
 				user = mapper.getUserByUsername(userForLoginValidation.getUsername());

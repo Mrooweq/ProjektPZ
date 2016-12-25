@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.malinki.pz.bll.*;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,39 +15,51 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.malinki.pz.bll.UserOperations;
-import com.malinki.pz.bll.UserUVM;
 
 @RestController
-@RequestMapping(value="/api")   
+@RequestMapping(value="/api")
 public class UserController {
 
 	private Logger logger = Logger.getLogger(UserController.class);
-	
+
 	@Autowired
-	private UserOperations userOperations;	
-	
+	private UserOperations userOperations;
+
+	@Autowired
+	private UserContext userContext;
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public void login(@RequestBody String requestBody, HttpServletResponse response) {		
-		userOperations.loginUser(response, parseToUserUVM(requestBody));
+	public SessionStorage login(@RequestBody String requestBody, HttpServletResponse response) {
+		int result = userOperations.loginUser(parseToUserUVM(requestBody));
+		response.setStatus(result);
+
+		UserUVM currentUser = userContext.getCurrentUser();
+
+		if(currentUser != null)
+			return new SessionStorage(currentUser, new TokenContainer());
+		else
+			return null;
 	}
-	
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public void register(@RequestBody String requestBody, HttpServletResponse response) {			
-		userOperations.registerUser(response, parseToUserUVM(requestBody));
+	public void register(@RequestBody String requestBody, HttpServletResponse response) {
+		int result = userOperations.registerUser(parseToUserUVM(requestBody));
+		response.setStatus(result);
 	}
-		
-	public UserUVM parseToUserUVM(String requestBody) {			
+
+	public UserUVM parseToUserUVM(String requestBody) {
 		ObjectMapper mapper = new ObjectMapper();
-		UserUVM user = null;
-		
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+		UserUVM user;
+
 		try {
 			user = mapper.readValue(requestBody, UserUVM.class);
 		} catch (IOException e) {
 			logger.log(Level.ERROR, e.toString());
 			throw new RuntimeException();
 		}
-				
+
 		return user;
 	}
 }

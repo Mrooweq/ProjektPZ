@@ -14,8 +14,7 @@ public class UserRegistration extends DatabaseOperation{
 	private UserDTO user;
 	private Logger logger = Logger.getLogger(UserRegistration.class);
 
-	public UserRegistration(HttpServletResponse response, UserDTO user) {
-		super(response);
+	public UserRegistration(UserDTO user) {
 		this.user = user;
 	}
 

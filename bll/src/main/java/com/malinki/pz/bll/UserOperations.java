@@ -17,15 +17,17 @@ public class UserOperations implements IUserRepository {
 	private UserContext userContext;
 			
 	@Override
-	public void registerUser(HttpServletResponse response, UserUVM user) {	
-		userRepository.registerUser(response, UserConverter.fromUserUVMToUserDTO(user));
+	public int registerUser(UserUVM user) {
+		return userRepository.registerUser(UserConverter.fromUserUVMToUserDTO(user));
 	}
 
 	@Override
-	public void loginUser(HttpServletResponse response, UserUVM user) {
-		boolean ifUserHasBeenLoggedInSuccessfully = userRepository.loginUser(response, UserConverter.fromUserUVMToUserDTO(user));
+	public int loginUser(UserUVM user) {
+		int result = userRepository.loginUser(UserConverter.fromUserUVMToUserDTO(user));
 		
-		if(ifUserHasBeenLoggedInSuccessfully)
+		if(result == HttpServletResponse.SC_OK)
 			userContext.setCurrentUser(user);
+
+		return result;
 	}
 }
