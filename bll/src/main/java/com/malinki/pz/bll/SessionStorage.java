@@ -1,6 +1,8 @@
 package com.malinki.pz.bll;
 
 
+import com.malinki.pz.lib.UserUVM;
+
 public class SessionStorage {
     private UserUVM userUVM;
     private TokenContainer tokenContainer;

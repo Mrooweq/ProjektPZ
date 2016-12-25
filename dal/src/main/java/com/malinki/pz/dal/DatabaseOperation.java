@@ -5,6 +5,8 @@ import java.io.InputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.malinki.pz.lib.UserDTO;
+import com.malinki.pz.lib.UserResponse;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -20,19 +22,24 @@ public abstract class DatabaseOperation {
 	protected Mapper mapper;
 	protected DatabaseOperationResultEnum databaseOperationResultEnum;
 
-	public int performAction() {
+	public UserResponse performAction() {
+		UserResponse userResponse = new UserResponse();
 		InputStream inputStream = openInputStream();
 		SqlSession session = establishSession(inputStream);
 		mapper = session.getMapper(Mapper.class);
 
 		try {
-			mainAction();
+			UserDTO user = mainAction();
+			int result = setResponse();
+
+			userResponse.setUser(user);
+			userResponse.setResult(result);
 		} finally {
 			session.close();
 			closeInputStream(inputStream);
 		}
 
-		return setResponse();
+		return userResponse;
 	}
 
 	private SqlSession establishSession(InputStream inputStream){
@@ -103,5 +110,5 @@ public abstract class DatabaseOperation {
 			return false;
 	}
 
-	abstract protected boolean mainAction();
+	abstract protected UserDTO mainAction();
 }

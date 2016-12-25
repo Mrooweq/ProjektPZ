@@ -1,6 +1,6 @@
 package com.malinki.pz.bll;
 
-import javax.servlet.http.HttpServletResponse;
+import com.malinki.pz.lib.UserUVM;
 
 public interface IUserRepository {
 	public int registerUser(UserUVM user);

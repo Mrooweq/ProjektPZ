@@ -1,7 +1,8 @@
 package com.malinki.pz.bll;
 
-import javax.servlet.http.HttpServletResponse;
-
+import com.malinki.pz.lib.UserResponse;
+import com.malinki.pz.lib.UserDTO;
+import com.malinki.pz.lib.UserUVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +19,17 @@ public class UserOperations implements IUserRepository {
 			
 	@Override
 	public int registerUser(UserUVM user) {
-		return userRepository.registerUser(UserConverter.fromUserUVMToUserDTO(user));
+		UserResponse userResponse = userRepository.registerUser(UserConverter.fromUserUVMToUserDTO(user));
+		return userResponse.getResult();
 	}
 
 	@Override
 	public int loginUser(UserUVM user) {
-		int result = userRepository.loginUser(UserConverter.fromUserUVMToUserDTO(user));
-		
-		if(result == HttpServletResponse.SC_OK)
-			userContext.setCurrentUser(user);
+		UserResponse userResponse = userRepository.loginUser(UserConverter.fromUserUVMToUserDTO(user));
 
-		return result;
+		UserDTO loggedUser = userResponse.getUser();
+		userContext.setCurrentUser(UserConverter.fromUserDTOToUserUVM(loggedUser));
+
+		return userResponse.getResult();
 	}
 }

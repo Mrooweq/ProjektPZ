@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.malinki.pz.bll.*;
+import com.malinki.pz.lib.UserUVM;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,13 +52,12 @@ public class UserController {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-		UserUVM user;
+		UserUVM user = null;
 
 		try {
 			user = mapper.readValue(requestBody, UserUVM.class);
 		} catch (IOException e) {
 			logger.log(Level.ERROR, e.toString());
-			throw new RuntimeException();
 		}
 
 		return user;
