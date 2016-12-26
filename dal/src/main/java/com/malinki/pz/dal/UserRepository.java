@@ -1,20 +1,18 @@
 package com.malinki.pz.dal;
 
-import javax.servlet.http.HttpServletResponse;
-
-import com.malinki.pz.dal.domain.UserDTO;
 import com.malinki.pz.dal.operations.UserLogin;
 import com.malinki.pz.dal.operations.UserRegistration;
+import com.malinki.pz.lib.UserResponse;
+import com.malinki.pz.lib.UserDTO;
 
 public class UserRepository {
-
-	public void registerUser(HttpServletResponse response, UserDTO user) {
-		UserRegistration userRegistration = new UserRegistration(response, user);
-		userRegistration.performAction();
+	public UserResponse registerUser(UserDTO user) {
+		UserRegistration userRegistration = new UserRegistration(user);
+		return userRegistration.performAction();
 	}
 	
-	public void loginUser(HttpServletResponse response, UserDTO user) {
-		UserLogin userLogin = new UserLogin(response, user);
-		userLogin.performAction();
+	public UserResponse loginUser(UserDTO userForLoginValidation) {
+		UserLogin userLogin = new UserLogin(userForLoginValidation);
+		return userLogin.performAction();
 	}
 }

@@ -12,6 +12,7 @@
 		<module>api</module>
 		<module>bll</module>
 		<module>dal</module>
+		<module>lib</module>
 	</modules>
 
 	<parent>

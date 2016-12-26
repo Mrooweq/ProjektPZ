@@ -30,7 +30,6 @@ export class LoginForm {
     this.userService.login(loginFormValue.username, loginFormValue.password)
       .subscribe(
         data => {
-          console.log('Data: ' + data);
           this.loginForm.reset();
           this.goBack();
         },

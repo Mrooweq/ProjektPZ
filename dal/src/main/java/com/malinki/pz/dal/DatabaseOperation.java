@@ -2,10 +2,11 @@ package com.malinki.pz.dal;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.malinki.pz.lib.UserDTO;
+import com.malinki.pz.lib.UserResponse;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,34 +16,34 @@ import org.apache.log4j.Logger;
 
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 import com.malinki.pz.dal.constants.Strings;
-import com.malinki.pz.dal.domain.UserDTO;
 
 public abstract class DatabaseOperation {
 	private Logger logger = Logger.getLogger(DatabaseOperation.class);
 	protected Mapper mapper;
-	protected HttpServletResponse response;
 	protected DatabaseOperationResultEnum databaseOperationResultEnum;
-	
-	public DatabaseOperation(HttpServletResponse response){
-		this.response = response;
-	}
 
-	public void performAction() {	
+	public UserResponse performAction() {
+		UserResponse userResponse = new UserResponse();
 		InputStream inputStream = openInputStream();
 		SqlSession session = establishSession(inputStream);
 		mapper = session.getMapper(Mapper.class);
 
-		try {				
-			mainAction();
+		try {
+			UserDTO user = mainAction();
+			int result = setResponse();
+
+			userResponse.setUserDTO(user);
+			userResponse.setResult(result);
 		} finally {
-			setResponse();
 			session.close();
 			closeInputStream(inputStream);
 		}
-	}	
+
+		return userResponse;
+	}
 
 	private SqlSession establishSession(InputStream inputStream){
-		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);	
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		return sqlSessionFactory.openSession();
 	}
 
@@ -58,50 +59,40 @@ public abstract class DatabaseOperation {
 		return inputStream;
 	}
 
+	private int setResponse() {
+		int result = 0;
 
-	private void setResponse() {
-		OutputStreamWriter writer = null;
-
-		try{
-			writer = new OutputStreamWriter(response.getOutputStream());
-			logResponse();
-			
-			writer.write(String.format(Strings.JSON_RESPONSE, databaseOperationResultEnum.getName()));
-			writer.flush();
-		} catch(IOException e){
-			logger.log(Level.ERROR, e.toString());
-		}
-		finally{
-			try {
-				writer.close();
-			} catch (IOException e) {
-				logger.log(Level.ERROR, e.toString());
-			}
-		}
-	}
-	
-	private void logResponse() {
 		switch (databaseOperationResultEnum){
-		case USER_ALREADY_EXIST:
-			logger.log(Level.INFO, String.format(Strings.USER_ALREADY_EXISTS, mapper.getLastAddedUser().getUsername()));
-			response.setStatus(HttpServletResponse.SC_CONFLICT);
-			break;
-		case USER_LOGGED_IN_SUCCESSFULLY:			
-			break;
-		case USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR:
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			break;
-		case USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_WRONG_USERNAME_OR_PASSWORD:
-			break;
-		case USER_REGISTERED_PROPERLY:
-			logger.log(Level.INFO, String.format(Strings.USER_ADDED_PROPERLY_INFO, mapper.getLastAddedUser().getUsername()));
-			response.setStatus(HttpServletResponse.SC_OK);
-			break;
-		case USER_REGISTER_ATTEMPT_FAILED_DUE_TO_ERROR:
-			break;
-		default:
-			break;
+			case USER_LOGGED_IN_SUCCESSFULLY:
+				logger.log(Level.INFO, Strings.USER_LOGGED_IN_SUCCESSFULLY);
+				result = HttpServletResponse.SC_OK;
+				break;
+			case USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR:
+				logger.log(Level.INFO, Strings.USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR);
+				result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+				break;
+			case USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_WRONG_USERNAME_OR_PASSWORD:
+				logger.log(Level.INFO, Strings.USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_WRONG_USERNAME_OR_PASSWORD);
+				result = HttpServletResponse.SC_FORBIDDEN;
+				break;
+
+			case USER_REGISTERED_SUCCESSFULLY:
+				logger.log(Level.INFO, String.format(Strings.USER_REGISTERED_SUCCESSFULLY, mapper.getLastAddedUser().getUsername()));
+				result = HttpServletResponse.SC_OK;
+				break;
+			case USER_REGISTER_ATTEMPT_FAILED_DUE_TO_ERROR:
+				logger.log(Level.INFO, Strings.USER_REGISTER_ATTEMPT_FAILED_DUE_TO_ERROR);
+				result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+				break;
+			case USER_ALREADY_EXIST:
+				logger.log(Level.INFO, String.format(Strings.USER_ALREADY_EXISTS, mapper.getLastAddedUser().getUsername()));
+				result = HttpServletResponse.SC_CONFLICT;
+				break;
+			default:
+				break;
 		}
+
+		return result;
 	}
 
 	private void closeInputStream(InputStream inputStream){
@@ -111,7 +102,7 @@ public abstract class DatabaseOperation {
 			logger.log(Level.ERROR, e.toString());
 		}
 	}
-	
+
 	protected boolean getBoolean(int dual){
 		if(dual == 1)
 			return true;
@@ -119,5 +110,5 @@ public abstract class DatabaseOperation {
 			return false;
 	}
 
-	abstract protected void mainAction();
+	abstract protected UserDTO mainAction();
 }

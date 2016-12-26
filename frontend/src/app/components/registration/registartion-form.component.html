@@ -5,6 +5,8 @@
       <div class="line float-lg-left"></div>
       <a (click)="goBack()" class="pointer float-xs-right close"></a>
       <div style="padding: 35px">
+        <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
+        <div class="success-message" *ngIf="succesMessage">{{succesMessage}}</div>
         <h1 id="#formHeader">Sign Up</h1>
         <form novalidate (ngSubmit)="createNewUser(registrationForm.value)" [formGroup]="registrationForm">
           <div class="row">

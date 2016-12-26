@@ -8,7 +8,6 @@ import {User} from "../_mocks/user";
 export class UserService {
   private httpLoginUrl = 'api/login';
   private httpRegisterUrl = 'api/register';
-  private loggedIn = false;
 
   constructor(private http: Http) {
   }
@@ -20,13 +19,6 @@ export class UserService {
 
     return this.http.post(this.httpLoginUrl, body, {headers: headers})
       .map(res => res.json())
-      .map((res) => {
-        if (res.success) {
-          this.loggedIn = true;
-          console.log('logged in');
-        }
-        return res.success;
-      })
       .catch(this.handleError);
   }
 
@@ -36,28 +28,24 @@ export class UserService {
     let body = JSON.stringify(user);
 
     return this.http.post(this.httpRegisterUrl, body, {headers: headers})
-      .map(res => res.json())
       .catch(this.handleError);
   }
 
-  isLogged() {
-    return this.loggedIn;
-  }
-
-  logout() {
-    this.loggedIn = false;
-  }
 
   private handleError(error: any) {
     let errorMsg;
     if (error.status === 500) {
       errorMsg = error.message ||
-        error.status + ` Internal Server Error`
+        error.status + `Internal Server Error`
+    } else if (error.status === 403) {
+      errorMsg = error.message || `Username or password is invalid`
+    } else if (error.status === 409) {
+      errorMsg = error.message || `Username is taken`
     } else {
       errorMsg = error.message ||
         `Oops! Error status: ` + error.status
     }
-    // throw an application level error
     return Observable.throw(errorMsg);
+
   }
 }
