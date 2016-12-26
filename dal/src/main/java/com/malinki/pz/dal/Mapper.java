@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 public interface Mapper {
-	@Select("INSERT INTO \"USER\" VALUES (getMinUserID, #{firstname}, #{lastname}, #{username}, #{password}, #{email})")
+	@Select("INSERT INTO \"User\" VALUES (getMinUserID, #{firstname}, #{lastname}, #{username}, #{password}, #{email})")
 	UserDTO registerUser(
 			@Param("firstname") String firstname,
 			@Param("lastname") String lastname,
@@ -19,7 +19,7 @@ public interface Mapper {
 	@Select("SELECT isUsernameAndPasswordCorrect(#{username}, #{password}) FROM DUAL")
 	int isUsernameAndPasswordCorrect(@Param("username") String username, @Param("password") String password);	//return 1 if username and password are correct
 
-	@Select("SELECT * FROM \"USER\" where id = ( select count(*) from \"USER\")") 
+	@Select("SELECT * FROM \"User\" where ID_User = ( select count(*) from \"User\")")
 	UserDTO getLastAddedUser();
 	
 	@Select("COMMIT")
@@ -27,9 +27,9 @@ public interface Mapper {
 
 	//////////////////
 
-	@Select("SELECT * FROM \"USER\" where username = #{username}")
+	@Select("SELECT * FROM \"User\" where Username = #{username}")
 	UserDTO getUserByUsername(@Param("username") String username);
 
-	@Select("DELETE \"USER\"")
+	@Select("DELETE \"User\"")
 	void deleteAllUsers();
 }

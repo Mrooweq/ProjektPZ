@@ -8,15 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.malinki.pz.dal.UserRepository;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Service
 public class UserOperations implements IUserRepository {
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
-	private UserContext userContext;
-			
+	private SessionTable sessionTable;
+
 	@Override
 	public int registerUser(UserUVM user) {
 		UserResponse userResponse = userRepository.registerUser(UserConverter.fromUserUVMToUserDTO(user));
@@ -24,12 +26,15 @@ public class UserOperations implements IUserRepository {
 	}
 
 	@Override
-	public int loginUser(UserUVM user) {
-		UserResponse userResponse = userRepository.loginUser(UserConverter.fromUserUVMToUserDTO(user));
+	public UserResponse loginUser(UserUVM userForLoginValidation) {
+		UserResponse userResponse = userRepository.loginUser(UserConverter.fromUserUVMToUserDTO(userForLoginValidation));
 
-		UserDTO loggedUser = userResponse.getUser();
-		userContext.setCurrentUser(UserConverter.fromUserDTOToUserUVM(loggedUser));
+		UserUVM loggedUserUVM = UserConverter.fromUserDTOToUserUVM(userResponse.getUserDTO());
+		userResponse.setUserUVM(loggedUserUVM);
 
-		return userResponse.getResult();
+		if(userResponse.getResult() == HttpServletResponse.SC_OK)
+			sessionTable.addUser(loggedUserUVM);
+
+		return userResponse;
 	}
 }

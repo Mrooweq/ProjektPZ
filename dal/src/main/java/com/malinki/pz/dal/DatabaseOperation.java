@@ -32,7 +32,7 @@ public abstract class DatabaseOperation {
 			UserDTO user = mainAction();
 			int result = setResponse();
 
-			userResponse.setUser(user);
+			userResponse.setUserDTO(user);
 			userResponse.setResult(result);
 		} finally {
 			session.close();

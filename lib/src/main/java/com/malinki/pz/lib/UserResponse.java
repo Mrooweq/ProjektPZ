@@ -6,19 +6,28 @@ import javax.servlet.http.HttpServletResponse;
  * Created by Lenovo on 2016-12-25.
  */
 public class UserResponse {
-    private UserDTO user;
+    private UserDTO userDTO;
+    private UserUVM userUVM;
     private int result;
 
     public UserResponse() {
         this.result = HttpServletResponse.SC_BAD_REQUEST;
     }
 
-    public UserDTO getUser() {
-        return user;
+    public UserDTO getUserDTO() {
+        return userDTO;
     }
 
-    public void setUser(UserDTO user) {
-        this.user = user;
+    public void setUserDTO(UserDTO user) {
+        this.userDTO = user;
+    }
+
+    public UserUVM getUserUVM() {
+        return userUVM;
+    }
+
+    public void setUserUVM(UserUVM user) {
+        this.userUVM = user;
     }
 
     public int getResult() {

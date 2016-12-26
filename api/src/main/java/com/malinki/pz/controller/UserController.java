@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.malinki.pz.bll.*;
+import com.malinki.pz.lib.UserResponse;
 import com.malinki.pz.lib.UserUVM;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -27,17 +28,16 @@ public class UserController {
 	private UserOperations userOperations;
 
 	@Autowired
-	private UserContext userContext;
+	private SessionTable sessionTable;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public SessionStorage login(@RequestBody String requestBody, HttpServletResponse response) {
-		int result = userOperations.loginUser(parseToUserUVM(requestBody));
+		UserResponse userResponse = userOperations.loginUser(parseToUserUVM(requestBody));
+		int result = userResponse.getResult();
 		response.setStatus(result);
 
-		UserUVM currentUser = userContext.getCurrentUser();
-
-		if(currentUser != null)
-			return new SessionStorage(currentUser, new TokenContainer());
+		if(result == HttpServletResponse.SC_OK)
+			return sessionTable.getUserSession(userResponse.getUserUVM());
 		else
 			return null;
 	}

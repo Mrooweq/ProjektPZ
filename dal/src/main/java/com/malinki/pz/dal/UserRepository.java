@@ -6,14 +6,13 @@ import com.malinki.pz.lib.UserResponse;
 import com.malinki.pz.lib.UserDTO;
 
 public class UserRepository {
-
 	public UserResponse registerUser(UserDTO user) {
 		UserRegistration userRegistration = new UserRegistration(user);
 		return userRegistration.performAction();
 	}
 	
-	public UserResponse loginUser(UserDTO user) {
-		UserLogin userLogin = new UserLogin(user);
+	public UserResponse loginUser(UserDTO userForLoginValidation) {
+		UserLogin userLogin = new UserLogin(userForLoginValidation);
 		return userLogin.performAction();
 	}
 }
