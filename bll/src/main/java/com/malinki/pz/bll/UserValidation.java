@@ -33,7 +33,7 @@ public class UserValidation {
 	}
 
 	private boolean checkPassword(String password) {
-		String patternPassword = "^[\\wąćęłńóśźżĄĘŁŃÓŚŹŻ\\d\\.-_!@#$%^&*()-_=+[]\\{}|;':\",./<>?]{3,20}$";
+		String patternPassword = "^[\\wąćęłńóśźżĄĘŁŃÓŚŹŻ\\d\\.-_!@#\\$%\\^&\\*()\\-_=\\+\\[\\]\\\\{\\}|;':\\\",./<>?]{3,20}$";
 		return Pattern.matches(patternPassword, password);
 	}
 
