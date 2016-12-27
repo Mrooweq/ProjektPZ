@@ -52,7 +52,6 @@ export class Registration {
           this.registrationForm.controls['username'].reset();
           this.registrationForm.controls['password'].reset();
           this.registrationForm.controls['conpassword'].reset();
-          //this.registrationForm.reset();
         }
       }
     );

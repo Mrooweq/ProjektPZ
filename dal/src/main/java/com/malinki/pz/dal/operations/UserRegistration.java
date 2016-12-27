@@ -4,10 +4,10 @@ import com.malinki.pz.lib.UserDTO;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.malinki.pz.dal.DatabaseOperation;
+import com.malinki.pz.dal.DatabaseUserOperation;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 
-public class UserRegistration extends DatabaseOperation{
+public class UserRegistration extends DatabaseUserOperation {
 
 	private UserDTO user;
 	private Logger logger = Logger.getLogger(UserRegistration.class);

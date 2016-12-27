@@ -10,9 +10,9 @@ public class Strings {
 	public static final String USER_LOGGED_IN_SUCCESSFULLY = "User logged in successfully";
 	public static final String USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR = "User log in attempt failed due to error";
 	public static final String USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_WRONG_USERNAME_OR_PASSWORD = "User log in attempt failed due to wrong username or password";
-	
-	
 
+	public static final String TICKET_BOUGHT_SUCCESSFULLY = "Ticket bought successfully";
+	public static final String TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR = "Ticket not bought successfully due to error";
 	
 	public static final String JSON_RESPONSE = "{\"responseMessage\":\"%s\"}";
 }
