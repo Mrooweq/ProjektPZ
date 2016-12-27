@@ -7,6 +7,7 @@ import {User} from "../_mocks/user";
 @Injectable()
 export class UserService {
   private httpLoginUrl = 'api/login';
+  private httpLogoutUrl = 'api/logout';
   private httpRegisterUrl = 'api/register';
   private loggedIn = false;
   private logger = new Subject<boolean>();
@@ -34,10 +35,19 @@ export class UserService {
       }).catch(this.handleError);
   }
 
-  logout() {
-    localStorage.removeItem('currentUser');
-    this.loggedIn = false;
-    this.logger.next(this.loggedIn);
+  logout(username: String) {
+    console.log(username);
+    let body = JSON.stringify({'username': username});
+
+    return this.http.post(this.httpLogoutUrl, body)
+      .map(res => {
+        if (res.status === 200) {
+          localStorage.removeItem('currentUser');
+          this.loggedIn = false;
+          this.logger.next(this.loggedIn);
+        }
+      })
+      .catch(this.handleError);
   }
 
   createNewUser(user: User) {

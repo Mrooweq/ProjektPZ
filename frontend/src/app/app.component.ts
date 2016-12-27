@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "./components/_services/user.service";
-import {User} from "./components/_mocks/user";
+import {UserService} from "./_services/user.service";
+import {User} from "./_mocks/user";
 
 @Component({
   selector: 'my-app',
@@ -15,17 +15,21 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout();
+    this.userService.logout(this.activeUser.username);
   }
 
   ngOnInit(): void {
-    this.userService.logout();
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.activeUser = currentUser.user;
+
+    if (this.activeUser)
+      this.userService.logout(this.activeUser.username);
+
     this.userService.isLoggedIn().subscribe(loggedIn => {
       if (loggedIn) {
+        console.log('aaa');
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.activeUser = currentUser.user;
-      } else {
-        this.activeUser = null;
       }
     });
   }

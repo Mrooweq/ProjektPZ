@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
-import {UserService} from "../_services/user.service";
+import {UserService} from "../../_services/user.service";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {EmailValidator} from "../_validators/email-validator";
-import {User} from "../_mocks/user";
+import {EmailValidator} from "../../_validators/email-validator";
+import {User} from "../../_mocks/user";
 
 @Component({
   selector: 'registartion-form',
