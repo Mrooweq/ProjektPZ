@@ -28,12 +28,12 @@ public class UserValidation {
 	}
 
 	private boolean checkUsername(String username) {
-		String patternUsername = "^[\\w\\dąćęłńóśźżĄĘŁŃÓŚŹŻ]{3,20}$";
+		String patternUsername = "^[\\wąćęłńóśźżĄĘŁŃÓŚŹŻ\\d]{3,20}$";
 		return Pattern.matches(patternUsername, username);
 	}
 
 	private boolean checkPassword(String password) {
-		String patternPassword = "^[\\wąćęłńóśźżĄĘŁŃÓŚŹŻ\\d\\.-_!@#$%^&*()]{6,20}$";
+		String patternPassword = "^[\\wąćęłńóśźżĄĘŁŃÓŚŹŻ\\d\\.-_!@#$%^&*()-_=+[]\\{}|;':\",./<>?]{3,20}$";
 		return Pattern.matches(patternPassword, password);
 	}
 
@@ -43,7 +43,7 @@ public class UserValidation {
 	}
 
 	private boolean checkLastname(String lastnamename) {
-		String patternLastname = "^[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20}(-[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20})?$";
+		String patternLastname = "^[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20}(-?[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20})?$";
 		return Pattern.matches(patternLastname, lastnamename);
 	}
 
