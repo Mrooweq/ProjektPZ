@@ -1,15 +1,21 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {User} from "../_mocks/user";
 
 @Injectable()
 export class UserService {
   private httpLoginUrl = 'api/login';
   private httpRegisterUrl = 'api/register';
+  private loggedIn = false;
+  private logger = new Subject<boolean>();
 
   constructor(private http: Http) {
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.logger.asObservable();
   }
 
   login(username: string, password: string) {
@@ -18,8 +24,20 @@ export class UserService {
     let body = JSON.stringify({'username': username, 'password': password});
 
     return this.http.post(this.httpLoginUrl, body, {headers: headers})
-      .map(res => res.json())
-      .catch(this.handleError);
+      .map(res => {
+        let user = res.json();
+        if (user && user.tokenContainer.token) {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.loggedIn = true;
+          this.logger.next(this.loggedIn);
+        }
+      }).catch(this.handleError);
+  }
+
+  logout() {
+    localStorage.removeItem('currentUser');
+    this.loggedIn = false;
+    this.logger.next(this.loggedIn);
   }
 
   createNewUser(user: User) {
