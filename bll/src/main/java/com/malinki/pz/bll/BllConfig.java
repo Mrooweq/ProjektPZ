@@ -1,6 +1,6 @@
 package com.malinki.pz.bll;
 
-import com.malinki.pz.dal.TicketRepository;
+import com.malinki.pz.dal.FlightRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,7 +15,7 @@ public class BllConfig {
     }
 
     @Bean
-    public TicketRepository ticketRepository() {
-        return new TicketRepository();
+    public FlightRepository flightRepository() {
+        return new FlightRepository();
     }
 }

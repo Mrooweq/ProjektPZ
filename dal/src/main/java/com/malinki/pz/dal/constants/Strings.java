@@ -13,6 +13,7 @@ public class Strings {
 
 	public static final String TICKET_BOUGHT_SUCCESSFULLY = "Ticket bought successfully";
 	public static final String TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR = "Ticket not bought successfully due to error";
-	
-	public static final String JSON_RESPONSE = "{\"responseMessage\":\"%s\"}";
+
+	public static final String POSSIBLE_AIRPORTS_FETCHED_SUCCESSFULLY = "Possible airports fetched successfully";
+	public static final String POSSIBLE_AIRPORTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR = "Possible airports not fetched successfully due to error";
 }

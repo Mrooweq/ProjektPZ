@@ -2,9 +2,7 @@ package com.malinki.pz.lib;
 
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Created by Lenovo on 2016-12-25.
- */
+
 public class UserResponse {
     private UserDTO userDTO;
     private UserUVM userUVM;
