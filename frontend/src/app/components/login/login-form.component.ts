@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {UserService} from '../_services/user.service';
+import {UserService} from '../../_services/user.service';
 import {Router} from "@angular/router";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 
@@ -29,8 +29,7 @@ export class LoginForm {
     this.errorMessage = null;
     this.userService.login(loginFormValue.username, loginFormValue.password)
       .subscribe(
-        data => {
-          console.log('Data: ' + data);
+        () => {
           this.loginForm.reset();
           this.goBack();
         },

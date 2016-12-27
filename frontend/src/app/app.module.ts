@@ -9,11 +9,11 @@ import {AppRoutingModule}   from './app-routing.module';
 import {Ng2Bs3ModalModule} from "ng2-bs3-modal/ng2-bs3-modal";
 
 import {AppComponent} from './app.component';
-import {UserService} from "./components/_services/user.service";
+import {UserService} from "./_services/user.service";
 import {LoginForm} from "./components/login/login-form.component";
 import {Home} from "./components/home/home.component";
 import {Registration} from "./components/registration/registartion-form.component";
-import {EqualValidator} from "./components/_validators/equal-validator.directive";
+import {EqualValidator} from "./_validators/equal-validator.directive";
 
 
 @NgModule({

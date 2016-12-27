@@ -20,3 +20,12 @@
     padding-right: 0px;
   }
 }
+.error-message {
+  color: #a94442;
+  font-style: italic;
+}
+.success-message {
+  color: #42A948;
+  font-style: italic;
+}
+

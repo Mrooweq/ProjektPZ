@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
-import {UserService} from "../_services/user.service";
+import {UserService} from "../../_services/user.service";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {EmailValidator} from "../_validators/email-validator";
-import {User} from "../_mocks/user";
+import {EmailValidator} from "../../_validators/email-validator";
+import {User} from "../../_mocks/user";
 
 @Component({
   selector: 'registartion-form',
@@ -37,15 +37,22 @@ export class Registration {
   }
 
   createNewUser(model: User): void {
-    // this.user = new User(model.firstname, model.lastname, model.username, model.email, model.password);
-    this.user = model;
+    this.errorMessage = null;
+    this.succesMessage = null;
+
+    this.user = new User(model.firstname, model.lastname, model.username, model.email, model.password);
     this.userService.createNewUser(this.user).subscribe(
-      () => {
-        this.succesMessage = 'Rejestracja przebiegla pomyslnie';
+      data => {
+        this.succesMessage = data.message || 'Rejestracja przebiegla pomyslnie';
+        this.registrationForm.reset();
       },
       error => {
         this.errorMessage = <any>error;
-        this.registrationForm.reset();
+        if (this.errorMessage == 'Username is taken') {
+          this.registrationForm.controls['username'].reset();
+          this.registrationForm.controls['password'].reset();
+          this.registrationForm.controls['conpassword'].reset();
+        }
       }
     );
   }
