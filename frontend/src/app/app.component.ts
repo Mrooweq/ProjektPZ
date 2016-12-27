@@ -16,18 +16,18 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.userService.logout(this.activeUser.username);
+    this.activeUser = null;
   }
 
   ngOnInit(): void {
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.activeUser = currentUser.user;
-
-    if (this.activeUser)
-      this.userService.logout(this.activeUser.username);
+    if (localStorage.getItem('currentUser')) {
+      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.activeUser = currentUser.user;
+      this.logout()
+    }
 
     this.userService.isLoggedIn().subscribe(loggedIn => {
       if (loggedIn) {
-        console.log('aaa');
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.activeUser = currentUser.user;
       }

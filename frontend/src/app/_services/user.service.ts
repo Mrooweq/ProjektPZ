@@ -36,17 +36,21 @@ export class UserService {
   }
 
   logout(username: String) {
-    console.log(username);
+    console.log('Username:' + username);
+    localStorage.removeItem('currentUser');
+    this.loggedIn = false;
+    this.logger.next(this.loggedIn);
+
     let body = JSON.stringify({'username': username});
 
     return this.http.post(this.httpLogoutUrl, body)
-      .map(res => {
-        if (res.status === 200) {
-          localStorage.removeItem('currentUser');
-          this.loggedIn = false;
-          this.logger.next(this.loggedIn);
-        }
-      })
+    // .map(res => {
+    //   if (res.status === 200) {
+    //     localStorage.removeItem('currentUser');
+    //     this.loggedIn = false;
+    //     this.logger.next(this.loggedIn);
+    //   }
+    // })
       .catch(this.handleError);
   }
 
