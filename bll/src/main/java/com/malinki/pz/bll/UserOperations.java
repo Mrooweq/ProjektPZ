@@ -37,4 +37,9 @@ public class UserOperations implements IUserRepository {
 
 		return userResponse;
 	}
+
+	@Override
+	public void logoutUser(UserUVM user) {
+		sessionTable.deleteUserSession(user);
+	}
 }

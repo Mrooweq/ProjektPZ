@@ -17,8 +17,8 @@ import org.apache.log4j.Logger;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 import com.malinki.pz.dal.constants.Strings;
 
-public abstract class DatabaseOperation {
-	private Logger logger = Logger.getLogger(DatabaseOperation.class);
+public abstract class DatabaseUserOperation {
+	private Logger logger = Logger.getLogger(DatabaseUserOperation.class);
 	protected Mapper mapper;
 	protected DatabaseOperationResultEnum databaseOperationResultEnum;
 
