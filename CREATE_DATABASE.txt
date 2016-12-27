@@ -1,0 +1,87 @@
+CREATE TABLE "User" (ID_User number(10) NOT NULL, Username varchar2(50) NOT NULL, Password varchar2(50) NOT NULL, Firstname varchar2(50) NOT NULL, Lastname varchar2(50) NOT NULL, Email varchar2(50) NOT NULL, PRIMARY KEY (ID_User));
+CREATE TABLE Invoice (ID_Invoice number(10) NOT NULL, Invoice_Date date NOT NULL, Invoice_Value number(7) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Invoice));
+CREATE TABLE Invoice_Pos (ID_Invoice_Pos number(10) NOT NULL, InvoiceID_Invoice number(10) NOT NULL, Amount number(10) NOT NULL, Position_Price number(10) NOT NULL, ID_Ticket number(10) NOT NULL, ID_Flight number(10) NOT NULL, PRIMARY KEY (ID_Invoice_Pos, InvoiceID_Invoice));
+CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
+CREATE TABLE Class (ID_Class number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Class));
+CREATE TABLE Airline (ID_Airline number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Airline));
+CREATE TABLE Flight (ID_Flight number(10) NOT NULL, Flight_Number number(10) NOT NULL, Flight_Date date NOT NULL, Base_Price number(10) NOT NULL, ID_Airline number(10) NOT NULL, "From" number(10) NOT NULL, "To" number(10) NOT NULL, PRIMARY KEY (ID_Flight));
+CREATE TABLE Airport (ID_Airport number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Airport));
+
+ALTER TABLE Invoice ADD CONSTRAINT FKInvoice592459 FOREIGN KEY (ID_User) REFERENCES "User" (ID_User);
+ALTER TABLE Invoice_Pos ADD CONSTRAINT FKInvoice_Po101405 FOREIGN KEY (InvoiceID_Invoice) REFERENCES Invoice (ID_Invoice);
+ALTER TABLE Flight ADD CONSTRAINT FKFlight238291 FOREIGN KEY (ID_Airline) REFERENCES Airline (ID_Airline);
+ALTER TABLE Ticket ADD CONSTRAINT FKTicket605673 FOREIGN KEY (ID_Flight) REFERENCES Flight (ID_Flight);
+ALTER TABLE Ticket ADD CONSTRAINT FKTicket704378 FOREIGN KEY (ID_Class) REFERENCES Class (ID_Class);
+ALTER TABLE Invoice_Pos ADD CONSTRAINT FKInvoice_Po525157 FOREIGN KEY (ID_Ticket) REFERENCES Ticket (ID_Ticket);
+ALTER TABLE Invoice_Pos ADD CONSTRAINT FKInvoice_Po114019 FOREIGN KEY (ID_Flight) REFERENCES Flight (ID_Flight);
+ALTER TABLE Ticket ADD CONSTRAINT FKTicket572044 FOREIGN KEY (ID_User) REFERENCES "User" (ID_User);
+ALTER TABLE Flight ADD CONSTRAINT FKFlight5365 FOREIGN KEY ("From") REFERENCES Airport (ID_Airport);
+ALTER TABLE Flight ADD CONSTRAINT FKFlight809603 FOREIGN KEY ("To") REFERENCES Airport (ID_Airport);
+------------------------
+
+create or replace FUNCTION getMinUserID 
+return number is 
+
+cnt number := 0;
+v_flag integer := 1;
+
+begin 
+
+loop 
+
+cnt := cnt + 1;
+
+SELECT 
+   CASE WHEN EXISTS(SELECT 1 FROM "User" where ID_User = cnt)
+     THEN 1  
+     ELSE 0  
+   END  
+into v_flag FROM dual;
+
+
+EXIT when v_flag = 0;                     
+end loop;
+ 
+return cnt; 
+end; 
+/
+
+------------------
+
+create or replace FUNCTION isLoginAlreadyUsed (str IN VARCHAR2)
+return integer is
+
+v_flag integer := 0;
+
+begin
+
+SELECT
+   CASE WHEN EXISTS(SELECT 1 FROM "User" where Username = str)
+     THEN 1  
+     ELSE 0  
+   END  
+into v_flag FROM dual;
+
+return v_flag;
+end;
+/
+
+-------------------
+
+create or replace FUNCTION isUsernameAndPasswordCorrect (v_username IN VARCHAR2, v_password IN VARCHAR2)
+return integer is
+
+v_flag integer := 0;
+
+begin
+  
+SELECT
+   CASE WHEN EXISTS(SELECT 1 FROM "User" where Username = v_username and Password = v_password)
+     THEN 1
+     ELSE 0
+   END
+into v_flag FROM dual;
+
+return v_flag;
+end;
+/

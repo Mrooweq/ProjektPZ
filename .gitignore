@@ -1,10 +1,8 @@
 target
 .idea
-*.iml
-.settings/
-target/
+.settings
 .project
-.classpath
+*.iml
 
 api/.settings/
 bll/.settings/
