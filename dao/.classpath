@@ -22,5 +22,12 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/bussiness_logic_layer"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/database_access_layer"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

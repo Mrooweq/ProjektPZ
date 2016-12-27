@@ -1,7 +1,6 @@
 package com.malinki.pz.bll;
 
 import com.malinki.pz.lib.UserResponse;
-import com.malinki.pz.lib.UserDTO;
 import com.malinki.pz.lib.UserUVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,11 @@ public class UserOperations implements IUserRepository {
 
 	@Override
 	public int registerUser(UserUVM user) {
-		UserResponse userResponse = userRepository.registerUser(UserConverter.fromUserUVMToUserDTO(user));
+		UserValidation validation = new UserValidation(user);
+		UserResponse userResponse = new UserResponse();
+		if(validation.checkUser()) {
+			userResponse = userRepository.registerUser(UserConverter.fromUserUVMToUserDTO(user));
+		}
 		return userResponse.getResult();
 	}
 
