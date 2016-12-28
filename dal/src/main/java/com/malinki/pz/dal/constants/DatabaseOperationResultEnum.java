@@ -9,6 +9,12 @@ public enum DatabaseOperationResultEnum {
 	USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_WRONG_USERNAME_OR_PASSWORD("User log in attempt failed due to wrong username or password"),
 	USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR("User log in attempt failed due to error"),
 
+	POSSIBLE_AIRPORTS_FETCHED_SUCCESSFULLY("Possible airports fetched successfully"),
+	POSSIBLE_AIRPORTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR("Possible airports not fetched successfully due to error"),
+
+	FLIGTS_FETCHED_SUCCESSFULLY("Flights fetched successfully"),
+	FLIGTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR("Flights not fetched successfully due to error"),
+
 	TICKET_BOUGHT_SUCCESSFULLY("Ticket bought successfully"),
 	TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR("Ticket not bought successfully due to error");
 
