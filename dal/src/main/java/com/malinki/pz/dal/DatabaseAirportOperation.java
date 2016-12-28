@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.malinki.pz.lib.FlightResponse;
 import com.malinki.pz.lib.PossibleAirportsResponse;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -18,29 +17,31 @@ import org.apache.log4j.Logger;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 import com.malinki.pz.dal.constants.Strings;
 
-public abstract class DatabaseFlightOperation {
+public abstract class DatabaseAirportOperation {
     private Logger logger = Logger.getLogger(DatabaseAirportOperation.class);
     protected FlightMapper flightMapper;
     protected DatabaseOperationResultEnum databaseOperationResultEnum;
 
-    public FlightResponse performAction() {
+    public PossibleAirportsResponse performAction() {
         InputStream inputStream = openInputStream();
         SqlSession session = establishSession(inputStream);
         flightMapper = session.getMapper(FlightMapper.class);
         int result;
-        FlightResponse flightResponse = new FlightResponse();
+        PossibleAirportsResponse possibleAirportsResponse = new PossibleAirportsResponse();
+        List<String> possibleAirportsList;
 
         try {
-            flightResponse = mainAction();
+            possibleAirportsList = mainAction();
             result = setResponse();
         } finally {
             session.close();
             closeInputStream(inputStream);
         }
 
-        flightResponse.setResult(result);
+        possibleAirportsResponse.setPossibleAirportsList(possibleAirportsList);
+        possibleAirportsResponse.setResult(result);
 
-        return flightResponse;
+        return possibleAirportsResponse;
     }
 
     private SqlSession establishSession(InputStream inputStream){
@@ -66,10 +67,17 @@ public abstract class DatabaseFlightOperation {
         logger.log(Level.INFO, databaseOperationResultEnum.getName());
 
         switch (databaseOperationResultEnum){
-            case FLIGTS_FETCHED_SUCCESSFULLY:
+            case POSSIBLE_AIRPORTS_FETCHED_SUCCESSFULLY:
                 result = HttpServletResponse.SC_OK;
                 break;
-            case FLIGTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR:
+            case POSSIBLE_AIRPORTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR:
+                result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+                break;
+
+            case TICKET_BOUGHT_SUCCESSFULLY:
+                result = HttpServletResponse.SC_OK;
+                break;
+            case TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR:
                 result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
                 break;
             default:
@@ -87,5 +95,5 @@ public abstract class DatabaseFlightOperation {
         }
     }
 
-    abstract protected FlightResponse mainAction();
+    abstract protected List<String> mainAction();
 }

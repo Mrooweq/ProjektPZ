@@ -18,24 +18,23 @@ public class UserLogin extends DatabaseUserOperation {
 
 	@Override
 	protected UserDTO mainAction() {
-		UserDTO user = null;
 		boolean isUsernameAndPasswordCorrect = false;
 		boolean hasErrorOccurred = false;
 
 		try{
-			isUsernameAndPasswordCorrect = getBoolean(
-					mapper.isUsernameAndPasswordCorrect(userForLoginValidation.getUsername(),
-							userForLoginValidation.getPassword()));
+			isUsernameAndPasswordCorrect = getBoolean(userMapper.isUsernameAndPasswordCorrect(userForLoginValidation));
 		} catch (Exception e){
 			logger.log(Level.ERROR, e.toString());
 			hasErrorOccurred = true;
 		}
 
+		UserDTO user = null;
+
 		if(hasErrorOccurred)
 			databaseOperationResultEnum = DatabaseOperationResultEnum.USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR;
 		else if(isUsernameAndPasswordCorrect){
 			try{
-				user = mapper.getUserByUsername(userForLoginValidation.getUsername());
+				user = userMapper.getUserByUsername(userForLoginValidation.getUsername());
 				databaseOperationResultEnum = DatabaseOperationResultEnum.USER_LOGGED_IN_SUCCESSFULLY;
 			} catch (Exception e){
 				logger.log(Level.ERROR, e.toString());

@@ -12,6 +12,9 @@ public enum DatabaseOperationResultEnum {
 	POSSIBLE_AIRPORTS_FETCHED_SUCCESSFULLY("Possible airports fetched successfully"),
 	POSSIBLE_AIRPORTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR("Possible airports not fetched successfully due to error"),
 
+	FLIGTS_FETCHED_SUCCESSFULLY("Flights fetched successfully"),
+	FLIGTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR("Flights not fetched successfully due to error"),
+
 	TICKET_BOUGHT_SUCCESSFULLY("Ticket bought successfully"),
 	TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR("Ticket not bought successfully due to error");
 

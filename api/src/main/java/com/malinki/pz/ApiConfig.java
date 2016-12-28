@@ -1,6 +1,6 @@
 package com.malinki.pz;
 
-import com.malinki.pz.bll.FlightOperations;
+import com.malinki.pz.bll.AirportOperations;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -19,8 +19,8 @@ public class ApiConfig {
     }
 
     @Bean
-    public FlightOperations ticketOperations() {
-        return new FlightOperations();
+    public AirportOperations ticketOperations() {
+        return new AirportOperations();
     }
     
     @Bean
