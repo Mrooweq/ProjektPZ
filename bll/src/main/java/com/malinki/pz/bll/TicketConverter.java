@@ -12,7 +12,7 @@ public class TicketConverter {
             return new TicketDTO.TicketDTOBuilder()
                     .flight(ticket.getFlight())
                     .flightClass(ticket.getFlightClass())
-                    .user(ticket.getUser())
+                    .username(ticket.getUsername())
                     .build();
     }
 
@@ -23,7 +23,7 @@ public class TicketConverter {
             return new TicketUVM.TicketUVMBuilder()
                     .flight(ticket.getFlight())
                     .flightClass(ticket.getFlightClass())
-                    .user(ticket.getUser())
+                    .username(ticket.getUsername())
                     .build();
     }
 }

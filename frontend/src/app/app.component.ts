@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "./_services/authentication.service";
-import {User} from "./_mocks/user";
+import {User} from "./_mocks/username";
 
 @Component({
   selector: 'my-app',
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
 
   setCurrentUser() {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.activeUser = currentUser.user;
+    this.activeUser = currentUser.username;
   }
 
   logoutPreviousUser() {

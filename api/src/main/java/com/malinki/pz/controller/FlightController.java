@@ -77,13 +77,12 @@ public class FlightController {
     public void buyTicket(HttpServletResponse response,
                           @RequestParam String flight,
                           @RequestParam String flightClass,
-                          @RequestParam String user,
-                          @RequestParam String numberOfFreePlaces) {
+                          @RequestParam String user) {
 
         TicketUVM ticketUVM = new TicketUVM.TicketUVMBuilder()
                 .flight(flight)
                 .flightClass(flightClass)
-                .user(user)
+                .username(user)
                 .build();
 
         ProjektPZResponse projektPZResponse = airportOperations.addTicket(ticketUVM);

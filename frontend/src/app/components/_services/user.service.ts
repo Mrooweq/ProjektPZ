@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 
 import {Observable} from "rxjs";
-import {User} from "../_mocks/user";
+import {User} from "../_mocks/username";
 
 @Injectable()
 export class UserService {
@@ -30,10 +30,10 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  createNewUser(user: User) {
+  createNewUser(username: User) {
     let headers = new Headers();
     headers.append('Authorization', 'register');
-    let body = JSON.stringify(user);
+    let body = JSON.stringify(username);
 
     return this.http.post(this.httpRegisterUrl, body, {headers: headers})
       .map(res => res.json())

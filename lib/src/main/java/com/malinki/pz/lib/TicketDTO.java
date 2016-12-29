@@ -4,12 +4,12 @@ package com.malinki.pz.lib;
 public class TicketDTO {
     private String flight;
     private String flightClass;
-    private String user;
+    private String username;
 
     private TicketDTO(TicketDTO.TicketDTOBuilder builder) {
         this.flight = builder.flight;
         this.flightClass = builder.flightClass;
-        this.user = builder.user;
+        this.username = builder.username;
     }
 
     public String getFlight() {
@@ -28,18 +28,18 @@ public class TicketDTO {
         this.flightClass = flightClass;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public static class TicketDTOBuilder {
         private String flight;
         private String flightClass;
-        private String user;
+        private String username;
 
         public TicketDTO.TicketDTOBuilder flight(String flight) {
             this.flight = flight;
@@ -51,8 +51,8 @@ public class TicketDTO {
             return this;
         }
 
-        public TicketDTO.TicketDTOBuilder user(String user) {
-            this.user = user;
+        public TicketDTO.TicketDTOBuilder username(String user) {
+            this.username = user;
             return this;
         }
 

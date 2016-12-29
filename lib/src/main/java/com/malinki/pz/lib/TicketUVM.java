@@ -4,12 +4,12 @@ package com.malinki.pz.lib;
 public class TicketUVM {
     private String flight;
     private String flightClass;
-    private String user;
+    private String username;
 
     private TicketUVM(TicketUVM.TicketUVMBuilder builder) {
         this.flight = builder.flight;
         this.flightClass = builder.flightClass;
-        this.user = builder.user;
+        this.username = builder.username;
     }
 
     public String getFlight() {
@@ -28,31 +28,31 @@ public class TicketUVM {
         this.flightClass = flightClass;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public static class TicketUVMBuilder {
         private String flight;
         private String flightClass;
-        private String user;
+        private String username;
 
-        public TicketUVMBuilder flight(String flight) {
+        public TicketUVM.TicketUVMBuilder flight(String flight) {
             this.flight = flight;
             return this;
         }
 
-        public TicketUVMBuilder flightClass(String flightClass) {
+        public TicketUVM.TicketUVMBuilder flightClass(String flightClass) {
             this.flightClass = flightClass;
             return this;
         }
 
-        public TicketUVMBuilder user(String user) {
-            this.user = user;
+        public TicketUVM.TicketUVMBuilder username(String user) {
+            this.username = user;
             return this;
         }
 

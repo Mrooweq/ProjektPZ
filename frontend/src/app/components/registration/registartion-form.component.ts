@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {AuthenticationService} from "../../_services/authentication.service";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {EmailValidator} from "../../_validators/email-validator";
-import {User} from "../../_mocks/user";
+import {User} from "../../_mocks/username";
 
 @Component({
   selector: 'registartion-form',
@@ -15,7 +15,7 @@ export class Registration {
   errorMessage: string;
   succesMessage: string;
   registrationForm: FormGroup;
-  user: User;
+  username: User;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -40,8 +40,8 @@ export class Registration {
     this.errorMessage = null;
     this.succesMessage = null;
 
-    this.user = new User(model.firstname, model.lastname, model.username, model.email, model.password);
-    this.authenticationService.createNewUser(this.user).subscribe(
+    this.username = new User(model.firstname, model.lastname, model.username, model.email, model.password);
+    this.authenticationService.createNewUser(this.username).subscribe(
       data => {
         this.succesMessage = data.message || 'Rejestracja przebiegla pomyslnie';
         this.registrationForm.reset();

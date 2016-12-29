@@ -28,17 +28,15 @@ public abstract class DatabaseAirportOperation {
         flightMapper = session.getMapper(FlightMapper.class);
         int result;
         ProjektPZResponse projektPZResponse = new ProjektPZResponse();
-        List<String> resultList;
 
         try {
-            resultList = mainAction();
+            mainAction();
             result = setResponse();
         } finally {
             session.close();
             closeInputStream(inputStream);
         }
 
-        projektPZResponse.setResponseList(resultList);
         projektPZResponse.setResult(result);
 
         return projektPZResponse;

@@ -21,7 +21,8 @@ public class TicketBuying extends DatabaseAirportOperation {
     @Override
     protected List<String> mainAction() {
         try{
-            flightMapper.addTicket(ticket.getFlight(), ticket.getFlightClass(), ticket.getUser());
+            flightMapper.addTicket(ticket);
+            flightMapper.commit();
             databaseOperationResultEnum = DatabaseOperationResultEnum.TICKET_BOUGHT_SUCCESSFULLY;
         } catch (Exception e){
             logger.log(Level.ERROR, e.toString());

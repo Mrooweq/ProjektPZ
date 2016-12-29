@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 
 import {Observable, Subject} from "rxjs";
-import {User} from "../_mocks/user";
+import {User} from "../_mocks/username";
 
 @Injectable()
 export class AuthenticationService {
@@ -26,9 +26,9 @@ export class AuthenticationService {
 
     return this.http.post(this.httpLoginUrl, body, {headers: headers})
       .map(res => {
-        let user = res.json();
-        if (user && user.tokenContainer.token) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
+        let username = res.json();
+        if (username && username.tokenContainer.token) {
+          localStorage.setItem('currentUser', JSON.stringify(username));
           this.loggedIn = true;
           this.logger.next(this.loggedIn);
         }
@@ -49,10 +49,10 @@ export class AuthenticationService {
       .catch(this.handleError);
   }
 
-  createNewUser(user: User) {
+  createNewUser(username: User) {
     let headers = new Headers();
     headers.append('Authorization', 'register');
-    let body = JSON.stringify(user);
+    let body = JSON.stringify(username);
 
     return this.http.post(this.httpRegisterUrl, body, {headers: headers})
       .catch(this.handleError);
