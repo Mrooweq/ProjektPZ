@@ -60,7 +60,9 @@ public class FlightController {
                                       @RequestParam String dateStart,
                                       @RequestParam String dateEnd,
                                       @RequestParam String from,
-                                      @RequestParam String to) {
+                                      @RequestParam String to,
+                                      @RequestParam String _class,
+                                      @RequestParam String numberOfPassengers) {
 
         FlightToSearchUVM flightToSearchUVM = new FlightToSearchUVM.FlightUVMBuilder()
                 .dateStart(dateStart)

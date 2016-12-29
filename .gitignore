@@ -1,7 +1,9 @@
 target
+target/
 .idea
-.settings
+.settings/
 .project
+.classpath
 *.iml
 
 api/.settings/
@@ -15,3 +17,6 @@ dal/.classpath
 api/.project
 bll/.project
 dal/.project
+
+msc/
+
