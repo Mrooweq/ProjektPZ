@@ -8,6 +8,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {AppRoutingModule}   from './app-routing.module';
 import {Ng2Bs3ModalModule} from "ng2-bs3-modal/ng2-bs3-modal";
 import {MyDatePickerModule} from 'mydatepicker';
+import {Ng2AutoCompleteModule} from 'ng2-auto-complete';
 
 import {AppComponent} from './app.component';
 import {AuthenticationService} from "./_services/authentication.service";
@@ -15,6 +16,7 @@ import {LoginForm} from "./components/login/login-form.component";
 import {Home} from "./components/home/home.component";
 import {Registration} from "./components/registration/registartion-form.component";
 import {EqualValidator} from "./_validators/equal-validator.directive";
+import {UserService} from "./_services/user.service";
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import {EqualValidator} from "./_validators/equal-validator.directive";
     AppRoutingModule,
     NgbModule.forRoot(),
     Ng2Bs3ModalModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    Ng2AutoCompleteModule
   ],
   declarations: [
     AppComponent,
@@ -35,7 +38,7 @@ import {EqualValidator} from "./_validators/equal-validator.directive";
     Home,
     EqualValidator
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

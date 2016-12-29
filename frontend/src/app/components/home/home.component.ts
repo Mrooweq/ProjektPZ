@@ -10,6 +10,9 @@ export class Home implements OnInit {
 
   private searchForm: FormGroup;
   cities = ['Warsaw', 'Kraków', 'Lublin', 'Wrocław'];
+  arrayOfStrings: string[] =
+    ["this", "is", "array", "of", "text"];
+  model1 = "is";
 
   myDatePickerOptions = {
     todayBtnTxt: 'Today',
@@ -25,20 +28,31 @@ export class Home implements OnInit {
   constructor(private fb: FormBuilder) {
   }
 
+  callback(value, name: String) {
+    if (name == 'source')
+      this.searchForm.controls['source'].setValue(value);
+    if (name == 'destination')
+      this.searchForm.controls['destination'].setValue(value);
+  }
+
   submit(value: any) {
     console.log(value);
     this.searchForm.reset();
   }
 
-  onDateChanged(event: any) {
-    this.searchForm.controls['depart'].setValue(event.formatted);
+  onDateChanged(value: any, name: String) {
+    if (name == 'start')
+      this.searchForm.controls['start'].setValue(value.formatted);
+    if (name == 'end')
+      this.searchForm.controls['end'].setValue(value.formatted);
   }
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
       source: [null],
       destination: [null],
-      depart: [null],
+      start: [null],
+      end: [null],
       class: [null],
       travelers: [null]
     });

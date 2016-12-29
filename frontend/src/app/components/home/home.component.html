@@ -6,32 +6,42 @@
         <div id="container">
           <form [formGroup]="searchForm" (ngSubmit)="submit(searchForm.value)">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <div class="form-group">
                   <label>From</label>
-                  <select name="cities" class="form-control" formControlName='source'>
-                    <option *ngFor="let city of cities" [value]="city">
-                      {{city}}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label>To</label>
-                  <select name="cities" class="form-control" formControlName='destination'>
-                    <option *ngFor="let city of cities" [value]="city">
-                      {{city}}
-                    </option>
-                  </select>
+                  <input ng2-auto-complete
+                         formControlName="source"
+                         [source]="cities"
+                         placeholder="Cities"
+                         class="form-control"
+                         (valueChanged)="callback($event,'source')">
                 </div>
               </div>
               <div class="col-md-2">
                 <div class="form-group">
-                  <label>Depart</label>
+                  <label>To</label>
+                  <input ng2-auto-complete
+                         formControlName="destination"
+                         [source]="cities"
+                         placeholder="Cities"
+                         class="form-control"
+                         (valueChanged)="callback($event,'destination')">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Start</label>
                   <my-date-picker [options]="myDatePickerOptions"
                                   [selDate]="selectedDate"
-                                  (dateChanged)="onDateChanged($event)"></my-date-picker>
+                                  (dateChanged)="onDateChanged($event,'start')"></my-date-picker>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>End</label>
+                  <my-date-picker [options]="myDatePickerOptions"
+                                  [selDate]="selectedDate"
+                                  (dateChanged)="onDateChanged($event,'end')"></my-date-picker>
                 </div>
               </div>
               <div class="col-md-2">
