@@ -3,3 +3,11 @@
   font-style: italic;
   text-align: center;
 }
+
+.ng-invalid:not(form).ng-touched, .ng-invalid:not(form).ng-dirty {
+  border-left: 6px solid #a94442;
+}
+
+.ng-valid.ng-dirty:not(form) {
+  border-left: 6px solid #42A948;
+}

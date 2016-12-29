@@ -1,0 +1,63 @@
+<div class="jumbotron">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="wrapper">
+        <div id="container">
+          <form [formGroup]="searchForm" (ngSubmit)="submit(searchForm.value)">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>From</label>
+                  <select name="cities" class="form-control" formControlName='source'>
+                    <option *ngFor="let city of cities" [value]="city">
+                      {{city}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>To</label>
+                  <select name="cities" class="form-control" formControlName='destination'>
+                    <option *ngFor="let city of cities" [value]="city">
+                      {{city}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Depart</label>
+                  <my-date-picker [options]="myDatePickerOptions"
+                                  [selDate]="selectedDate"
+                                  (dateChanged)="onDateChanged($event)"></my-date-picker>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Class</label>
+                  <input type="number" min=1 max=3 step=1 class="form-control" formControlName='class'>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Travelers</label>
+                  <input type="number" min=0 max=5 step=1 class="form-control" formControlName='travelers'>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-secondary float-xs-right" [disabled]="!searchForm.valid">
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>

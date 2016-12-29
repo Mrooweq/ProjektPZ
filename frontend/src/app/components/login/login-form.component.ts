@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {UserService} from '../../_services/user.service';
+import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from "@angular/router";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 
@@ -14,7 +14,7 @@ export class LoginForm {
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              private userService: UserService) {
+              private authenticationService: AuthenticationService) {
     this.loginForm = fb.group({
       'username': [null, [Validators.required, Validators.pattern('[a-zA-Z0-9)]+')]],
       'password': [null, [Validators.required, Validators.pattern('[a-zA-Z0-9)]+')]]
@@ -27,7 +27,7 @@ export class LoginForm {
 
   login(loginFormValue: any): void {
     this.errorMessage = null;
-    this.userService.login(loginFormValue.username, loginFormValue.password)
+    this.authenticationService.login(loginFormValue.username, loginFormValue.password)
       .subscribe(
         () => {
           this.loginForm.reset();

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "./_services/user.service";
+import {AuthenticationService} from "./_services/authentication.service";
 import {User} from "./_mocks/user";
-import {error} from "util";
 
 @Component({
   selector: 'my-app',
@@ -12,11 +11,11 @@ export class AppComponent implements OnInit {
   title = 'App works!';
   activeUser: User;
 
-  constructor(private userService: UserService) {
+  constructor(private authenticationService: AuthenticationService) {
   }
 
   logout() {
-    this.userService.logout(this.activeUser.username).subscribe(
+    this.authenticationService.logout(this.activeUser.username).subscribe(
       () => {
         this.activeUser = null;
       },
@@ -26,10 +25,14 @@ export class AppComponent implements OnInit {
     );
   }
 
+  setCurrentUser() {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.activeUser = currentUser.user;
+  }
+
   logoutPreviousUser() {
     if (localStorage.getItem('currentUser')) {
-      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      this.activeUser = currentUser.user;
+      this.setCurrentUser();
       this.logout();
     }
   }
@@ -37,11 +40,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.logoutPreviousUser();
 
-    this.userService.isLoggedIn().subscribe(loggedIn => {
-      if (loggedIn) {
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        this.activeUser = currentUser.user;
-      }
+    this.authenticationService.isLoggedIn().subscribe(loggedIn => {
+      if (loggedIn)
+        this.setCurrentUser();
     });
   }
 }

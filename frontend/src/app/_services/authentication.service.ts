@@ -5,7 +5,7 @@ import {Observable, Subject} from "rxjs";
 import {User} from "../_mocks/user";
 
 @Injectable()
-export class UserService {
+export class AuthenticationService {
   private httpLoginUrl = 'api/login';
   private httpLogoutUrl = 'api/logout';
   private httpRegisterUrl = 'api/register';

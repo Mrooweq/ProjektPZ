@@ -3,11 +3,26 @@
   margin-bottom: 0;
   padding-bottom: 0;
   background-color: #4f5457;
-  border-bottom:4px solid #78315f;
+  border-bottom: 4px solid #78315f;
 
 }
+
 .nav-item {
   padding-bottom: 7px;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.dropdown-menu {
+  z-index: 100;
+  color: #f4f4f4;
+  background-color: #1f2122;
+  opacity: 0.8;
+  border-radius: 0 0 5px 5px;
+}
+
+.dropdown-item:hover {
+  color: #f4f4f4;
+  background-color: #3f4345;
+  opacity: 0.8;
 }
