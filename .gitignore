@@ -1,21 +1,26 @@
 target
 target/
 .idea
+.settings
 .settings/
 .project
 .classpath
 *.iml
 
-api/.settings/
-bll/.settings/
-dal/.settings/
-
+api/.settings
 api/.classpath
-bll/.classpath
-dal/.classpath
-
 api/.project
+api/mvnw
+api/mvnw.cmd
+api/.mvn/wrapper
+
+
+bll/.settings
+bll/.classpath
 bll/.project
+
+dal/.settings
+dal/.classpath
 dal/.project
 
 msc/
