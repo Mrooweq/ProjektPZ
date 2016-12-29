@@ -27,7 +27,8 @@ public class FlightController {
     public void buyTicket(HttpServletResponse response,
                           @RequestParam String flight,
                           @RequestParam String flightClass,
-                          @RequestParam String user) {
+                          @RequestParam String user,
+                          @RequestParam String numberOfFreePlaces) {
 
         TicketUVM ticketUVM = new TicketUVM.TicketUVMBuilder()
                 .flight(flight)

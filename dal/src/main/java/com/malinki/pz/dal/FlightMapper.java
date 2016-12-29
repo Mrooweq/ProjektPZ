@@ -22,15 +22,6 @@ public interface FlightMapper {
     @Select("SELECT DISTINCT src.Name FROM Flight, Airport src, Airport dest WHERE \"From\"=src.ID_Airport AND \"To\"=dest.ID_Airport AND dest.Name=#{dest}")
     ArrayList<String> getPossibleSourcesWithParam(@Param("dest") String dest);
 
-//    @Select("select Flight_Number as flightNumber, flight_date as flightDate, base_price as basePrice, Airline.name as airline, src.Name as \"From\", dest.Name as \"To\"" +
-//            " from Flight, Airline, Airport src, Airport dest" +
-//            " where Flight.ID_AIRLINE = Airline.ID_AIRLINE and Flight.ID_AIRLINE = Airline.ID_AIRLINE" +
-//            " and src.ID_AIRPORT = \"From\" and dest.ID_AIRPORT = \"To\"" +
-//            " and src.NAME = #{from} and dest.NAME = #{to}" +
-//            " and FLIGHT_DATE between #{dateStart} and #{dateEnd};")
-//    ArrayList<FlightDTO> getFlights(FlightToSearchDTO flightToSearchDTO);
-
-
     @Select("select Flight_Number as flightNumber, flight_date as flightDate, base_price as basePrice, Airline.name as airline, src.Name as \"From\", dest.Name as \"To\" " +
             "from Flight, Airline, Airport src, Airport dest " +
             "where Flight.ID_AIRLINE = Airline.ID_AIRLINE and Flight.ID_AIRLINE = Airline.ID_AIRLINE " +

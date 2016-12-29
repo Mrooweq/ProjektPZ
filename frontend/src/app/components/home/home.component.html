@@ -11,7 +11,7 @@
                   <label>From</label>
                   <input ng2-auto-complete
                          formControlName="source"
-                         [source]="cities"
+                         [source]="_sources"
                          placeholder="Cities"
                          class="form-control"
                          (valueChanged)="callback($event,'source')">
@@ -22,7 +22,7 @@
                   <label>To</label>
                   <input ng2-auto-complete
                          formControlName="destination"
-                         [source]="cities"
+                         [source]="_dest"
                          placeholder="Cities"
                          class="form-control"
                          (valueChanged)="callback($event,'destination')">

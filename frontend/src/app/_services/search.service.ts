@@ -6,6 +6,7 @@ import {Http, URLSearchParams} from "@angular/http";
 export class SearchService {
   private flightsUrl = 'api/flights';
   private srcUrl = 'api/src';
+  private destUrl = 'api/dest';
 
   constructor(private http: Http) {
   }
@@ -16,6 +17,18 @@ export class SearchService {
     return this.http.get(this.srcUrl, {search: params})
       .map(res => res.json())
       .catch(this.handleError);
+  }
+
+  getDestinationAirport(): Observable<String[]> {
+    let params = new URLSearchParams();
+    params.set('src', '');
+    return this.http.get(this.destUrl, {search: params})
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getTicket(){
+    
   }
 
   private handleError(error: any) {
