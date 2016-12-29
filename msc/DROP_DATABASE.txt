@@ -3,6 +3,7 @@ DROP TABLE Invoice;
 DROP TABLE Ticket;
 DROP TABLE Class;
 DROP TABLE Flight;
+DROP TABLE Airport;
 DROP TABLE Airline;
 DROP TABLE "User";
 
