@@ -1,0 +1,22 @@
+.jumbotron {
+  height: 91vh;
+  background-position: center;
+  background-size: cover;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.wrapper {
+  margin-top: 60px;
+  border-radius: 5px;
+  color: white;
+  padding: 20px;
+  background-color: rgba(43, 45, 47, 0.8);
+}
+
+.form-control {
+  font-weight: 700;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  text-align: center;
+}

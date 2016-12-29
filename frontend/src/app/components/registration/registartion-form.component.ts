@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
-import {UserService} from "../../_services/user.service";
+import {AuthenticationService} from "../../_services/authentication.service";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {EmailValidator} from "../../_validators/email-validator";
 import {User} from "../../_mocks/user";
@@ -19,7 +19,7 @@ export class Registration {
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              private userService: UserService) {
+              private authenticationService: AuthenticationService) {
     this.registrationForm = fb.group({
       'firstname': [null, [Validators.required, Validators.pattern('[A-Z][a-z]*')]],
       'lastname': [null, [Validators.required, Validators.pattern('[A-Z][a-z]*')]],
@@ -41,7 +41,7 @@ export class Registration {
     this.succesMessage = null;
 
     this.user = new User(model.firstname, model.lastname, model.username, model.email, model.password);
-    this.userService.createNewUser(this.user).subscribe(
+    this.authenticationService.createNewUser(this.user).subscribe(
       data => {
         this.succesMessage = data.message || 'Rejestracja przebiegla pomyslnie';
         this.registrationForm.reset();
