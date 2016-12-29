@@ -1,17 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {SearchService} from "../../_services/search.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'home',
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.css']
 })
-export class Home implements OnInit {
+export class Home implements OnInit,OnDestroy {
 
   private searchForm: FormGroup;
   _sources: String[];
   _dest: String[];
+  _subscriptions: Subscription[] = [];
+
 
   myDatePickerOptions = {
     todayBtnTxt: 'Today',
@@ -48,23 +51,23 @@ export class Home implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchService.getSourceAirport().subscribe(
+    this._subscriptions.push(this.searchService.getSourceAirport().subscribe(
       sources => {
         this._sources = sources;
       },
       error => {
         console.log(error);
       }
-    );
+    ));
 
-    this.searchService.getDestinationAirport().subscribe(
+    this._subscriptions.push(this.searchService.getDestinationAirport().subscribe(
       dest => {
         this._dest = dest;
       },
       error => {
         console.log(error);
       }
-    );
+    ));
     this.searchForm = this.fb.group({
       source: [null],
       destination: [null],
@@ -75,4 +78,7 @@ export class Home implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this._subscriptions.forEach(s => s.unsubscribe());
+  }
 }

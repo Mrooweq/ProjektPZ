@@ -28,7 +28,7 @@ export class SearchService {
   }
 
   getTicket(){
-    
+
   }
 
   private handleError(error: any) {
