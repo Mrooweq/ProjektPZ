@@ -14,7 +14,6 @@ api/mvnw
 api/mvnw.cmd
 api/.mvn/wrapper
 
-
 bll/.settings
 bll/.classpath
 bll/.project
@@ -23,5 +22,9 @@ dal/.settings
 dal/.classpath
 dal/.project
 
-msc/
+lib/.settings
+lib/.classpath
+lib/.project
+
+
 
