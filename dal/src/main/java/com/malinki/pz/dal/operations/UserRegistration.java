@@ -32,8 +32,8 @@ public class UserRegistration extends DatabaseUserOperation {
 			databaseOperationResultEnum = DatabaseOperationResultEnum.USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR;
 		else if(isUserPositivelyValidated) {
 			try{
-				mapper.registerUser(user.getUsername(), user.getPassword(), user.getFirstname(), user.getLastname(), user.getEmail());
-				mapper.commit();
+				userMapper.registerUser(user);
+				userMapper.commit();
 				databaseOperationResultEnum = DatabaseOperationResultEnum.USER_REGISTERED_SUCCESSFULLY;
 			} catch (Exception e){
 				logger.log(Level.ERROR, e.toString());
@@ -47,7 +47,7 @@ public class UserRegistration extends DatabaseUserOperation {
 	}
 
 	private boolean isUserPositivelyValidated(UserDTO user) {
-		boolean isLoginAlreadyUsed = getBoolean(mapper.isLoginAlreadyUsed(user.getUsername()));
+		boolean isLoginAlreadyUsed = getBoolean(userMapper.isLoginAlreadyUsed(user.getUsername()));
 		return !isLoginAlreadyUsed;
 	}
 }

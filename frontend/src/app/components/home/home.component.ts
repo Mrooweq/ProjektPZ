@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder} from "@angular/forms";
+import {SearchService} from "../../_services/search.service";
 
 @Component({
   selector: 'home',
@@ -10,9 +11,7 @@ export class Home implements OnInit {
 
   private searchForm: FormGroup;
   cities = ['Warsaw', 'Kraków', 'Lublin', 'Wrocław'];
-  arrayOfStrings: string[] =
-    ["this", "is", "array", "of", "text"];
-  model1 = "is";
+  sources: String[];
 
   myDatePickerOptions = {
     todayBtnTxt: 'Today',
@@ -25,7 +24,8 @@ export class Home implements OnInit {
     selectionTxtFontSize: '14px'
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private searchService: SearchService) {
   }
 
   callback(value, name: String) {
@@ -48,6 +48,15 @@ export class Home implements OnInit {
   }
 
   ngOnInit(): void {
+    this.searchService.getSourceAirport().subscribe(
+      sources => {
+        this.sources = sources;
+        console.log(this.sources);
+      },
+      error => {
+        console.log(error);
+      }
+    );
     this.searchForm = this.fb.group({
       source: [null],
       destination: [null],

@@ -1,11 +1,11 @@
 CREATE TABLE "User" (ID_User number(10) NOT NULL, Username varchar2(50) NOT NULL, Password varchar2(50) NOT NULL, Firstname varchar2(50) NOT NULL, Lastname varchar2(50) NOT NULL, Email varchar2(50) NOT NULL, PRIMARY KEY (ID_User));
-CREATE TABLE Invoice (ID_Invoice number(10) NOT NULL, ID_User number(10) NOT NULL, Invoice_Date date NOT NULL, Invoice_Value number(7) NOT NULL, PRIMARY KEY (ID_Invoice));
-CREATE TABLE Invoice_Pos (ID_Invoice_Pos number(10) NOT NULL, InvoiceID_Invoice number(10) NOT NULL, Amount number(10) NOT NULL, ID_Ticket number(10) NOT NULL, ID_Flight number(10) NOT NULL, Price number(10) NOT NULL, PRIMARY KEY (ID_Invoice_Pos, InvoiceID_Invoice));
-CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, Price number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
+CREATE TABLE Invoice (ID_Invoice number(10) NOT NULL, Invoice_Date date NOT NULL, Invoice_Value number(7) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Invoice));
+CREATE TABLE Invoice_Pos (ID_Invoice_Pos number(10) NOT NULL, InvoiceID_Invoice number(10) NOT NULL, Amount number(10) NOT NULL, Position_Price number(10) NOT NULL, ID_Ticket number(10) NOT NULL, ID_Flight number(10) NOT NULL, PRIMARY KEY (ID_Invoice_Pos, InvoiceID_Invoice));
+CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
 CREATE TABLE Class (ID_Class number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Class));
 CREATE TABLE Airline (ID_Airline number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Airline));
-CREATE TABLE Flight (ID_Flight number(10) NOT NULL, Flight_Number number(10) NOT NULL, Flight_Date date NOT NULL, ID_Airline number(10) NOT NULL, PRIMARY KEY (ID_Flight));
-
+CREATE TABLE Flight (ID_Flight number(10) NOT NULL, Flight_Number number(10) NOT NULL, Flight_Date date NOT NULL, Base_Price number(10) NOT NULL, ID_Airline number(10) NOT NULL, "From" number(10) NOT NULL, "To" number(10) NOT NULL, PRIMARY KEY (ID_Flight));
+CREATE TABLE Airport (ID_Airport number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Airport));
 
 ALTER TABLE Invoice ADD CONSTRAINT FKInvoice592459 FOREIGN KEY (ID_User) REFERENCES "User" (ID_User);
 ALTER TABLE Invoice_Pos ADD CONSTRAINT FKInvoice_Po101405 FOREIGN KEY (InvoiceID_Invoice) REFERENCES Invoice (ID_Invoice);
@@ -15,6 +15,25 @@ ALTER TABLE Ticket ADD CONSTRAINT FKTicket704378 FOREIGN KEY (ID_Class) REFERENC
 ALTER TABLE Invoice_Pos ADD CONSTRAINT FKInvoice_Po525157 FOREIGN KEY (ID_Ticket) REFERENCES Ticket (ID_Ticket);
 ALTER TABLE Invoice_Pos ADD CONSTRAINT FKInvoice_Po114019 FOREIGN KEY (ID_Flight) REFERENCES Flight (ID_Flight);
 ALTER TABLE Ticket ADD CONSTRAINT FKTicket572044 FOREIGN KEY (ID_User) REFERENCES "User" (ID_User);
+ALTER TABLE Flight ADD CONSTRAINT FKFlight5365 FOREIGN KEY ("From") REFERENCES Airport (ID_Airport);
+ALTER TABLE Flight ADD CONSTRAINT FKFlight809603 FOREIGN KEY ("To") REFERENCES Airport (ID_Airport);
+
+INSERT INTO Airport VALUES (1, 'Warsaw');
+INSERT INTO Airport VALUES (2, 'Geneva');
+INSERT INTO Airport VALUES (3, 'Moscow');
+INSERT INTO Airport VALUES (4, 'Paris');
+INSERT INTO Airport VALUES (5, 'Madrid');
+INSERT INTO Airport VALUES (6, 'London');
+INSERT INTO Airport VALUES (7, 'Berlin');
+INSERT INTO Airport VALUES (8, 'Roma');
+INSERT INTO Airport VALUES (9, 'Athens');
+INSERT INTO Airport VALUES (10, 'Oslo');
+
+INSERT INTO Flight VALUES (1, 1000, '2016-01-01', 100, 1, 1, 2);
+INSERT INTO Flight VALUES (2, 1000, '2016-01-01', 100, 1, 2, 3);
+INSERT INTO Flight VALUES (3, 1000, '2016-01-01', 100, 1, 8, 9);
+INSERT INTO Flight VALUES (4, 1000, '2016-01-01', 100, 1, 1, 5);
+INSERT INTO Flight VALUES (5, 1000, '2016-01-01', 100, 1, 1, 5);
 ------------------------
 
 create or replace FUNCTION getMinUserID 

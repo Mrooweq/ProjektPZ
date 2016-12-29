@@ -2,12 +2,12 @@ package com.malinki.pz.dal;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.malinki.pz.lib.TicketDTO;
-import com.malinki.pz.lib.UserDTO;
-import com.malinki.pz.lib.UserResponse;
+import com.malinki.pz.lib.FlightResponse;
+import com.malinki.pz.lib.PossibleAirportsResponse;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -18,26 +18,29 @@ import org.apache.log4j.Logger;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 import com.malinki.pz.dal.constants.Strings;
 
-public abstract class DatabaseTicketOperation {
-    private Logger logger = Logger.getLogger(DatabaseTicketOperation.class);
-    protected Mapper mapper;
+public abstract class DatabaseFlightOperation {
+    private Logger logger = Logger.getLogger(DatabaseAirportOperation.class);
+    protected FlightMapper flightMapper;
     protected DatabaseOperationResultEnum databaseOperationResultEnum;
 
-    public int performAction() {
+    public FlightResponse performAction() {
         InputStream inputStream = openInputStream();
         SqlSession session = establishSession(inputStream);
-        mapper = session.getMapper(Mapper.class);
-        int result = 0;
+        flightMapper = session.getMapper(FlightMapper.class);
+        int result;
+        FlightResponse flightResponse = new FlightResponse();
 
         try {
-            mainAction();
+            flightResponse = mainAction();
             result = setResponse();
         } finally {
             session.close();
             closeInputStream(inputStream);
         }
 
-        return result;
+        flightResponse.setResult(result);
+
+        return flightResponse;
     }
 
     private SqlSession establishSession(InputStream inputStream){
@@ -60,13 +63,13 @@ public abstract class DatabaseTicketOperation {
     private int setResponse() {
         int result = 0;
 
+        logger.log(Level.INFO, databaseOperationResultEnum.getName());
+
         switch (databaseOperationResultEnum){
-            case TICKET_BOUGHT_SUCCESSFULLY:
-                logger.log(Level.INFO, Strings.TICKET_BOUGHT_SUCCESSFULLY);
+            case FLIGTS_FETCHED_SUCCESSFULLY:
                 result = HttpServletResponse.SC_OK;
                 break;
-            case TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR:
-                logger.log(Level.INFO, Strings.TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR);
+            case FLIGTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR:
                 result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
                 break;
             default:
@@ -84,5 +87,5 @@ public abstract class DatabaseTicketOperation {
         }
     }
 
-    abstract protected void mainAction();
+    abstract protected FlightResponse mainAction();
 }

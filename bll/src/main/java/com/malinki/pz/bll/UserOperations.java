@@ -1,7 +1,6 @@
 package com.malinki.pz.bll;
 
 import com.malinki.pz.lib.UserResponse;
-import com.malinki.pz.lib.UserDTO;
 import com.malinki.pz.lib.UserUVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,7 @@ import com.malinki.pz.dal.UserRepository;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
-public class UserOperations implements IUserRepository {
+public class UserOperations implements IUserOperations {
 
 	@Autowired
 	private UserRepository userRepository;
