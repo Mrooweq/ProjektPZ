@@ -1,9 +1,9 @@
 package com.malinki.pz.dal.constants;
 
 public enum DatabaseOperationResultEnum {
-	USER_REGISTERED_SUCCESSFULLY("User registered properly"),
+	USER_REGISTERED_SUCCESSFULLY("User registered successfully"),
 	USER_ALREADY_EXIST("User with such login already exists"),
-	USER_REGISTER_ATTEMPT_FAILED_DUE_TO_ERROR("Error occured during user registering"),
+	USER_REGISTER_ATTEMPT_FAILED_DUE_TO_ERROR("User not registered successfully due to error"),
 	
 	USER_LOGGED_IN_SUCCESSFULLY("User logged in successfully"),
 	USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_WRONG_USERNAME_OR_PASSWORD("User log in attempt failed due to wrong username or password"),
