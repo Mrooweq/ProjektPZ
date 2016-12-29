@@ -13,6 +13,7 @@ export class Home implements OnInit,OnDestroy {
   private searchForm: FormGroup;
   _sources: String[];
   _dest: String[];
+  _classes: String[];
   _subscriptions: Subscription[] = [];
 
 
@@ -23,7 +24,7 @@ export class Home implements OnInit,OnDestroy {
     sunHighlight: true,
     inline: false,
     customPlaceholderTxt: 'yyyy-mm-dd',
-    disableUntil: {year: 2016, month: 11, day: 1},
+    disableUntil: {year: 2015, month: 11, day: 1},
     selectionTxtFontSize: '14px'
   };
 
@@ -40,6 +41,14 @@ export class Home implements OnInit,OnDestroy {
 
   submit(value: any) {
     console.log(value);
+    this._subscriptions.push(this.searchService.getFlights(value).subscribe(
+      flights => {
+        console.log(flights);
+      },
+      error => {
+        console.log(error);
+      }
+    ));
     this.searchForm.reset();
   }
 
@@ -68,6 +77,15 @@ export class Home implements OnInit,OnDestroy {
         console.log(error);
       }
     ));
+    this._subscriptions.push(this.searchService.getClasses().subscribe(
+      classes => {
+        this._classes = classes;
+      },
+      error => {
+        console.log(error);
+      }
+    ));
+
     this.searchForm = this.fb.group({
       source: [null],
       destination: [null],

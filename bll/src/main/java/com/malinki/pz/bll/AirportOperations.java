@@ -1,7 +1,7 @@
 package com.malinki.pz.bll;
 
 import com.malinki.pz.dal.AirportRepository;
-import com.malinki.pz.lib.PossibleAirportsResponse;
+import com.malinki.pz.lib.ProjektPZResponse;
 import com.malinki.pz.lib.TicketUVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,17 +13,22 @@ public class AirportOperations implements IAirportOperations {
     private AirportRepository airportRepository;
 
     @Override
-    public PossibleAirportsResponse addTicket(TicketUVM ticketUVM) {
+    public ProjektPZResponse addTicket(TicketUVM ticketUVM) {
         return airportRepository.addTicket(TicketConverter.fromTicketUVMToTicketDTO(ticketUVM));
     }
 
     @Override
-    public PossibleAirportsResponse getPossibleDestinations(String src) {
+    public ProjektPZResponse getPossibleDestinations(String src) {
         return airportRepository.getPossibleDestinations(src);
     }
 
     @Override
-    public PossibleAirportsResponse getPossibleSources(String dest) {
+    public ProjektPZResponse getPossibleSources(String dest) {
         return airportRepository.getPossibleSources(dest);
+    }
+
+    @Override
+    public ProjektPZResponse getClasses() {
+        return airportRepository.getClasses();
     }
 }

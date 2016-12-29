@@ -2,12 +2,10 @@ package com.malinki.pz.dal;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import com.malinki.pz.lib.FlightResponse;
-import com.malinki.pz.lib.PossibleAirportsResponse;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

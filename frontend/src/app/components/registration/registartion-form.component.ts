@@ -45,7 +45,7 @@ export class Registration {
     this.user = new User(model.firstname, model.lastname, model.username, model.email, model.password);
     this._subscriptions.push(this.authenticationService.createNewUser(this.user).subscribe(
       data => {
-        this.succesMessage = data.message || 'Rejestracja przebiegla pomyslnie';
+        this.succesMessage = data.message || 'Registration successful';
         this.registrationForm.reset();
       },
       error => {

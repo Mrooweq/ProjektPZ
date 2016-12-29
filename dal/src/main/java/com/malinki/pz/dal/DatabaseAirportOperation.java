@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.malinki.pz.lib.PossibleAirportsResponse;
+import com.malinki.pz.lib.ProjektPZResponse;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -22,26 +22,26 @@ public abstract class DatabaseAirportOperation {
     protected FlightMapper flightMapper;
     protected DatabaseOperationResultEnum databaseOperationResultEnum;
 
-    public PossibleAirportsResponse performAction() {
+    public ProjektPZResponse performAction() {
         InputStream inputStream = openInputStream();
         SqlSession session = establishSession(inputStream);
         flightMapper = session.getMapper(FlightMapper.class);
         int result;
-        PossibleAirportsResponse possibleAirportsResponse = new PossibleAirportsResponse();
-        List<String> possibleAirportsList;
+        ProjektPZResponse projektPZResponse = new ProjektPZResponse();
+        List<String> resultList;
 
         try {
-            possibleAirportsList = mainAction();
+            resultList = mainAction();
             result = setResponse();
         } finally {
             session.close();
             closeInputStream(inputStream);
         }
 
-        possibleAirportsResponse.setPossibleAirportsList(possibleAirportsList);
-        possibleAirportsResponse.setResult(result);
+        projektPZResponse.setResponseList(resultList);
+        projektPZResponse.setResult(result);
 
-        return possibleAirportsResponse;
+        return projektPZResponse;
     }
 
     private SqlSession establishSession(InputStream inputStream){
@@ -67,6 +67,13 @@ public abstract class DatabaseAirportOperation {
         logger.log(Level.INFO, databaseOperationResultEnum.getName());
 
         switch (databaseOperationResultEnum){
+            case CLASSES_FETCHED_SUCCESSFULLY:
+                result = HttpServletResponse.SC_OK;
+                break;
+            case CLASSES_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR:
+                result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+                break;
+
             case POSSIBLE_AIRPORTS_FETCHED_SUCCESSFULLY:
                 result = HttpServletResponse.SC_OK;
                 break;
