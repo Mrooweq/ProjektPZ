@@ -4,20 +4,22 @@ package com.malinki.pz.lib;
 public class FlightDTO {
     private int flightNumber;
     private String flightDate;
-    private int basePrice;
+    private int price;
     private String airline;
     private String from;
     private String to;
+    private int freePlaces;
 
     public FlightDTO(){}
 
     private FlightDTO(FlightDTO.FlightDTOBuilder builder) {
         this.flightNumber = builder.flightNumber;
         this.flightDate = builder.flightDate;
-        this.basePrice = builder.basePrice;
+        this.price = builder.price;
         this.airline = builder.airline;
         this.from = builder.from;
         this.to = builder.to;
+        this.freePlaces = builder.freePlaces;
     }
 
     public int getFlightNumber() {
@@ -36,12 +38,12 @@ public class FlightDTO {
         this.flightDate = flightDate;
     }
 
-    public int getBasePrice() {
-        return basePrice;
+    public int getPrice() {
+        return price;
     }
 
-    public void setBasePrice(int basePrice) {
-        this.basePrice = basePrice;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public String getAirline() {
@@ -68,13 +70,22 @@ public class FlightDTO {
         this.to = to;
     }
 
+    public int getFreePlaces() {
+        return freePlaces;
+    }
+
+    public void setFreePlaces(int freePlaces) {
+        this.freePlaces = freePlaces;
+    }
+
     public static class FlightDTOBuilder {
         private int flightNumber;
         private String flightDate;
-        private int basePrice;
+        private int price;
         private String airline;
         private String from;
         private String to;
+        private int freePlaces;
 
         public FlightDTO.FlightDTOBuilder flightNumber(int flightNumber) {
             this.flightNumber = flightNumber;
@@ -87,7 +98,7 @@ public class FlightDTO {
         }
 
         public FlightDTO.FlightDTOBuilder basePrice(int basePrice) {
-            this.basePrice = basePrice;
+            this.price = basePrice;
             return this;
         }
 
@@ -98,6 +109,11 @@ public class FlightDTO {
 
         public FlightDTO.FlightDTOBuilder from(String from) {
             this.from = from;
+            return this;
+        }
+
+        public FlightDTO.FlightDTOBuilder freePlaces(int freePlaces) {
+            this.freePlaces = freePlaces;
             return this;
         }
 

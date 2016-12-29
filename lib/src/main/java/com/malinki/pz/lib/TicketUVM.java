@@ -6,10 +6,6 @@ public class TicketUVM {
     private String flightClass;
     private String user;
 
-    private int priceMultiplier;
-
-    public TicketUVM(){}
-
     private TicketUVM(TicketUVM.TicketUVMBuilder builder) {
         this.flight = builder.flight;
         this.flightClass = builder.flightClass;
@@ -38,14 +34,6 @@ public class TicketUVM {
 
     public void setUser(String user) {
         this.user = user;
-    }
-
-    public int getPriceMultiplier() {
-        return priceMultiplier;
-    }
-
-    public void setPriceMultiplier(int priceMultiplier) {
-        this.priceMultiplier = priceMultiplier;
     }
 
     public static class TicketUVMBuilder {

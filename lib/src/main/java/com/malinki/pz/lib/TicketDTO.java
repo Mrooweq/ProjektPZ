@@ -5,9 +5,6 @@ public class TicketDTO {
     private String flight;
     private String flightClass;
     private String user;
-    private int priceMultiplier;
-
-    public TicketDTO(){}
 
     private TicketDTO(TicketDTO.TicketDTOBuilder builder) {
         this.flight = builder.flight;
@@ -38,15 +35,6 @@ public class TicketDTO {
     public void setUser(String user) {
         this.user = user;
     }
-
-    public int getPriceMultiplier() {
-        return priceMultiplier;
-    }
-
-    public void setPriceMultiplier(int priceMultiplier) {
-        this.priceMultiplier = priceMultiplier;
-    }
-
 
     public static class TicketDTOBuilder {
         private String flight;

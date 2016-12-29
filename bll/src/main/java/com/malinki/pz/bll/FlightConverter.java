@@ -13,6 +13,8 @@ public class FlightConverter {
                     .dateEnd(flightToSearchUVM.getDateEnd())
                     .from(flightToSearchUVM.getFrom())
                     .to(flightToSearchUVM.getTo())
+                    ._class(flightToSearchUVM.get_class())
+                    .numberOfPassengers(flightToSearchUVM.getNumberOfPassengers())
                     .build();
     }
 
@@ -25,6 +27,8 @@ public class FlightConverter {
                     .dateEnd(flightToSearchDTO.getDateEnd())
                     .from(flightToSearchDTO.getFrom())
                     .to(flightToSearchDTO.getTo())
+                    ._class(flightToSearchDTO.get_class())
+                    .numberOfPassengers(flightToSearchDTO.getNumberOfPassengers())
                     .build();
     }
 
@@ -37,10 +41,11 @@ public class FlightConverter {
             return new FlightDTO.FlightDTOBuilder()
                     .flightNumber(flightUVM.getFlightNumber())
                     .flightDate(flightUVM.getFlightDate())
-                    .basePrice(flightUVM.getBasePrice())
+                    .basePrice(flightUVM.getPrice())
                     .airline(flightUVM.getAirline())
                     .from(flightUVM.getFrom())
                     .to(flightUVM.getTo())
+                    .freePlaces(flightUVM.getFreePlaces())
                     .build();
     }
 
@@ -51,10 +56,11 @@ public class FlightConverter {
             return new FlightUVM.FlightUVMBuilder()
                     .flightNumber(flightDTO.getFlightNumber())
                     .flightDate(flightDTO.getFlightDate())
-                    .basePrice(flightDTO.getBasePrice())
+                    .basePrice(flightDTO.getPrice())
                     .airline(flightDTO.getAirline())
                     .from(flightDTO.getFrom())
                     .to(flightDTO.getTo())
+                    .freePlaces(flightDTO.getFreePlaces())
                     .build();
     }
 }

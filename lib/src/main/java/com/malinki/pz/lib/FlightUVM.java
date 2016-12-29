@@ -4,20 +4,20 @@ package com.malinki.pz.lib;
 public class FlightUVM {
     private int flightNumber;
     private String flightDate;
-    private int basePrice;
+    private int price;
     private String airline;
     private String from;
     private String to;
-
-    public FlightUVM(){}
+    private int freePlaces;
 
     private FlightUVM(FlightUVM.FlightUVMBuilder builder) {
         this.flightNumber = builder.flightNumber;
         this.flightDate = builder.flightDate;
-        this.basePrice = builder.basePrice;
+        this.price = builder.price;
         this.airline = builder.airline;
         this.from = builder.from;
         this.to = builder.to;
+        this.freePlaces = builder.freePlaces;
     }
 
     public int getFlightNumber() {
@@ -36,12 +36,12 @@ public class FlightUVM {
         this.flightDate = flightDate;
     }
 
-    public int getBasePrice() {
-        return basePrice;
+    public int getPrice() {
+        return price;
     }
 
-    public void setBasePrice(int basePrice) {
-        this.basePrice = basePrice;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public String getAirline() {
@@ -68,13 +68,22 @@ public class FlightUVM {
         this.to = to;
     }
 
+    public int getFreePlaces() {
+        return freePlaces;
+    }
+
+    public void setFreePlaces(int freePlaces) {
+        this.freePlaces = freePlaces;
+    }
+
     public static class FlightUVMBuilder {
         private int flightNumber;
         private String flightDate;
-        private int basePrice;
+        private int price;
         private String airline;
         private String from;
         private String to;
+        private int freePlaces;
 
         public FlightUVM.FlightUVMBuilder flightNumber(int flightNumber) {
             this.flightNumber = flightNumber;
@@ -87,7 +96,7 @@ public class FlightUVM {
         }
 
         public FlightUVM.FlightUVMBuilder basePrice(int basePrice) {
-            this.basePrice = basePrice;
+            this.price = basePrice;
             return this;
         }
 
@@ -98,6 +107,11 @@ public class FlightUVM {
 
         public FlightUVM.FlightUVMBuilder from(String from) {
             this.from = from;
+            return this;
+        }
+
+        public FlightUVM.FlightUVMBuilder freePlaces(int freePlaces) {
+            this.freePlaces = freePlaces;
             return this;
         }
 
