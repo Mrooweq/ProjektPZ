@@ -10,8 +10,8 @@ import {SearchService} from "../../_services/search.service";
 export class Home implements OnInit {
 
   private searchForm: FormGroup;
-  cities = ['Warsaw', 'Kraków', 'Lublin', 'Wrocław'];
-  sources: String[];
+  _sources: String[];
+  _dest: String[];
 
   myDatePickerOptions = {
     todayBtnTxt: 'Today',
@@ -50,8 +50,16 @@ export class Home implements OnInit {
   ngOnInit(): void {
     this.searchService.getSourceAirport().subscribe(
       sources => {
-        this.sources = sources;
-        console.log(this.sources);
+        this._sources = sources;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+    this.searchService.getDestinationAirport().subscribe(
+      dest => {
+        this._dest = dest;
       },
       error => {
         console.log(error);

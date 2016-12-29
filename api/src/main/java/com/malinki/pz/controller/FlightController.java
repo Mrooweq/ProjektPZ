@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,24 +35,24 @@ public class FlightController {
                 .user(user)
                 .build();
 
-        PossibleAirportsResponse possibleAirportsResponse = airportOperations.addTicket(ticketUVM);
-        response.setStatus(possibleAirportsResponse.getResult());
+        ProjektPZResponse projektPZResponse = airportOperations.addTicket(ticketUVM);
+        response.setStatus(projektPZResponse.getResult());
     }
 
     @RequestMapping(value = "/dest", method = RequestMethod.GET)
     public List<String> getPossibleDestinations(HttpServletResponse response, @RequestParam String src) {
-        PossibleAirportsResponse possibleAirportsResponse = airportOperations.getPossibleDestinations(src);
-        response.setStatus(possibleAirportsResponse.getResult());
+        ProjektPZResponse projektPZResponse = airportOperations.getPossibleDestinations(src);
+        response.setStatus(projektPZResponse.getResult());
 
-        return possibleAirportsResponse.getPossibleAirportsList();
+        return projektPZResponse.getResponseList();
     }
 
     @RequestMapping(value = "/src", method = RequestMethod.GET)
     public List<String> getPossibleSources(HttpServletResponse response, @RequestParam String dest) {
-        PossibleAirportsResponse possibleAirportsResponse = airportOperations.getPossibleSources(dest);
-        response.setStatus(possibleAirportsResponse.getResult());
+        ProjektPZResponse projektPZResponse = airportOperations.getPossibleSources(dest);
+        response.setStatus(projektPZResponse.getResult());
 
-        return possibleAirportsResponse.getPossibleAirportsList();
+        return projektPZResponse.getResponseList();
     }
 
     @RequestMapping(value = "/flights", method = RequestMethod.GET)
@@ -77,5 +76,13 @@ public class FlightController {
         response.setStatus(flightResponse.getResult());
 
         return flightResponse.getFlightUVMResultList();
+    }
+
+    @RequestMapping(value = "/classes", method = RequestMethod.GET)
+    public List<String> getClasses(HttpServletResponse response) {
+        ProjektPZResponse projektPZResponse = airportOperations.getClasses();
+
+        response.setStatus(projektPZResponse.getResult());
+        return projektPZResponse.getResponseList();
     }
 }

@@ -31,6 +31,9 @@ public interface FlightMapper {
     ArrayList<FlightDTO> getFlights(FlightToSearchDTO flightToSearchDTO);
 
 
+    @Select("SELECT Name FROM Class")
+    ArrayList<String> getClasses();
+
     @Select("COMMIT")
     void commit();
 
