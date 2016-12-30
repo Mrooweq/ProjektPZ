@@ -64,6 +64,26 @@ return v_flag;
 end;
 /
 
+------------------
+
+create or replace FUNCTION isEmailAlreadyUsed (str IN VARCHAR2)
+return integer is
+
+v_flag integer := 0;
+
+begin
+
+SELECT
+   CASE WHEN EXISTS(SELECT 1 FROM "User" where Email = str)
+     THEN 1  
+     ELSE 0  
+   END  
+into v_flag FROM dual;
+
+return v_flag;
+end;
+/
+
 -------------------
 
 create or replace FUNCTION isUsernameAndPasswordCorrect (v_username IN VARCHAR2, v_password IN VARCHAR2)

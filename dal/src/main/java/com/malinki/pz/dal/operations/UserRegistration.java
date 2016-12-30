@@ -48,6 +48,11 @@ public class UserRegistration extends DatabaseOperation{
 
 	private boolean isUserPositivelyValidated(UserDTO user) {
 		boolean isLoginAlreadyUsed = getBoolean(mapper.isLoginAlreadyUsed(user.getUsername()));
-		return !isLoginAlreadyUsed;
+		boolean isEmailAlreadyUsed = getBoolean(mapper.isEmailAlreadyUsed(user.getUsername()));
+		if(!isEmailAlreadyUsed && !isLoginAlreadyUsed) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
