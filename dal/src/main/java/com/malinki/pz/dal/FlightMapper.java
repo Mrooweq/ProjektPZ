@@ -24,7 +24,7 @@ public interface FlightMapper {
     ArrayList<String> getPossibleSourcesWithParam(@Param("dest") String dest);
 
     @Select("SELECT Flight_Number AS flightNumber, flight_date AS flightDate, (base_price * Multiplier.Multiplier) AS price, Airline.name AS airlineName, " +
-            "src.Name AS \"From\", dest.Name AS \"To\", free_places AS freePlaces, Airline.name_Shortcut as airlineShortcut " +
+            "src.Name AS \"From\", dest.Name AS \"To\", free_places AS freePlaces, Airline.name_Shortcut AS airlineShortcut " +
             "FROM Flight, Airline, Airport src, Airport dest, Multiplier, \"CLASS\" " +
             "WHERE Flight.ID_Airline = Airline.ID_Airline AND Flight.ID_Airline = Airline.ID_Airline " +
             "AND src.ID_AIRPORT = \"From\" AND dest.ID_AIRPORT = \"To\" " +
@@ -38,11 +38,11 @@ public interface FlightMapper {
     @Select("SELECT Name FROM Class")
     ArrayList<String> getClasses();
 
-    @Select("INSERT INTO TICKET VALUES (" +
+    @Select("INSERT INTO Ticket VALUES (" +
             "getMinTicketID, " +
-            "(select Id_Flight from Flight, Airline where FLIGHT_NUMBER = SUBSTR(#{flight},4,7) and Airline.NAME_SHORTCUT = SUBSTR(#{flight},1,3)), " +
-            "(select ID_Class from Class where Name = #{flightClass}), " +
-            "(select ID_User from \"User\" where Username = #{username}))")
+            "(SELECT ID_Flight FROM Flight, Airline WHERE FLIGHT_NUMBER = #{flightNumber} AND Airline.NAME_SHORTCUT = #{airlineShortcut}), " +
+            "(SELECT ID_Class FROM Class WHERE Name = #{flightClass}), " +
+            "(SELECT ID_User FROM \"User\" WHERE Username = #{username}))")
     void addTicket(TicketDTO ticket);
 
     @Select("COMMIT")

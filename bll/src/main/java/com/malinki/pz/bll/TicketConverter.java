@@ -10,7 +10,8 @@ public class TicketConverter {
             return null;
         else
             return new TicketDTO.TicketDTOBuilder()
-                    .flight(ticket.getFlight())
+                    .flightNumber(ticket.getFlightNumber())
+                    .airlineShortcut(ticket.getAirlineShortcut())
                     .flightClass(ticket.getFlightClass())
                     .username(ticket.getUsername())
                     .build();
@@ -21,7 +22,8 @@ public class TicketConverter {
             return null;
         else
             return new TicketUVM.TicketUVMBuilder()
-                    .flight(ticket.getFlight())
+                    .flightNumber(ticket.getFlightNumber())
+                    .airlineShortcut(ticket.getAirlineShortcut())
                     .flightClass(ticket.getFlightClass())
                     .username(ticket.getUsername())
                     .build();

@@ -2,12 +2,16 @@ package com.malinki.pz.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.malinki.pz.bll.*;
 import com.malinki.pz.lib.*;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -73,19 +77,24 @@ public class FlightController {
         return flightResponse.getFlightUVMResultList();
     }
 
-    @RequestMapping(value = "/buy", method = RequestMethod.GET)
-    public void buyTicket(HttpServletResponse response,
-                          @RequestParam String flight,
-                          @RequestParam String flightClass,
-                          @RequestParam String user) {
-
-        TicketUVM ticketUVM = new TicketUVM.TicketUVMBuilder()
-                .flight(flight)
-                .flightClass(flightClass)
-                .username(user)
-                .build();
-
-        ProjektPZResponse projektPZResponse = airportOperations.addTicket(ticketUVM);
+    @RequestMapping(value = "/buy", method = RequestMethod.POST)
+    public void buyTicket(HttpServletResponse response, @RequestBody String requestBody) {
+        ProjektPZResponse projektPZResponse = airportOperations.addTicket(parseToTicketUVM(requestBody));
         response.setStatus(projektPZResponse.getResult());
+    }
+
+    public TicketUVM parseToTicketUVM(String requestBody) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        TicketUVM user = null;
+
+        try {
+            user = mapper.readValue(requestBody, TicketUVM.class);
+        } catch (IOException e) {
+            logger.log(Level.ERROR, e.toString());
+        }
+
+        return user;
     }
 }

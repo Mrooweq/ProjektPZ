@@ -2,22 +2,24 @@ package com.malinki.pz.lib;
 
 
 public class TicketDTO {
-    private String flight;
+    private String flightNumber;
     private String flightClass;
     private String username;
+    private String airlineShortcut;
 
     private TicketDTO(TicketDTO.TicketDTOBuilder builder) {
-        this.flight = builder.flight;
+        this.flightNumber = builder.flightNumber;
         this.flightClass = builder.flightClass;
         this.username = builder.username;
+        this.airlineShortcut = builder.airlineShortcut;
     }
 
-    public String getFlight() {
-        return flight;
+    public String getFlightNumber() {
+        return flightNumber;
     }
 
-    public void setFlight(String flight) {
-        this.flight = flight;
+    public void setFlightNumber(String flightNumber) {
+        this.flightNumber = flightNumber;
     }
 
     public String getFlightClass() {
@@ -36,13 +38,22 @@ public class TicketDTO {
         this.username = username;
     }
 
+    public String getAirlineShortcut() {
+        return airlineShortcut;
+    }
+
+    public void setAirlineShortcut(String airlineShortcut) {
+        this.airlineShortcut = airlineShortcut;
+    }
+
     public static class TicketDTOBuilder {
-        private String flight;
+        private String flightNumber;
         private String flightClass;
         private String username;
+        private String airlineShortcut;
 
-        public TicketDTO.TicketDTOBuilder flight(String flight) {
-            this.flight = flight;
+        public TicketDTO.TicketDTOBuilder flightNumber(String flightNumber) {
+            this.flightNumber = flightNumber;
             return this;
         }
 
@@ -53,6 +64,11 @@ public class TicketDTO {
 
         public TicketDTO.TicketDTOBuilder username(String user) {
             this.username = user;
+            return this;
+        }
+
+        public TicketDTO.TicketDTOBuilder airlineShortcut(String airlineShortcut) {
+            this.airlineShortcut = airlineShortcut;
             return this;
         }
 
