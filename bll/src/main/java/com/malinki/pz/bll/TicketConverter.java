@@ -20,7 +20,7 @@ public class TicketConverter {
         if(ticket == null)
             return null;
         else
-            return new TicketUVM.TicketUVMBuilder()
+            return new TicketUVM.TicketDTOTicketDTOBuilder()
                     .flight(ticket.getFlight())
                     .flightClass(ticket.getFlightClass())
                     .user(ticket.getUser())

@@ -22,10 +22,18 @@ public interface Mapper {
 	@Select("SELECT * FROM \"User\" where ID_User = ( select count(*) from \"User\")")
 	UserDTO getLastAddedUser();
 
-	@Select("INSERT INTO TICKET VALUES (1, #{flight}, #{flightClass}, (select ID_User from \"User\" where Username = #{username}))")
+	@Select("INSERT INTO TICKET VALUES (getMinTicketID, #{flight}, #{flightClass}, (select ID_User from \"User\" where Username = #{username}))")
 	void addTicket(@Param("flight") String flight,
-				   @Param("flightClass") String flightClass,
-				   @Param("username") String username);
+			@Param("flightClass") String flightClass,
+			@Param("username") String username/*,
+			@Param("firstname") String firstname,
+			@Param("lastName") String lastName,
+			@Param("nrIDCard") String nrIDCard,
+			@Param("email") String email,
+			@Param("sourceAirport") String sourceAirport,
+			@Param("destinyAirport") String destinyAirport,
+			@Param("flightDate") String flightDate,
+			@Param("airlineName") String airlineName*/);
 
 	@Select("COMMIT")
 	void commit();

@@ -1,5 +1,7 @@
 package com.malinki.pz.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletResponse;
 
 import com.malinki.pz.bll.*;
@@ -23,13 +25,18 @@ public class TicketController {
                           @RequestParam String flightClass,
                           @RequestParam String user) {
 
-        TicketUVM ticketUVM = new TicketUVM.TicketUVMBuilder()
+        TicketUVM ticketUVM = new TicketUVM.TicketDTOTicketDTOBuilder()
                 .flight(flight)
                 .flightClass(flightClass)
                 .user(user)
                 .build();
 
         int result = ticketOperations.addTicket(ticketUVM);
+        
+        SendPDFByEmail sendPDFByEmail = new SendPDFByEmail(ticketUVM);
+        
+        
+       
         response.setStatus(result);
     }
 }

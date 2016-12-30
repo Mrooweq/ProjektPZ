@@ -48,6 +48,34 @@ end;
 
 ------------------
 
+create or replace FUNCTION getMinTicketID 
+return number is 
+
+cnt number := 0;
+v_flag integer := 1;
+
+begin 
+
+loop 
+
+cnt := cnt + 1;
+
+SELECT 
+   CASE WHEN EXISTS(SELECT 1 FROM "Ticket" where ID_Ticket = cnt)
+     THEN 1  
+     ELSE 0  
+   END  
+into v_flag FROM dual;
+
+
+EXIT when v_flag = 0;                     
+end loop;
+ 
+return cnt; 
+end; 
+/
+
+------------------
 create or replace FUNCTION isLoginAlreadyUsed (str IN VARCHAR2)
 return integer is
 
