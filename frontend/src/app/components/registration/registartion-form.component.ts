@@ -3,7 +3,8 @@ import {Router} from "@angular/router";
 import {AuthenticationService} from "../../_services/authentication.service";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {EmailValidator} from "../../_validators/email-validator";
-import {User} from "../../_mocks/username";
+import {User} from "../../_mocks/user";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'registartion-form',
@@ -15,7 +16,8 @@ export class Registration {
   errorMessage: string;
   succesMessage: string;
   registrationForm: FormGroup;
-  username: User;
+  user: User;
+  _subscriptions: Subscription[] = [];
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -40,10 +42,10 @@ export class Registration {
     this.errorMessage = null;
     this.succesMessage = null;
 
-    this.username = new User(model.firstname, model.lastname, model.username, model.email, model.password);
-    this.authenticationService.createNewUser(this.username).subscribe(
+    this.user = new User(model.firstname, model.lastname, model.username, model.email, model.password);
+    this._subscriptions.push(this.authenticationService.createNewUser(this.user).subscribe(
       data => {
-        this.succesMessage = data.message || 'Rejestracja przebiegla pomyslnie';
+        this.succesMessage = data.message || 'Registration successful';
         this.registrationForm.reset();
       },
       error => {
@@ -54,6 +56,10 @@ export class Registration {
           this.registrationForm.controls['conpassword'].reset();
         }
       }
-    );
+    ));
+  }
+
+  ngOnDestroy() {
+    this._subscriptions.forEach(s => s.unsubscribe());
   }
 }

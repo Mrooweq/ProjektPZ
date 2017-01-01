@@ -7,6 +7,7 @@ export class SearchService {
   private flightsUrl = 'api/flights';
   private srcUrl = 'api/src';
   private destUrl = 'api/dest';
+  private classesUrl = 'api/classes';
 
   constructor(private http: Http) {
   }
@@ -27,8 +28,24 @@ export class SearchService {
       .catch(this.handleError);
   }
 
-  getTicket(){
-    
+  getClasses(): Observable<String[]> {
+    return this.http.get(this.classesUrl)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getFlights(value: any): Observable<any[]> {
+    let params = new URLSearchParams();
+    params.set('dateStart', value.start);
+    params.set('dateEnd', value.end);
+    params.set('from', value.source);
+    params.set('to', value.destination);
+    params.set('_class', value.class);
+    params.set('numberOfPassengers', value.travelers);
+
+    return this.http.get(this.flightsUrl, {search: params})
+      .map(res => res.json())
+      .catch(this.handleError);
   }
 
   private handleError(error: any) {
