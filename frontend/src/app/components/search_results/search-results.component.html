@@ -1,0 +1,6 @@
+<div *ngIf="_flights?.length > 0">
+  <div *ngFor="let flight of _flights">
+    {{flight.flightDate}}
+  </div>
+</div>
+<p *ngIf="_flights?.length <= 0">Results not found!</p>

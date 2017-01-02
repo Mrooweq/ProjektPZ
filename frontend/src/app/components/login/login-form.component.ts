@@ -15,16 +15,11 @@ export class LoginForm implements OnDestroy{
   _subscriptions: Subscription[] = [];
 
   constructor(private fb: FormBuilder,
-              private router: Router,
               private authenticationService: AuthenticationService) {
     this.loginForm = fb.group({
       'username': [null, [Validators.required, Validators.pattern('[a-zA-Z0-9)]+')]],
       'password': [null, [Validators.required, Validators.pattern('[a-zA-Z0-9)]+')]]
     });
-  }
-
-  goBack(): void {
-    this.router.navigate(['/']);
   }
 
   login(loginFormValue: any): void {
@@ -33,7 +28,6 @@ export class LoginForm implements OnDestroy{
       .subscribe(
         () => {
           this.loginForm.reset();
-          this.goBack();
         },
         error => {
           this.errorMessage = error;

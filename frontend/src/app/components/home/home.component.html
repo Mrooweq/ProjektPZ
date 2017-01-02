@@ -47,9 +47,9 @@
               <div class="col-md-2">
                 <div class="form-group">
                   <label>Class</label>
-                  <select name="class" class="form-control" formControlName="class">
-                    <option *ngFor="let class of _classes" [value]="class">
-                      {{class}}
+                  <select name="class" class="form-control" formControlName="_class">
+                    <option *ngFor="let _class of _classes" [value]="_class">
+                      {{_class}}
                     </option>
                   </select>
                 </div>
@@ -63,7 +63,7 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <button type="submit" class="btn btn-secondary float-xs-right" [disabled]="!searchForm.valid">
+                <button type="submit" class="btn btn-secondary float-xs-right" [disabled]="!searchForm.valid" data-dismiss="my-date-picker">
                   Search
                 </button>
               </div>

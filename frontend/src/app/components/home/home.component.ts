@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'home',
@@ -29,6 +30,7 @@ export class Home implements OnInit,OnDestroy {
   };
 
   constructor(private fb: FormBuilder,
+              private router: Router,
               private searchService: SearchService) {
   }
 
@@ -40,10 +42,9 @@ export class Home implements OnInit,OnDestroy {
   }
 
   submit(value: any) {
-    console.log(value);
     this._subscriptions.push(this.searchService.getFlights(value).subscribe(
       flights => {
-        console.log(flights);
+        this.router.navigate(['/results']);
       },
       error => {
         console.log(error);
@@ -91,7 +92,7 @@ export class Home implements OnInit,OnDestroy {
       destination: [null],
       start: [null],
       end: [null],
-      class: [null],
+      _class: [null],
       travelers: [null]
     });
   }

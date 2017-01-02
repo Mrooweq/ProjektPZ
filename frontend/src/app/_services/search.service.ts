@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Http, URLSearchParams} from "@angular/http";
+import {Flight} from "../_mocks/flight";
 
 @Injectable()
 export class SearchService {
@@ -9,7 +10,13 @@ export class SearchService {
   private destUrl = 'api/dest';
   private classesUrl = 'api/classes';
 
+  private _flights: Flight[] = [];
+
   constructor(private http: Http) {
+  }
+
+  flights(): Observable<Flight[]> {
+    return Observable.of(this._flights);
   }
 
   getSourceAirport(): Observable<String[]> {
@@ -34,17 +41,23 @@ export class SearchService {
       .catch(this.handleError);
   }
 
-  getFlights(value: any): Observable<any[]> {
+  getFlights(flight: any): Observable<Flight[]> {
     let params = new URLSearchParams();
-    params.set('dateStart', value.start);
-    params.set('dateEnd', value.end);
-    params.set('from', value.source);
-    params.set('to', value.destination);
-    params.set('_class', value.class);
-    params.set('numberOfPassengers', value.travelers);
+    params.set('dateStart', flight.start);
+    params.set('dateEnd', flight.end);
+    params.set('from', flight.source);
+    params.set('to', flight.destination);
+    params.set('_class', flight._class);
+    params.set('numberOfPassengers', flight.travelers);
 
     return this.http.get(this.flightsUrl, {search: params})
-      .map(res => res.json())
+      .map(res => {
+          let flights = res.json();
+          if (res.status === 200)
+            this._flights = flights;
+          return flights;
+        }
+      )
       .catch(this.handleError);
   }
 

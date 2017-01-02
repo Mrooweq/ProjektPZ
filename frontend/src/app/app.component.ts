@@ -9,7 +9,7 @@ import {Subscription} from "rxjs";
   styleUrls: ['../_css/app.component.css']
 })
 export class AppComponent implements OnInit,OnDestroy {
-  title = 'App works!';
+  title = 'MALINKI';
   activeUser: User;
   _subscriptions:Subscription[] = [];
 
