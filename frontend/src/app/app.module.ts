@@ -17,6 +17,7 @@ import {Home} from "./components/home/home.component";
 import {Registration} from "./components/registration/registartion-form.component";
 import {EqualValidator} from "./_validators/equal-validator.directive";
 import {SearchService} from "./_services/search.service";
+import {SearchResults} from "./components/search_results/search-results.component";
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {SearchService} from "./_services/search.service";
     LoginForm,
     Registration,
     Home,
+    SearchResults,
     EqualValidator
   ],
   providers: [AuthenticationService, SearchService],

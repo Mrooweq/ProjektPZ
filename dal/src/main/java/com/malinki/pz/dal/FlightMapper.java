@@ -23,13 +23,13 @@ public interface FlightMapper {
     @Select("SELECT DISTINCT src.Name FROM Flight, Airport src, Airport dest WHERE \"From\"=src.ID_Airport AND \"To\"=dest.ID_Airport AND dest.Name=#{dest}")
     ArrayList<String> getPossibleSourcesWithParam(@Param("dest") String dest);
 
-    @Select("SELECT Flight_Number AS flightNumber, flight_date AS flightDate, (base_price * Multiplier.Multiplier) AS price, Airline.name AS airlineName, " +
+    @Select("SELECT Flight_Number AS flightNumber, departure_date AS departureDate, arrival_date AS arrivalDate, (base_price * Multiplier.Multiplier) AS price, Airline.name AS airlineName, " +
             "src.Name AS \"From\", dest.Name AS \"To\", free_places AS freePlaces, Airline.name_Shortcut AS airlineShortcut " +
             "FROM Flight, Airline, Airport src, Airport dest, Multiplier, \"CLASS\" " +
             "WHERE Flight.ID_Airline = Airline.ID_Airline AND Flight.ID_Airline = Airline.ID_Airline " +
             "AND src.ID_AIRPORT = \"From\" AND dest.ID_AIRPORT = \"To\" " +
             "AND src.NAME = #{from} AND dest.NAME = #{to} " +
-            "AND FLIGHT_DATE BETWEEN #{dateStart} AND #{dateEnd} " +
+            "AND Departure_Date BETWEEN #{dateStart} AND #{dateEnd} " +
             "and Multiplier.ID_Multiplier = \"CLASS\".ID_Multiplier and \"CLASS\".Name = #{_class} " +
             "AND free_places >= #{numberOfPassengers}")
     ArrayList<FlightDTO> getFlights(FlightToSearchDTO flightToSearchDTO);

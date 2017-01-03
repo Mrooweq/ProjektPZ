@@ -1,36 +1,50 @@
-<div class="container" style="padding-top: 30px">
-  <div class="row">
-    <div class="col-lg-3"></div>
-    <div class="col-lg-6 form-bordered">
-      <a (click)="goBack()" class="pointer float-xs-right close"> </a>
-      <div style="padding: 35px">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top: 90px">
+      <div class="modal-body" style="margin-top: 10px">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="loginForm.reset()">
+          <span aria-hidden="true">&times;</span>
+        </button>
         <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
-        <h1 id="#formHeader">Log In</h1>
+        <h1 style="padding: 10px 20px 0 20px" id="#formHeader">Log In</h1>
         <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
-          <div class="form-group">
-            <label>Username: </label>
-            <input type="text" class="form-control" [formControl]="loginForm.controls['username']">
-            <div class="error">
-              <p *ngIf="loginForm.get('username').hasError('required') && loginForm.get('username').touched"> Username
-                is required</p>
-              <p *ngIf="loginForm.get('username').hasError('pattern') && loginForm.get('username').dirty">Invalid username</p>
+          <div style="padding: 20px">
+            <div class="form-group">
+              <label>Username: </label>
+              <input type="text" class="form-control" [formControl]="loginForm.controls['username']">
+              <div class="error">
+                <p *ngIf="loginForm.get('username').hasError('required') && loginForm.get('username').touched">
+                  Username
+                  is required</p>
+                <p *ngIf="loginForm.get('username').hasError('pattern') && loginForm.get('username').dirty">
+                  Invalid username</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Password: </label>
+              <input type="password" class="form-control" [formControl]="loginForm.controls['password']">
+              <div class="error">
+                <p *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
+                  Password
+                  is required</p>
+                <p *ngIf="loginForm.get('password').hasError('pattern') && loginForm.get('password').dirty">
+                  Invalid password</p>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label>Password: </label>
-            <input type="password" class="form-control" [formControl]="loginForm.controls['password']">
-            <div class="error">
-              <p *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched"> Password
-                is required</p>
-              <p *ngIf="loginForm.get('password').hasError('pattern') && loginForm.get('password').dirty">Invalid password</p>
-            </div>
+          <div class="modal-footer">
+            <div class="float-xs-left">Don't have an account? <a data-dismiss="modal" routerLink="/registration"
+                                                                 (click)="loginForm.reset()">Sign
+              Up</a></div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="loginForm.reset()">Close
+            </button>
+            <button type="submit" class="btn btn-primary float-xs-right" [disabled]="!loginForm.valid"
+                    style="margin-left: 15px">
+              Submit
+            </button>
           </div>
-          <button type="submit" class="btn btn-secondary float-xs-right" [disabled]="!loginForm.valid">
-            Submit
-          </button>
         </form>
       </div>
-      Don't have an account? <a routerLink="/registration">Sign Up</a>
     </div>
   </div>
 </div>

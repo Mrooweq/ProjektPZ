@@ -3,7 +3,8 @@ package com.malinki.pz.lib;
 
 public class FlightUVM {
     private int flightNumber;
-    private String flightDate;
+    private String departureDate;
+    private String arrivalDate;
     private int price;
     private String airlineName;
     private String airlineShortcut;
@@ -15,7 +16,8 @@ public class FlightUVM {
 
     private FlightUVM(FlightUVM.FlightUVMBuilder builder) {
         this.flightNumber = builder.flightNumber;
-        this.flightDate = builder.flightDate;
+        this.departureDate = builder.departureDate;
+        this.arrivalDate = builder.arrivalDate;
         this.price = builder.price;
         this.airlineName = builder.airlineName;
         this.from = builder.from;
@@ -32,12 +34,20 @@ public class FlightUVM {
         this.flightNumber = flightNumber;
     }
 
-    public String getFlightDate() {
-        return flightDate;
+    public String getDepartureDate() {
+        return departureDate;
     }
 
-    public void setFlightDate(String flightDate) {
-        this.flightDate = flightDate;
+    public void setDepartureDate(String departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public String getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public void setArrivalDate(String arrivalDate) {
+        this.arrivalDate = arrivalDate;
     }
 
     public int getPrice() {
@@ -90,7 +100,8 @@ public class FlightUVM {
 
     public static class FlightUVMBuilder {
         private int flightNumber;
-        private String flightDate;
+        private String departureDate;
+        private String arrivalDate;
         private int price;
         private String airlineName;
         private String from;
@@ -103,8 +114,13 @@ public class FlightUVM {
             return this;
         }
 
-        public FlightUVM.FlightUVMBuilder flightDate(String flightDate) {
-            this.flightDate = flightDate;
+        public FlightUVM.FlightUVMBuilder departureDate(String departureDate) {
+            this.departureDate = departureDate;
+            return this;
+        }
+
+        public FlightUVM.FlightUVMBuilder arrivalDate(String arrivalDate) {
+            this.arrivalDate = arrivalDate;
             return this;
         }
 

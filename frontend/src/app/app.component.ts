@@ -9,9 +9,9 @@ import {Subscription} from "rxjs";
   styleUrls: ['../_css/app.component.css']
 })
 export class AppComponent implements OnInit,OnDestroy {
-  title = 'App works!';
-  activeUser: User;
-  _subscriptions:Subscription[] = [];
+  private title = 'MALINKI BOOKING';
+  private activeUser: User;
+  private _subscriptions: Subscription[] = [];
 
   constructor(private authenticationService: AuthenticationService) {
   }
@@ -29,18 +29,21 @@ export class AppComponent implements OnInit,OnDestroy {
 
   setCurrentUser() {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.activeUser = currentUser.user;
+    if (currentUser)
+      this.activeUser = currentUser.user;
+    else
+      this.activeUser = null;
   }
 
   ngOnInit(): void {
-    this._subscriptions.push( this.authenticationService.isLoggedIn().subscribe(loggedIn => {
+    this.setCurrentUser();
+    this._subscriptions.push(this.authenticationService.isLoggedIn().subscribe(loggedIn => {
       if (loggedIn)
         this.setCurrentUser();
     }));
   }
 
   ngOnDestroy() {
-    this.logout();
     this._subscriptions.forEach(s => s.unsubscribe());
   }
 }
