@@ -13,11 +13,11 @@ import {Subscription} from "rxjs";
 })
 
 export class Registration {
-  errorMessage: string;
-  succesMessage: string;
-  registrationForm: FormGroup;
-  user: User;
-  _subscriptions: Subscription[] = [];
+  private errorMessage: string;
+  private succesMessage: string;
+  private registrationForm: FormGroup;
+  private user: User;
+  private _subscriptions: Subscription[] = [];
 
   constructor(private fb: FormBuilder,
               private router: Router,

@@ -1,6 +1,29 @@
-<div *ngIf="_flights?.length > 0">
-  <div *ngFor="let flight of _flights">
-    {{flight.flightDate}}
+<div class="container body form-bordered">
+  <div class="container" style="padding: 10px">
+    <div *ngIf="_flights?.length > 0">
+      <div *ngFor="let flight of _flights">
+        <div class="row">
+          <div class="col-md-4" style="margin-top: 15px">{{flight.airline}}</div>
+          <div class="col-md-8" style="margin-top: 15px">
+            <div class="col-xs-4">
+              <div>{{flight.from}}</div>
+              <div>{{flight.flightDate}}</div>
+            </div>
+            <div class="col-xs-4">
+              <div class="arrow"></div>
+            </div>
+            <div class="col-xs-4">
+              <div>{{flight.to}}</div>
+              <div>{{flight.flightDate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row float-xs-right price">Price: {{flight.basePrice}} €</div>
+      </div>
+    </div>
+    <div class="not_found" *ngIf="_flights?.length <= 0">
+      <p>Sorry</p>
+      <p>Results not found!</p>
+    </div>
   </div>
 </div>
-<p *ngIf="_flights?.length <= 0">Results not found!</p>
