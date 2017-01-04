@@ -20,6 +20,7 @@
     "@angular/router": "~3.1.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.14",
     "core-js": "^2.4.1",
+    "jquery": "^3.1.1",
     "mydatepicker": "^1.1.12",
     "ng2-auto-complete": "^0.8.4",
     "ng2-bs3-modal": "^0.10.4",
@@ -29,7 +30,9 @@
     "zone.js": "^0.6.23"
   },
   "devDependencies": {
+    "@types/bootstrap": "^3.3.32",
     "@types/jasmine": "^2.2.30",
+    "@types/jquery": "^2.0.39",
     "@types/node": "^6.0.42",
     "angular-cli": "1.0.0-beta.19-3",
     "codelyzer": "1.0.0-beta.1",

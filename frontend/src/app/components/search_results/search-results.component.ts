@@ -1,20 +1,21 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterViewChecked} from '@angular/core';
 import {Flight} from "../../_mocks/flight";
 import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";
-import {AppComponent} from "../../app.component";
 import {User} from "../../_mocks/user";
 import {AuthenticationService} from "../../_services/authentication.service";
+declare var $: JQueryStatic;
 
 @Component({
   selector: 'my-app',
   templateUrl: './search-results.component.html',
   styleUrls: ['search-results.component.css']
 })
-export class SearchResults implements OnInit,OnDestroy {
+export class SearchResults implements OnInit,OnDestroy,AfterViewChecked {
   private _flights: Flight[] = [new Flight('NieLot', 100, '2016-01-01', 1000, 'Warsaw', 'Geneva')];
   private _subscriptions: Subscription[] = [];
-  loggedUser: User;
+  private loggedUser: User;
+
 
   constructor(private searchService: SearchService,
               private authenticationService: AuthenticationService) {
@@ -33,6 +34,12 @@ export class SearchResults implements OnInit,OnDestroy {
     else {
       this.loggedUser = null;
     }
+  }
+
+  ngAfterViewChecked() {
+    $('.log_in_button').click(function () {
+      $('#myModal').modal('show');
+    });
   }
 
   ngOnInit(): void {

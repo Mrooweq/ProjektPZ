@@ -21,8 +21,11 @@
         </div>
         <div class="row float-xs-right price">
           <span style="margin-right: 5px">Price: {{flight.basePrice}} €</span>
-          <button class="btn btn-primary" (click)="click(flight)">
+          <button *ngIf="loggedUser" class="btn btn-primary buy_button" (click)="click(flight)">
             Buy
+          </button>
+          <button *ngIf="!loggedUser" class="btn btn-primary log_in_button" (click)="click(flight)">
+            Log In to buy
           </button>
         </div>
       </div>

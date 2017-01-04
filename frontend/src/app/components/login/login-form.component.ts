@@ -1,16 +1,16 @@
-import {Component, OnDestroy, ViewChild} from '@angular/core';
+import {Component, OnDestroy, AfterViewInit, AfterViewChecked} from '@angular/core';
 import {AuthenticationService} from '../../_services/authentication.service';
-import {Router} from "@angular/router";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
+declare var $: JQueryStatic;
 
 @Component({
   selector: 'login',
   templateUrl: 'login-form.component.html',
   styleUrls: ['login-form.component.css']
 })
-export class LoginForm implements OnDestroy {
-  errorMessage: string;
+export class LoginForm implements OnDestroy,AfterViewInit {
+  errorMessage: string = null;
   loginForm: FormGroup;
   _subscriptions: Subscription[] = [];
 
@@ -22,11 +22,19 @@ export class LoginForm implements OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    $('#myModal').on('hidden.bs.modal', () => {
+      this.loginForm.reset();
+      this.errorMessage = null;
+    });
+  }
+
   login(loginFormValue: any): void {
     this.errorMessage = null;
     this._subscriptions.push(this.authenticationService.login(loginFormValue.username, loginFormValue.password)
       .subscribe(
         () => {
+          $('#myModal').modal('hide');
           this.loginForm.reset();
         },
         error => {
