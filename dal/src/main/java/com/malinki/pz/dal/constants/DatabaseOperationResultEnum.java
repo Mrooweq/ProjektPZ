@@ -2,7 +2,8 @@ package com.malinki.pz.dal.constants;
 
 public enum DatabaseOperationResultEnum {
 	USER_REGISTERED_SUCCESSFULLY("User registered successfully"),
-	USER_ALREADY_EXIST("User with such login already exists"),
+	USERNAME_ALREADY_USED("User with such login already exists"),
+	EMAIL_ALREADY_USED("Email already used"),
 	USER_REGISTER_ATTEMPT_FAILED_DUE_TO_ERROR("User not registered successfully due to error"),
 	
 	USER_LOGGED_IN_SUCCESSFULLY("User logged in successfully"),

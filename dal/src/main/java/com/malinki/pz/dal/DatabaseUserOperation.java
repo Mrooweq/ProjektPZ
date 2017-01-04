@@ -81,8 +81,11 @@ public abstract class DatabaseUserOperation {
 			case USER_REGISTER_ATTEMPT_FAILED_DUE_TO_ERROR:
 				result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 				break;
-			case USER_ALREADY_EXIST:
+			case USERNAME_ALREADY_USED:
 				result = HttpServletResponse.SC_CONFLICT;
+				break;
+			case EMAIL_ALREADY_USED:
+				result = HttpServletResponse.SC_NOT_ACCEPTABLE;
 				break;
 			default:
 				break;

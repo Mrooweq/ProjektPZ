@@ -14,6 +14,9 @@ public interface UserMapper {
 	@Select("SELECT isLoginAlreadyUsed(#{str}) FROM DUAL")
 	int isLoginAlreadyUsed(@Param("str") String str);	//returns 1 if username with such login already exists
 	
+	@Select("SELECT isEmailAlreadyUsed(#{str}) FROM DUAL")
+	int isEmailAlreadyUsed(@Param("str") String str);
+	
 	@Select("SELECT isUsernameAndPasswordCorrect(#{username}, #{password}) FROM DUAL")
 	int isUsernameAndPasswordCorrect(UserDTO user);	//return 1 if username and password are correct
 
