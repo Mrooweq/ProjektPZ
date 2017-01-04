@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 
 import {Observable, Subject} from "rxjs";
@@ -9,10 +9,18 @@ export class AuthenticationService {
   private httpLoginUrl = 'api/login';
   private httpLogoutUrl = 'api/logout';
   private httpRegisterUrl = 'api/register';
-  private loggedIn = false;
+  private loggedIn: boolean;
   private logger = new Subject<boolean>();
 
   constructor(private http: Http) {
+    if (localStorage.getItem('currentUser'))
+      this.loggedIn = true;
+    else
+      this.loggedIn = false;
+  }
+
+  isCurrentUser() {
+    return this.loggedIn;
   }
 
   isLoggedIn(): Observable<boolean> {

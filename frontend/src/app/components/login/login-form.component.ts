@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from "@angular/router";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
@@ -9,7 +9,7 @@ import {Subscription} from "rxjs";
   templateUrl: 'login-form.component.html',
   styleUrls: ['login-form.component.css']
 })
-export class LoginForm implements OnDestroy{
+export class LoginForm implements OnDestroy {
   errorMessage: string;
   loginForm: FormGroup;
   _subscriptions: Subscription[] = [];
@@ -34,6 +34,7 @@ export class LoginForm implements OnDestroy{
           this.loginForm.reset();
         }));
   }
+
   ngOnDestroy() {
     this._subscriptions.forEach(s => s.unsubscribe());
   }

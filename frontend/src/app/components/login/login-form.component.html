@@ -7,7 +7,7 @@
         </button>
         <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
         <h1 style="padding: 10px 20px 0 20px" id="#formHeader">Log In</h1>
-        <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+        <form id="myForm" [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
           <div style="padding: 20px">
             <div class="form-group">
               <label>Username: </label>

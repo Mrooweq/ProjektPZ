@@ -6,18 +6,53 @@
 }
 
 .not_found {
+  min-height: 75vh;
+  text-align: center;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.not_found_content {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
 }
 
 .arrow {
-  width: 80%;
-  height: 27px;
+  margin-top: 10px;
+  width: 45%;
+  height: 25px;
+  margin-left: 30%;
+
 }
 
 .price {
-  margin-right: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #2c991b;
+}
+
+.content {
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.form-bordered {
+  background-color: #4f5457;
+  border: 2px solid #3c4042;
+}
+
+.airline {
+  font-weight: bold;
+}
+
+.date {
+  font-weight: 700;
+}
+
+.country {
+  font-weight: 300;
 }
