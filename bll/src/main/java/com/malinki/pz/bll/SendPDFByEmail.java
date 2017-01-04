@@ -18,27 +18,17 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 import com.itextpdf.io.source.ByteArrayOutputStream;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceCmyk;
 import com.malinki.pz.lib.TicketUVM;
 
-/**
- * Email with PDF example. <br>
- * <br>
- * Email sending code adapted from
- * http://www.java-tips.org/other-api-tips/javamail/how-to-send-an-email-with-a-file-attachment.html.
- * 
- * @author Jee Vang
- *
- */
+
+
 public class SendPDFByEmail {
-	Color grayColor = new DeviceCmyk(0.f, 0.f, 0.f, 0.875f);
 	
-	final String senderEmailID = "sajgon338";
-	final String senderPassword = "znaczek338";
+	final String senderEmailID = "malinkibooking";
+	final String senderPassword = "znaczek6598";
 	final String emailSMTPserver = "smtp.gmail.com";
 	final String emailServerPort = "465";
-	String senderEmail = "sajgon338@gmail.com";
+	String senderEmail = "malinkibooking@gmail.com";
 	String receiverEmailID = "sajgon338@gmail.com";
 	String emailSubject = "Test Mail";
 	String emailBody = ":)";
