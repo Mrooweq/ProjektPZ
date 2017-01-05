@@ -13,10 +13,14 @@ public class SessionTable {
 	}
 
 	public void addUser(UserUVM user){
-			sessionTable.put(user.getUsername(), new SessionStorage(user, new TokenContainer()));
+		sessionTable.put(user.getUsername(), new SessionStorage(user, new TokenContainer()));
 	}
 
 	public SessionStorage getUserSession(UserUVM user){
 		return sessionTable.get(user.getUsername());
+	}
+
+	public void deleteUserSession(UserUVM user){
+		sessionTable.remove(user.getUsername());
 	}
 }

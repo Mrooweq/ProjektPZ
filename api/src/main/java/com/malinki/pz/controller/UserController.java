@@ -48,6 +48,11 @@ public class UserController {
 		response.setStatus(result);
 	}
 
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public void logout(@RequestBody String requestBody, HttpServletResponse response) {
+		userOperations.logoutUser(parseToUserUVM(requestBody));
+	}
+
 	public UserUVM parseToUserUVM(String requestBody) {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

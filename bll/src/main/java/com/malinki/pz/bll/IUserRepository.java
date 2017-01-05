@@ -6,4 +6,5 @@ import com.malinki.pz.lib.UserUVM;
 public interface IUserRepository {
 	public int registerUser(UserUVM user);
 	public UserResponse loginUser(UserUVM user);
+	public void logoutUser(UserUVM user);
 }
