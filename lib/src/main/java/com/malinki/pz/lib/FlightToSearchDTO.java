@@ -6,14 +6,16 @@ public class FlightToSearchDTO {
     private String dateEnd;
     private String from;
     private String to;
-
-    public FlightToSearchDTO(){}
+    private String _class;
+    private String numberOfPassengers;
 
     private FlightToSearchDTO(FlightToSearchDTO.FlightDTOBuilder builder) {
         this.dateStart = builder.dateStart;
         this.dateEnd = builder.dateEnd;
         this.from = builder.from;
         this.to = builder.to;
+        this._class = builder._class;
+        this.numberOfPassengers = builder.numberOfPassengers;
     }
 
     public String getDateStart() {
@@ -48,11 +50,29 @@ public class FlightToSearchDTO {
         this.to = to;
     }
 
+    public String get_class() {
+        return _class;
+    }
+
+    public void set_class(String _class) {
+        this._class = _class;
+    }
+
+    public String getNumberOfPassengers() {
+        return numberOfPassengers;
+    }
+
+    public void setNumberOfPassengers(String numberOfPassengers) {
+        this.numberOfPassengers = numberOfPassengers;
+    }
+
     public static class FlightDTOBuilder {
         private String dateStart;
         private String dateEnd;
         private String from;
         private String to;
+        private String _class;
+        private String numberOfPassengers;
 
         public FlightToSearchDTO.FlightDTOBuilder dateStart(String dateStart) {
             this.dateStart = dateStart;
@@ -71,6 +91,16 @@ public class FlightToSearchDTO {
 
         public FlightToSearchDTO.FlightDTOBuilder to(String to) {
             this.to = to;
+            return this;
+        }
+
+        public FlightToSearchDTO.FlightDTOBuilder _class(String _class) {
+            this._class = _class;
+            return this;
+        }
+
+        public FlightToSearchDTO.FlightDTOBuilder numberOfPassengers(String numberOfPassengers) {
+            this.numberOfPassengers = numberOfPassengers;
             return this;
         }
 

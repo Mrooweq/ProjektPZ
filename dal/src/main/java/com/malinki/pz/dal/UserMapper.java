@@ -12,7 +12,7 @@ public interface UserMapper {
 	UserDTO registerUser(UserDTO user);
 
 	@Select("SELECT isLoginAlreadyUsed(#{str}) FROM DUAL")
-	int isLoginAlreadyUsed(@Param("str") String str);	//returns 1 if user with such login already exists
+	int isLoginAlreadyUsed(@Param("str") String str);	//returns 1 if username with such login already exists
 	
 	@Select("SELECT isUsernameAndPasswordCorrect(#{username}, #{password}) FROM DUAL")
 	int isUsernameAndPasswordCorrect(UserDTO user);	//return 1 if username and password are correct

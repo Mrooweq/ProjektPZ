@@ -76,6 +76,8 @@ export class AuthenticationService {
       errorMsg = error.message || `Username or password is invalid`
     } else if (error.status === 409) {
       errorMsg = error.message || `Username is taken`
+    } else if (error.status === 406) {
+      errorMsg = error.message || `Email is alredy used`
     } else {
       errorMsg = error.message ||
         `Oops! Error status: ` + error.status

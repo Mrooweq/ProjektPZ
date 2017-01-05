@@ -10,7 +10,7 @@ public class UserRepository {
 		UserRegistration userRegistration = new UserRegistration(user);
 		return userRegistration.performAction();
 	}
-	
+
 	public UserResponse loginUser(UserDTO userForLoginValidation) {
 		UserLogin userLogin = new UserLogin(userForLoginValidation);
 		return userLogin.performAction();

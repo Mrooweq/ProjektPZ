@@ -4,6 +4,7 @@ import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";
 import {User} from "../../_mocks/user";
 import {AuthenticationService} from "../../_services/authentication.service";
+import {TicketService} from "../../_services/tickets.service";
 declare var $: JQueryStatic;
 
 @Component({
@@ -18,12 +19,19 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewChecked {
 
 
   constructor(private searchService: SearchService,
+              private ticketService: TicketService,
               private authenticationService: AuthenticationService) {
   }
 
-  click(value: Flight) {
-    if (this.loggedUser)
-      console.log(value.airline + "," + this.loggedUser.firstname);
+  click(flight: Flight) {
+    this._subscriptions.push(this.ticketService.buyTicket(flight, this.loggedUser).subscribe(
+      () => {
+        console.log('hi');
+      },
+      error => {
+        console.log(error);
+      }
+    ))
   }
 
   setUser(logged: any) {

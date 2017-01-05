@@ -18,6 +18,8 @@ import {Registration} from "./components/registration/registartion-form.componen
 import {EqualValidator} from "./_validators/equal-validator.directive";
 import {SearchService} from "./_services/search.service";
 import {SearchResults} from "./components/search_results/search-results.component";
+import {TicketService} from "./_services/tickets.service";
+import {AuthGuard} from "./_services/auth_guard.service";
 
 
 @NgModule({
@@ -40,7 +42,7 @@ import {SearchResults} from "./components/search_results/search-results.componen
     SearchResults,
     EqualValidator
   ],
-  providers: [AuthenticationService, SearchService],
+  providers: [AuthenticationService, SearchService, TicketService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

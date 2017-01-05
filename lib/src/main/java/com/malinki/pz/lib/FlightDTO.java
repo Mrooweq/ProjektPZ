@@ -3,21 +3,27 @@ package com.malinki.pz.lib;
 
 public class FlightDTO {
     private int flightNumber;
-    private String flightDate;
-    private int basePrice;
-    private String airline;
+    private String departureDate;
+    private String arrivalDate;
+    private int price;
+    private String airlineName;
+    private String airlineShortcut;
     private String from;
     private String to;
+    private int freePlaces;
 
     public FlightDTO(){}
 
     private FlightDTO(FlightDTO.FlightDTOBuilder builder) {
         this.flightNumber = builder.flightNumber;
-        this.flightDate = builder.flightDate;
-        this.basePrice = builder.basePrice;
-        this.airline = builder.airline;
+        this.departureDate = builder.departureDate;
+        this.arrivalDate = builder.arrivalDate;
+        this.price = builder.price;
+        this.airlineName = builder.airlineName;
         this.from = builder.from;
         this.to = builder.to;
+        this.freePlaces = builder.freePlaces;
+        this.airlineShortcut = builder.airlineShortcut;
     }
 
     public int getFlightNumber() {
@@ -28,28 +34,36 @@ public class FlightDTO {
         this.flightNumber = flightNumber;
     }
 
-    public String getFlightDate() {
-        return flightDate;
+    public String getDepartureDate() {
+        return departureDate;
     }
 
-    public void setFlightDate(String flightDate) {
-        this.flightDate = flightDate;
+    public void setDepartureDate(String departureDate) {
+        this.departureDate = departureDate;
     }
 
-    public int getBasePrice() {
-        return basePrice;
+    public String getArrivalDate() {
+        return arrivalDate;
     }
 
-    public void setBasePrice(int basePrice) {
-        this.basePrice = basePrice;
+    public void setArrivalDate(String arrivalDate) {
+        this.arrivalDate = arrivalDate;
     }
 
-    public String getAirline() {
-        return airline;
+    public int getPrice() {
+        return price;
     }
 
-    public void setAirline(String airline) {
-        this.airline = airline;
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getAirlineName() {
+        return airlineName;
+    }
+
+    public void setAirlineName(String airlineName) {
+        this.airlineName = airlineName;
     }
 
     public String getFrom() {
@@ -68,36 +82,70 @@ public class FlightDTO {
         this.to = to;
     }
 
+    public int getFreePlaces() {
+        return freePlaces;
+    }
+
+    public void setFreePlaces(int freePlaces) {
+        this.freePlaces = freePlaces;
+    }
+
+    public String getAirlineShortcut() {
+        return airlineShortcut;
+    }
+
+    public void setAirlineShortcut(String airlineShortcut) {
+        this.airlineShortcut = airlineShortcut;
+    }
+
     public static class FlightDTOBuilder {
         private int flightNumber;
-        private String flightDate;
-        private int basePrice;
-        private String airline;
+        private String departureDate;
+        private String arrivalDate;
+        private int price;
+        private String airlineName;
         private String from;
         private String to;
+        private int freePlaces;
+        private String airlineShortcut;
 
         public FlightDTO.FlightDTOBuilder flightNumber(int flightNumber) {
             this.flightNumber = flightNumber;
             return this;
         }
 
-        public FlightDTO.FlightDTOBuilder flightDate(String flightDate) {
-            this.flightDate = flightDate;
+        public FlightDTO.FlightDTOBuilder departureDate(String departureDate) {
+            this.departureDate = departureDate;
+            return this;
+        }
+
+        public FlightDTO.FlightDTOBuilder arrivalDate(String arrivalDate) {
+            this.arrivalDate = arrivalDate;
             return this;
         }
 
         public FlightDTO.FlightDTOBuilder basePrice(int basePrice) {
-            this.basePrice = basePrice;
+            this.price = basePrice;
             return this;
         }
 
-        public FlightDTO.FlightDTOBuilder airline(String airline) {
-            this.airline = airline;
+        public FlightDTO.FlightDTOBuilder airlineName(String airlineName) {
+            this.airlineName = airlineName;
             return this;
         }
 
         public FlightDTO.FlightDTOBuilder from(String from) {
             this.from = from;
+            return this;
+        }
+
+        public FlightDTO.FlightDTOBuilder freePlaces(int freePlaces) {
+            this.freePlaces = freePlaces;
+            return this;
+        }
+
+        public FlightDTO.FlightDTOBuilder airlineShortcut(String airlineShortcut) {
+            this.airlineShortcut = airlineShortcut;
             return this;
         }
 

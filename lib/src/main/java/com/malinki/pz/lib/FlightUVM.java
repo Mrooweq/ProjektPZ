@@ -3,21 +3,27 @@ package com.malinki.pz.lib;
 
 public class FlightUVM {
     private int flightNumber;
-    private String flightDate;
-    private int basePrice;
-    private String airline;
+    private String departureDate;
+    private String arrivalDate;
+    private int price;
+    private String airlineName;
+    private String airlineShortcut;
     private String from;
     private String to;
+    private int freePlaces;
 
     public FlightUVM(){}
 
     private FlightUVM(FlightUVM.FlightUVMBuilder builder) {
         this.flightNumber = builder.flightNumber;
-        this.flightDate = builder.flightDate;
-        this.basePrice = builder.basePrice;
-        this.airline = builder.airline;
+        this.departureDate = builder.departureDate;
+        this.arrivalDate = builder.arrivalDate;
+        this.price = builder.price;
+        this.airlineName = builder.airlineName;
         this.from = builder.from;
         this.to = builder.to;
+        this.freePlaces = builder.freePlaces;
+        this.airlineShortcut = builder.airlineShortcut;
     }
 
     public int getFlightNumber() {
@@ -28,28 +34,36 @@ public class FlightUVM {
         this.flightNumber = flightNumber;
     }
 
-    public String getFlightDate() {
-        return flightDate;
+    public String getDepartureDate() {
+        return departureDate;
     }
 
-    public void setFlightDate(String flightDate) {
-        this.flightDate = flightDate;
+    public void setDepartureDate(String departureDate) {
+        this.departureDate = departureDate;
     }
 
-    public int getBasePrice() {
-        return basePrice;
+    public String getArrivalDate() {
+        return arrivalDate;
     }
 
-    public void setBasePrice(int basePrice) {
-        this.basePrice = basePrice;
+    public void setArrivalDate(String arrivalDate) {
+        this.arrivalDate = arrivalDate;
     }
 
-    public String getAirline() {
-        return airline;
+    public int getPrice() {
+        return price;
     }
 
-    public void setAirline(String airline) {
-        this.airline = airline;
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getAirlineName() {
+        return airlineName;
+    }
+
+    public void setAirlineName(String airlineName) {
+        this.airlineName = airlineName;
     }
 
     public String getFrom() {
@@ -68,36 +82,70 @@ public class FlightUVM {
         this.to = to;
     }
 
+    public int getFreePlaces() {
+        return freePlaces;
+    }
+
+    public void setFreePlaces(int freePlaces) {
+        this.freePlaces = freePlaces;
+    }
+
+    public String getAirlineShortcut() {
+        return airlineShortcut;
+    }
+
+    public void setAirlineShortcut(String airlineShortcut) {
+        this.airlineShortcut = airlineShortcut;
+    }
+
     public static class FlightUVMBuilder {
         private int flightNumber;
-        private String flightDate;
-        private int basePrice;
-        private String airline;
+        private String departureDate;
+        private String arrivalDate;
+        private int price;
+        private String airlineName;
         private String from;
         private String to;
+        private int freePlaces;
+        private String airlineShortcut;
 
         public FlightUVM.FlightUVMBuilder flightNumber(int flightNumber) {
             this.flightNumber = flightNumber;
             return this;
         }
 
-        public FlightUVM.FlightUVMBuilder flightDate(String flightDate) {
-            this.flightDate = flightDate;
+        public FlightUVM.FlightUVMBuilder departureDate(String departureDate) {
+            this.departureDate = departureDate;
+            return this;
+        }
+
+        public FlightUVM.FlightUVMBuilder arrivalDate(String arrivalDate) {
+            this.arrivalDate = arrivalDate;
             return this;
         }
 
         public FlightUVM.FlightUVMBuilder basePrice(int basePrice) {
-            this.basePrice = basePrice;
+            this.price = basePrice;
             return this;
         }
 
-        public FlightUVM.FlightUVMBuilder airline(String airline) {
-            this.airline = airline;
+        public FlightUVM.FlightUVMBuilder airlineName(String airlineName) {
+            this.airlineName = airlineName;
             return this;
         }
 
         public FlightUVM.FlightUVMBuilder from(String from) {
             this.from = from;
+            return this;
+        }
+
+        public FlightUVM.FlightUVMBuilder freePlaces(int freePlaces) {
+            this.freePlaces = freePlaces;
+            return this;
+        }
+
+        public FlightUVM.FlightUVMBuilder airlineShortcut(String airlineShortcut) {
+            this.airlineShortcut = airlineShortcut;
             return this;
         }
 

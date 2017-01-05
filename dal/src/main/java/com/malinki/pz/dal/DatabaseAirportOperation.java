@@ -2,6 +2,7 @@ package com.malinki.pz.dal;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,9 +27,9 @@ public abstract class DatabaseAirportOperation {
         InputStream inputStream = openInputStream();
         SqlSession session = establishSession(inputStream);
         flightMapper = session.getMapper(FlightMapper.class);
-        int result;
         ProjektPZResponse projektPZResponse = new ProjektPZResponse();
-        List<String> resultList;
+        List<String> resultList = new ArrayList<>();
+        int result;
 
         try {
             resultList = mainAction();

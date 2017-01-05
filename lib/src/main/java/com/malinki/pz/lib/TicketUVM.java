@@ -2,26 +2,24 @@ package com.malinki.pz.lib;
 
 
 public class TicketUVM {
-    private String flight;
+    private String flightNumber;
     private String flightClass;
-    private String user;
-
-    private int priceMultiplier;
-
-    public TicketUVM(){}
+    private String username;
+    private String airlineShortcut;
 
     private TicketUVM(TicketUVM.TicketUVMBuilder builder) {
-        this.flight = builder.flight;
+        this.flightNumber = builder.flightNumber;
         this.flightClass = builder.flightClass;
-        this.user = builder.user;
+        this.username = builder.username;
+        this.airlineShortcut = builder.airlineShortcut;
     }
 
-    public String getFlight() {
-        return flight;
+    public String getFlightNumber() {
+        return flightNumber;
     }
 
-    public void setFlight(String flight) {
-        this.flight = flight;
+    public void setFlightNumber(String flightNumber) {
+        this.flightNumber = flightNumber;
     }
 
     public String getFlightClass() {
@@ -32,39 +30,45 @@ public class TicketUVM {
         this.flightClass = flightClass;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public int getPriceMultiplier() {
-        return priceMultiplier;
+    public String getAirlineShortcut() {
+        return airlineShortcut;
     }
 
-    public void setPriceMultiplier(int priceMultiplier) {
-        this.priceMultiplier = priceMultiplier;
+    public void setAirlineShortcut(String airlineShortcut) {
+        this.airlineShortcut = airlineShortcut;
     }
 
     public static class TicketUVMBuilder {
-        private String flight;
+        private String flightNumber;
         private String flightClass;
-        private String user;
+        private String username;
+        private String airlineShortcut;
 
-        public TicketUVMBuilder flight(String flight) {
-            this.flight = flight;
+        public TicketUVM.TicketUVMBuilder flightNumber(String flightNumber) {
+            this.flightNumber = flightNumber;
             return this;
         }
 
-        public TicketUVMBuilder flightClass(String flightClass) {
+        public TicketUVM.TicketUVMBuilder flightClass(String flightClass) {
             this.flightClass = flightClass;
             return this;
         }
 
-        public TicketUVMBuilder user(String user) {
-            this.user = user;
+        public TicketUVM.TicketUVMBuilder username(String user) {
+            this.username = user;
+            return this;
+        }
+
+        public TicketUVM.TicketUVMBuilder airlineShortcut(String airlineShortcut) {
+            this.airlineShortcut = airlineShortcut;
             return this;
         }
 

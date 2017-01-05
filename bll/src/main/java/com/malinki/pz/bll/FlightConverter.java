@@ -13,6 +13,8 @@ public class FlightConverter {
                     .dateEnd(flightToSearchUVM.getDateEnd())
                     .from(flightToSearchUVM.getFrom())
                     .to(flightToSearchUVM.getTo())
+                    ._class(flightToSearchUVM.get_class())
+                    .numberOfPassengers(flightToSearchUVM.getNumberOfPassengers())
                     .build();
     }
 
@@ -25,6 +27,8 @@ public class FlightConverter {
                     .dateEnd(flightToSearchDTO.getDateEnd())
                     .from(flightToSearchDTO.getFrom())
                     .to(flightToSearchDTO.getTo())
+                    ._class(flightToSearchDTO.get_class())
+                    .numberOfPassengers(flightToSearchDTO.getNumberOfPassengers())
                     .build();
     }
 
@@ -36,11 +40,14 @@ public class FlightConverter {
         else
             return new FlightDTO.FlightDTOBuilder()
                     .flightNumber(flightUVM.getFlightNumber())
-                    .flightDate(flightUVM.getFlightDate())
-                    .basePrice(flightUVM.getBasePrice())
-                    .airline(flightUVM.getAirline())
+                    .departureDate(flightUVM.getDepartureDate())
+                    .arrivalDate(flightUVM.getArrivalDate())
+                    .basePrice(flightUVM.getPrice())
+                    .airlineName(flightUVM.getAirlineName())
+                    .airlineShortcut(flightUVM.getAirlineShortcut())
                     .from(flightUVM.getFrom())
                     .to(flightUVM.getTo())
+                    .freePlaces(flightUVM.getFreePlaces())
                     .build();
     }
 
@@ -50,11 +57,14 @@ public class FlightConverter {
         else
             return new FlightUVM.FlightUVMBuilder()
                     .flightNumber(flightDTO.getFlightNumber())
-                    .flightDate(flightDTO.getFlightDate())
-                    .basePrice(flightDTO.getBasePrice())
-                    .airline(flightDTO.getAirline())
+                    .departureDate(flightDTO.getDepartureDate())
+                    .arrivalDate(flightDTO.getArrivalDate())
+                    .basePrice(flightDTO.getPrice())
+                    .airlineName(flightDTO.getAirlineName())
+                    .airlineShortcut(flightDTO.getAirlineShortcut())
                     .from(flightDTO.getFrom())
                     .to(flightDTO.getTo())
+                    .freePlaces(flightDTO.getFreePlaces())
                     .build();
     }
 }
