@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterViewInit} from '@angular/core';
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";

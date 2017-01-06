@@ -1,17 +1,33 @@
 .jumbotron {
-  height: 91vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
   background-position: center;
   background-size: cover;
   border-radius: 0;
   margin-bottom: 0;
 }
 
-.wrapper {
-  margin-top: 60px;
-  border-radius: 5px;
-  color: white;
-  padding: 20px;
-  background-color: rgba(43, 45, 47, 0.8);
+@media (max-width: 768px) {
+  .wrapper {
+    margin-top: 50px;
+    border-radius: 5px;
+    color: white;
+    padding: 20px;
+    background-color: rgba(43, 45, 47, 0.8);
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    margin-top: 22vh;
+    border-radius: 5px;
+    color: white;
+    padding: 20px;
+    background-color: rgba(43, 45, 47, 0.8);
+  }
 }
 
 .form-control {

@@ -20,7 +20,11 @@ public class UserOperations implements IUserOperations {
 
 	@Override
 	public int registerUser(UserUVM user) {
-		UserResponse userResponse = userRepository.registerUser(UserConverter.fromUserUVMToUserDTO(user));
+		UserValidation validation = new UserValidation(user);
+		UserResponse userResponse = new UserResponse();
+		if(validation.checkUser()) {
+			userResponse = userRepository.registerUser(UserConverter.fromUserUVMToUserDTO(user));
+		}
 		return userResponse.getResult();
 	}
 

@@ -1,4 +1,5 @@
-import {Component, OnInit, OnDestroy, AfterViewChecked} from '@angular/core';
+///<reference path="../../../../node_modules/@angular/core/src/metadata/lifecycle_hooks.d.ts"/>
+import {Component, OnInit, OnDestroy, AfterViewChecked, AfterViewInit} from '@angular/core';
 import {Flight} from "../../_mocks/flight";
 import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";
@@ -12,7 +13,7 @@ declare var $: JQueryStatic;
   templateUrl: './search-results.component.html',
   styleUrls: ['search-results.component.css']
 })
-export class SearchResults implements OnInit,OnDestroy,AfterViewChecked {
+export class SearchResults implements OnInit,OnDestroy,AfterViewChecked,AfterViewInit {
   private _flights: Flight[] = [new Flight('NieLot', 100, '2016-01-01', 1000, 'Warsaw', 'Geneva')];
   private _subscriptions: Subscription[] = [];
   private loggedUser: User;
@@ -23,7 +24,7 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewChecked {
               private authenticationService: AuthenticationService) {
   }
 
-  click(flight: Flight) {
+  buyTickect(flight: Flight) {
     this._subscriptions.push(this.ticketService.buyTicket(flight, this.loggedUser).subscribe(
       () => {
         console.log('hi');
@@ -44,6 +45,21 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewChecked {
     }
   }
 
+  setheight() {
+    let width = $('.arrow').width();
+    $('.arrow').height(0.2 * width);
+  }
+
+  ngAfterViewInit(): void {
+    $(document).ready(() => {
+      this.setheight();
+    });
+
+    $(window).resize(() => {
+      this.setheight();
+    });
+  }
+
   ngAfterViewChecked() {
     $('.log_in_button').click(function () {
       $('#myModal').modal('show');
@@ -60,6 +76,7 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewChecked {
     this._flights = [];
     this._subscriptions.push(this.searchService.flights().subscribe(flights => {
       this._flights = flights;
+      console.log(this._flights);
     }));
   }
 

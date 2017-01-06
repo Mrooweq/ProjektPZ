@@ -40,8 +40,7 @@ public class FlightConverter {
         else
             return new FlightDTO.FlightDTOBuilder()
                     .flightNumber(flightUVM.getFlightNumber())
-                    .departureDate(flightUVM.getDepartureDate())
-                    .arrivalDate(flightUVM.getArrivalDate())
+                    .flightDate(flightUVM.getFlightDate())
                     .basePrice(flightUVM.getPrice())
                     .airlineName(flightUVM.getAirlineName())
                     .airlineShortcut(flightUVM.getAirlineShortcut())
@@ -57,8 +56,7 @@ public class FlightConverter {
         else
             return new FlightUVM.FlightUVMBuilder()
                     .flightNumber(flightDTO.getFlightNumber())
-                    .departureDate(flightDTO.getDepartureDate())
-                    .arrivalDate(flightDTO.getArrivalDate())
+                    .flightDate(flightDTO.getFlightDate())
                     .basePrice(flightDTO.getPrice())
                     .airlineName(flightDTO.getAirlineName())
                     .airlineShortcut(flightDTO.getAirlineShortcut())

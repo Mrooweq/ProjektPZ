@@ -1,16 +1,19 @@
-ALTER SESSION SET nls_date_format = 'yyyy-mm-dd hh24:mi:ss';
-
 CREATE TABLE "User" (ID_User number(10) NOT NULL, Username varchar2(50) NOT NULL, Password varchar2(50) NOT NULL, Firstname varchar2(50) NOT NULL, Lastname varchar2(50) NOT NULL, Email varchar2(50) NOT NULL, PRIMARY KEY (ID_User));
-CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, Number_Of_Places number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
+CREATE TABLE Invoice (ID_Invoice number(10) NOT NULL, Invoice_Date date NOT NULL, Invoice_Value number(7) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Invoice));
+CREATE TABLE Invoice_Pos (ID_Invoice_Pos number(10) NOT NULL, InvoiceID_Invoice number(10) NOT NULL, Position_Price number(10) NOT NULL, Amount number(10) NOT NULL, ID_Ticket number(10) NOT NULL, PRIMARY KEY (ID_Invoice_Pos, InvoiceID_Invoice));
+CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
 CREATE TABLE Class (ID_Class number(10) NOT NULL, Name varchar2(50) NOT NULL, ID_Multiplier number(10) NOT NULL, PRIMARY KEY (ID_Class));
 CREATE TABLE Airline (ID_Airline number(10) NOT NULL, Name varchar2(50) NOT NULL, Name_Shortcut varchar2(3) NOT NULL, PRIMARY KEY (ID_Airline));
-CREATE TABLE Flight (ID_Flight number(10) NOT NULL, Flight_Number varchar2(4) NOT NULL, Departure_Date date NOT NULL, Arrival_Date date NOT NULL, Base_Price number(10) NOT NULL, Free_Places number(10) NOT NULL, ID_Airline number(10) NOT NULL, "From" number(10) NOT NULL, "To" number(10) NOT NULL, PRIMARY KEY (ID_Flight));
+CREATE TABLE Flight (ID_Flight number(10) NOT NULL, Flight_Number varchar2(4) NOT NULL, Flight_Date date NOT NULL, Base_Price number(10) NOT NULL, Free_Places number(10) NOT NULL, ID_Airline number(10) NOT NULL, "From" number(10) NOT NULL, "To" number(10) NOT NULL, PRIMARY KEY (ID_Flight));
 CREATE TABLE Airport (ID_Airport number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Airport));
 CREATE TABLE Multiplier (ID_Multiplier number(10) NOT NULL, Multiplier number(10) NOT NULL, PRIMARY KEY (ID_Multiplier));
 
+ALTER TABLE Invoice ADD CONSTRAINT FKInvoice592459 FOREIGN KEY (ID_User) REFERENCES "User" (ID_User);
+ALTER TABLE Invoice_Pos ADD CONSTRAINT FKInvoice_Po101405 FOREIGN KEY (InvoiceID_Invoice) REFERENCES Invoice (ID_Invoice);
 ALTER TABLE Flight ADD CONSTRAINT FKFlight238291 FOREIGN KEY (ID_Airline) REFERENCES Airline (ID_Airline);
 ALTER TABLE Ticket ADD CONSTRAINT FKTicket605673 FOREIGN KEY (ID_Flight) REFERENCES Flight (ID_Flight);
 ALTER TABLE Ticket ADD CONSTRAINT FKTicket704378 FOREIGN KEY (ID_Class) REFERENCES Class (ID_Class);
+ALTER TABLE Invoice_Pos ADD CONSTRAINT FKInvoice_Po525157 FOREIGN KEY (ID_Ticket) REFERENCES Ticket (ID_Ticket);
 ALTER TABLE Ticket ADD CONSTRAINT FKTicket572044 FOREIGN KEY (ID_User) REFERENCES "User" (ID_User);
 ALTER TABLE Flight ADD CONSTRAINT FKFlight5365 FOREIGN KEY ("From") REFERENCES Airport (ID_Airport);
 ALTER TABLE Flight ADD CONSTRAINT FKFlight809603 FOREIGN KEY ("To") REFERENCES Airport (ID_Airport);
@@ -35,12 +38,11 @@ INSERT INTO Multiplier VALUES (2, 2);
 INSERT INTO Class VALUES (1, 'Ekonomiczna', 1);
 INSERT INTO Class VALUES (2, 'VIP', 2);
 
-INSERT INTO Flight VALUES (1, 1000, '2016-01-01 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 2);
-INSERT INTO Flight VALUES (2, 2000, '2016-01-01 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 2, 3);
-INSERT INTO Flight VALUES (3, 3000, '2016-01-01 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 8, 9);
-INSERT INTO Flight VALUES (4, 4000, '2016-01-01 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 5);
-INSERT INTO Flight VALUES (5, 5000, '2016-01-01 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 5);
-
+INSERT INTO Flight VALUES (1, 1000, '2016-01-01', 100, 200, 1, 1, 2);
+INSERT INTO Flight VALUES (2, 2000, '2016-01-01', 100, 200, 1, 2, 3);
+INSERT INTO Flight VALUES (3, 3000, '2016-01-01', 100, 200, 1, 8, 9);
+INSERT INTO Flight VALUES (4, 4000, '2016-01-01', 100, 200, 1, 1, 5);
+INSERT INTO Flight VALUES (5, 5000, '2016-01-01', 100, 200, 1, 1, 5);
 ------------------------
 
 create or replace FUNCTION getMinUserID 
@@ -81,6 +83,26 @@ begin
 
 SELECT
    CASE WHEN EXISTS(SELECT 1 FROM "User" where Username = str)
+     THEN 1  
+     ELSE 0  
+   END  
+into v_flag FROM dual;
+
+return v_flag;
+end;
+/
+
+------------------
+
+create or replace FUNCTION isEmailAlreadyUsed (str IN VARCHAR2)
+return integer is
+
+v_flag integer := 0;
+
+begin
+
+SELECT
+   CASE WHEN EXISTS(SELECT 1 FROM "User" where Email = str)
      THEN 1  
      ELSE 0  
    END  

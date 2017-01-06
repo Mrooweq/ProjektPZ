@@ -2,6 +2,7 @@ package com.malinki.pz.dal.operations;
 
 import com.malinki.pz.dal.DatabaseAirportOperation;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
+import com.malinki.pz.lib.ProjektPZResponse;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -12,7 +13,7 @@ public class FetchingOfClasses extends DatabaseAirportOperation {
     private Logger logger = Logger.getLogger(UserRegistration.class);
 
     @Override
-    protected List<String> mainAction() {
+    protected ProjektPZResponse mainAction() {
         List<String> classesList = null;
 
         try{
@@ -23,7 +24,10 @@ public class FetchingOfClasses extends DatabaseAirportOperation {
             databaseOperationResultEnum = DatabaseOperationResultEnum.CLASSES_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR;
         }
 
-        return classesList;
+        ProjektPZResponse projektPZResponse = new ProjektPZResponse();
+        projektPZResponse.setResponseList(classesList);
+
+        return projektPZResponse;
     }
 }
 

@@ -20,11 +20,11 @@
           <div class="col-md-2"></div>
         </div>
         <div class="row float-xs-right price">
-          <span style="margin-right: 5px">Price: {{flight.basePrice}} €</span>
-          <button *ngIf="loggedUser" class="btn btn-primary buy_button" (click)="click(flight)">
+          <span style="margin-right: 5px">Price: {{flight.price}} €</span>
+          <button *ngIf="loggedUser" class="btn btn-primary buy_button" (click)="buyTickect(flight)">
             Buy
           </button>
-          <button *ngIf="!loggedUser" class="btn btn-primary log_in_button" (click)="click(flight)">
+          <button *ngIf="!loggedUser" class="btn btn-primary log_in_button">
             Log In to buy
           </button>
         </div>

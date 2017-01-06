@@ -13,6 +13,7 @@
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Hello, {{activeUser.firstname}} {{activeUser.lastname}} !</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item pointer">Settings</a>
           <a class="dropdown-item pointer" (click)="logout()">Log Out</a>
         </div>
       </li>

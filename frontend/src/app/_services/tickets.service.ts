@@ -6,7 +6,7 @@ import {User} from "../_mocks/user";
 
 @Injectable()
 export class TicketService {
-  private flightsUrl = 'api/flights';
+  private buyTickectsUrl = 'api/buy';
 
   constructor(private http: Http) {
   }
@@ -15,14 +15,13 @@ export class TicketService {
     let body = JSON.stringify({'flight': flight, 'user': user});
     console.log(body);
 
-    return this.http.post(this.flightsUrl, body, this.jwt())
+    return this.http.post(this.buyTickectsUrl, body, this.jwt())
       .map(res => res.json()).catch(this.handleError);
   }
 
   private jwt() {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser && currentUser.tokenContainer.token) {
-      console.log('token');
       let headers = new Headers({'Authorization': 'Bearer ' + currentUser.tokenContainer.token});
       return new RequestOptions({headers: headers});
     }
