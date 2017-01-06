@@ -6,8 +6,8 @@
 
 # dependencies
 /node_modules
+!ng2-auto-complete
 /bower_components
-/!ng2-auto-complete
 
 # IDEs and editors
 /.idea
