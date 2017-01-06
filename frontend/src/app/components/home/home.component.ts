@@ -34,14 +34,17 @@ export class Home implements OnInit,OnDestroy {
               private searchService: SearchService) {
   }
 
-  callback(value, name: String) {
+  callback(value: any, name: String) {
+    if (!value)
+      value = '';
     if (name == 'source')
       this.searchForm.controls['source'].setValue(value);
-    if (name == 'destination')
+    else if (name == 'destination')
       this.searchForm.controls['destination'].setValue(value);
   }
 
   submit(value: any) {
+    console.log(value);
     this._subscriptions.push(this.searchService.getFlights(value).subscribe(
       flights => {
         this.router.navigate(['/results']);
@@ -88,12 +91,12 @@ export class Home implements OnInit,OnDestroy {
     ));
 
     this.searchForm = this.fb.group({
-      source: [null],
-      destination: [null],
-      start: [null],
-      end: [null],
-      _class: [null],
-      travelers: [null]
+      source: [''],
+      destination: [''],
+      start: [''],
+      end: [''],
+      _class: [''],
+      travelers: ['']
     });
   }
 
