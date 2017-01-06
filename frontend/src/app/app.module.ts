@@ -20,6 +20,7 @@ import {SearchService} from "./_services/search.service";
 import {SearchResults} from "./components/search_results/search-results.component";
 import {TicketService} from "./_services/tickets.service";
 import {AuthGuard} from "./_services/auth_guard.service";
+import {UserAccount} from "./components/user_account/user_account.component";
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import {AuthGuard} from "./_services/auth_guard.service";
     Registration,
     Home,
     SearchResults,
+    UserAccount,
     EqualValidator
   ],
   providers: [AuthenticationService, SearchService, TicketService, AuthGuard],

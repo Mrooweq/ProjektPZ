@@ -21,6 +21,10 @@
   border-radius: 0 0 5px 5px;
 }
 
+.dropdown-item {
+  color: white;
+}
+
 .dropdown-item:hover {
   color: #f4f4f4;
   background-color: #3f4345;

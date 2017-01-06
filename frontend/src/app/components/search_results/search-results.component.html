@@ -3,7 +3,7 @@
     <div *ngIf="_flights?.length > 0">
       <div id="flight" *ngFor="let flight of _flights" class="container content">
         <div class="row main-info">
-          <div class="col-md-2 airline" style="margin-top: 15px">{{flight.airline}}</div>
+          <div class="col-md-2 airline" style="margin-top: 15px">{{flight.airlineName}}</div>
           <div class="col-md-8" style="margin-top: 15px">
             <div class="col-xs-4" style="text-align: center">
               <div class="date">{{flight.flightDate}}</div>
