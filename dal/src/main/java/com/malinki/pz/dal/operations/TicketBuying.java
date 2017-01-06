@@ -1,6 +1,7 @@
 package com.malinki.pz.dal.operations;
 
 import com.malinki.pz.dal.DatabaseAirportOperation;
+import com.malinki.pz.lib.ProjektPZResponse;
 import com.malinki.pz.lib.TicketDTO;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -19,7 +20,7 @@ public class TicketBuying extends DatabaseAirportOperation {
     }
 
     @Override
-    protected List<String> mainAction() {
+    protected ProjektPZResponse mainAction() {
         try{
             flightMapper.addTicket(ticket);
             flightMapper.commit();

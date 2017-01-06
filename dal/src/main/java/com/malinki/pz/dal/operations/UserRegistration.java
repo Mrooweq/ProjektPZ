@@ -1,6 +1,7 @@
 package com.malinki.pz.dal.operations;
 
 import com.malinki.pz.lib.UserDTO;
+import com.malinki.pz.lib.UserResponse;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -12,17 +13,20 @@ public class UserRegistration extends DatabaseUserOperation {
 	private UserDTO user;
 	private Logger logger = Logger.getLogger(UserRegistration.class);
 
+	private boolean isUserPositivelyValidated;
+	private boolean isLoginAlreadyUsed;
+	private boolean isEmailAlreadyUsed;
+
 	public UserRegistration(UserDTO user) {
 		this.user = user;
 	}
 
 	@Override
-	protected UserDTO mainAction() {
-		boolean isUserPositivelyValidated = false;
+	protected UserResponse mainAction() {
 		boolean hasErrorOccurred = false;
 
 		try{
-			isUserPositivelyValidated = isUserPositivelyValidated(user);
+			validateUser(user);
 		} catch (Exception e){
 			logger.log(Level.ERROR, e.toString());
 			hasErrorOccurred = true;
@@ -40,14 +44,21 @@ public class UserRegistration extends DatabaseUserOperation {
 				databaseOperationResultEnum = DatabaseOperationResultEnum.USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_ERROR;
 			}
 		}
-		else
-			databaseOperationResultEnum = DatabaseOperationResultEnum.USER_ALREADY_EXIST;
+		else if (isLoginAlreadyUsed)
+			databaseOperationResultEnum = DatabaseOperationResultEnum.USERNAME_ALREADY_USED;
+		else if (isEmailAlreadyUsed)
+			databaseOperationResultEnum = DatabaseOperationResultEnum.EMAIL_ALREADY_USED;
 
-		return null;
+		return new UserResponse();
 	}
 
-	private boolean isUserPositivelyValidated(UserDTO user) {
-		boolean isLoginAlreadyUsed = getBoolean(userMapper.isLoginAlreadyUsed(user.getUsername()));
-		return !isLoginAlreadyUsed;
+	private void validateUser(UserDTO user) {
+		isLoginAlreadyUsed = getBoolean(userMapper.isLoginAlreadyUsed(user.getUsername()));
+		isEmailAlreadyUsed = getBoolean(userMapper.isEmailAlreadyUsed(user.getEmail()));
+
+		if(!isEmailAlreadyUsed && !isLoginAlreadyUsed)
+			isUserPositivelyValidated = true;
+		else
+			isUserPositivelyValidated = false;
 	}
 }
