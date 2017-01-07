@@ -15,11 +15,6 @@ public class BllConfig {
     }
 
     @Bean
-    public AirportRepository airportRepository() {
-        return new AirportRepository();
-    }
-
-    @Bean
     public FlightRepository flightRepository() {
         return new FlightRepository();
     }

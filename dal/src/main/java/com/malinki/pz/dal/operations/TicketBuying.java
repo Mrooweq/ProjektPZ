@@ -1,7 +1,7 @@
 package com.malinki.pz.dal.operations;
 
 import com.malinki.pz.dal.DatabaseSearcherOperation;
-import com.malinki.pz.lib.MalinkiResponse;
+import com.malinki.pz.lib.MalinkiSimpleResponse;
 import com.malinki.pz.lib.TicketDTO;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -18,7 +18,7 @@ public class TicketBuying extends DatabaseSearcherOperation {
     }
 
     @Override
-    protected MalinkiResponse mainAction() {
+    protected MalinkiSimpleResponse mainAction() {
         try{
             flightMapper.addTicket(ticket);
             flightMapper.commit();

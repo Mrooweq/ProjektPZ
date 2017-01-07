@@ -4,7 +4,7 @@ import com.malinki.pz.dal.DatabaseFlightOperation;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 import com.malinki.pz.lib.FlightDTO;
 import com.malinki.pz.lib.FlightRequest;
-import com.malinki.pz.lib.FlightResponse;
+import com.malinki.pz.lib.MalinkiComplexResponse;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -19,13 +19,13 @@ public class FetchingFlights extends DatabaseFlightOperation {
     }
 
     @Override
-    protected FlightResponse mainAction() {
+    protected MalinkiComplexResponse mainAction() {
         List<FlightDTO> flightDTOResultList;
-        FlightResponse flightResponse = new FlightResponse();
+        MalinkiComplexResponse malinkiComplexResponse = new MalinkiComplexResponse();
 
         try{
             flightDTOResultList = flightMapper.getFlights(flightRequest.getFlightToSearchDTO());
-            flightResponse.setFlightDTOResultList(flightDTOResultList);
+            malinkiComplexResponse.setDtoResult(flightDTOResultList);
 
             databaseOperationResultEnum = DatabaseOperationResultEnum.FLIGTS_FETCHED_SUCCESSFULLY;
         } catch (Exception e){
@@ -33,6 +33,6 @@ public class FetchingFlights extends DatabaseFlightOperation {
             databaseOperationResultEnum = DatabaseOperationResultEnum.FLIGTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR;
         }
 
-        return flightResponse;
+        return malinkiComplexResponse;
     }
 }

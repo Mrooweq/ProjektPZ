@@ -15,42 +15,42 @@ public class FlightOperations implements IFlightOperations {
     private FlightRepository flightRepository;
 
     @Override
-    public FlightResponse getFlights(FlightRequest flightRequest) {
+    public MalinkiComplexResponse getFlights(FlightRequest flightRequest) {
         FlightToSearchUVM flightToSearchUVM = flightRequest.getFlightToSearchUVM();
         FlightToSearchDTO flightToSearchDTO = FlightConverter.fromFlightToSearchUVMToFlightToSearchDTO(flightToSearchUVM);
 
         flightRequest.setFlightToSearchDTO(flightToSearchDTO);
 
-        FlightResponse flightResponse = flightRepository.getFlights(flightRequest);
+        MalinkiComplexResponse malinkiComplexResponse = flightRepository.getFlights(flightRequest);
 
-        List<FlightDTO> flightDTOResultList = flightResponse.getFlightDTOResultList();
+        List<FlightDTO> flightDTOResultList = (List<FlightDTO>) malinkiComplexResponse.getDtoResult();
         List<FlightUVM> flightUVMResultList = new ArrayList<>();
 
         for(FlightDTO flightDTO : flightDTOResultList)
             flightUVMResultList.add(FlightConverter.fromFlightDTOToFlightUVM(flightDTO));
 
-        flightResponse.setFlightUVMResultList(flightUVMResultList);
+        malinkiComplexResponse.setUvmResult(flightUVMResultList);
 
-        return flightResponse;
+        return malinkiComplexResponse;
     }
 
     @Override
-    public MalinkiResponse addTicket(TicketUVM ticketUVM) {
+    public MalinkiSimpleResponse addTicket(TicketUVM ticketUVM) {
         return flightRepository.addTicket(TicketConverter.fromTicketUVMToTicketDTO(ticketUVM));
     }
 
     @Override
-    public MalinkiResponse getPossibleDestinations(String src) {
+    public MalinkiSimpleResponse getPossibleDestinations(String src) {
         return flightRepository.getPossibleDestinations(src);
     }
 
     @Override
-    public MalinkiResponse getPossibleSources(String dest) {
+    public MalinkiSimpleResponse getPossibleSources(String dest) {
         return flightRepository.getPossibleSources(dest);
     }
 
     @Override
-    public MalinkiResponse getClasses() {
+    public MalinkiSimpleResponse getClasses() {
         return flightRepository.getClasses();
     }
 }

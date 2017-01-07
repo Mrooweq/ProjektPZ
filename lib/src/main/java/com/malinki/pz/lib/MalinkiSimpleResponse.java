@@ -4,11 +4,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
-public class MalinkiResponse {
+public class MalinkiSimpleResponse {
     private List<String> responseList;
     private int result;
 
-    public MalinkiResponse() {
+    public MalinkiSimpleResponse() {
         this.result = HttpServletResponse.SC_BAD_REQUEST;
     }
 

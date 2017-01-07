@@ -20,24 +20,24 @@ public class FlightService {
     private FlightOperations flightOperations;
 
     public List<String> getPossibleDestinations(String src, HttpServletResponse response){
-        MalinkiResponse malinkiResponse = flightOperations.getPossibleDestinations(src);
-        response.setStatus(malinkiResponse.getResult());
+        MalinkiSimpleResponse malinkiSimpleResponse = flightOperations.getPossibleDestinations(src);
+        response.setStatus(malinkiSimpleResponse.getResult());
 
-        return malinkiResponse.getResponseList();
+        return malinkiSimpleResponse.getResponseList();
     }
 
     public List<String> getPossibleSources(String dest, HttpServletResponse response){
-        MalinkiResponse malinkiResponse = flightOperations.getPossibleSources(dest);
-        response.setStatus(malinkiResponse.getResult());
+        MalinkiSimpleResponse malinkiSimpleResponse = flightOperations.getPossibleSources(dest);
+        response.setStatus(malinkiSimpleResponse.getResult());
 
-        return malinkiResponse.getResponseList();
+        return malinkiSimpleResponse.getResponseList();
     }
 
     public List<String> getClasses(HttpServletResponse response) {
-        MalinkiResponse malinkiResponse = flightOperations.getClasses();
+        MalinkiSimpleResponse malinkiSimpleResponse = flightOperations.getClasses();
 
-        response.setStatus(malinkiResponse.getResult());
-        return malinkiResponse.getResponseList();
+        response.setStatus(malinkiSimpleResponse.getResult());
+        return malinkiSimpleResponse.getResponseList();
     }
 
     public List<FlightUVM> getFlights(HttpServletResponse response,
@@ -60,15 +60,15 @@ public class FlightService {
         FlightRequest flightRequest = new FlightRequest();
         flightRequest.setFlightToSearchUVM(flightToSearchUVM);
 
-        FlightResponse flightResponse = flightOperations.getFlights(flightRequest);
-        response.setStatus(flightResponse.getResult());
+        MalinkiComplexResponse malinkiComplexResponse = flightOperations.getFlights(flightRequest);
+        response.setStatus(malinkiComplexResponse.getResult());
 
-        return flightResponse.getFlightUVMResultList();
+        return (List<FlightUVM>) malinkiComplexResponse.getUvmResult();
     }
 
     public void buyTicket(@RequestBody String requestBody, HttpServletResponse response) {
-        MalinkiResponse malinkiResponse = flightOperations.addTicket(parseToTicketUVM(requestBody));
-        response.setStatus(malinkiResponse.getResult());
+        MalinkiSimpleResponse malinkiSimpleResponse = flightOperations.addTicket(parseToTicketUVM(requestBody));
+        response.setStatus(malinkiSimpleResponse.getResult());
     }
 
     private TicketUVM parseToTicketUVM(String requestBody) {
