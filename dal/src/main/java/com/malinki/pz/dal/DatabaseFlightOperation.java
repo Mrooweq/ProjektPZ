@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 
 public abstract class DatabaseFlightOperation extends DatabaseOperation {
-    private Logger logger = Logger.getLogger(DatabaseAirportOperation.class);
+    private Logger logger = Logger.getLogger(DatabaseSearcherOperation.class);
     protected FlightMapper flightMapper;
     protected DatabaseOperationResultEnum databaseOperationResultEnum;
 

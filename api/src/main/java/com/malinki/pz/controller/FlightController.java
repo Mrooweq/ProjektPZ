@@ -18,36 +18,27 @@ import java.util.List;
 @RequestMapping(value="/api")
 public class FlightController {
 
-    private Logger logger = Logger.getLogger(UserController.class);
-
     @Autowired
-    private AirportOperations airportOperations;
-
-    @Autowired
-    private FlightOperations flightOperations;
+    private FlightService flightService;
 
     @RequestMapping(value = "/dest", method = RequestMethod.GET)
-    public List<String> getPossibleDestinations(HttpServletResponse response, @RequestParam String src) {
-        ProjektPZResponse projektPZResponse = airportOperations.getPossibleDestinations(src);
-        response.setStatus(projektPZResponse.getResult());
-
-        return projektPZResponse.getResponseList();
+    public List<String> getPossibleDestinations(@RequestParam String src, HttpServletResponse response) {
+        return flightService.getPossibleDestinations(src, response);
     }
 
     @RequestMapping(value = "/src", method = RequestMethod.GET)
-    public List<String> getPossibleSources(HttpServletResponse response, @RequestParam String dest) {
-        ProjektPZResponse projektPZResponse = airportOperations.getPossibleSources(dest);
-        response.setStatus(projektPZResponse.getResult());
-
-        return projektPZResponse.getResponseList();
+    public List<String> getPossibleSources(@RequestParam String dest, HttpServletResponse response) {
+        return flightService.getPossibleSources(dest, response);
     }
 
     @RequestMapping(value = "/classes", method = RequestMethod.GET)
     public List<String> getClasses(HttpServletResponse response) {
-        ProjektPZResponse projektPZResponse = airportOperations.getClasses();
+        return flightService.getClasses(response);
+    }
 
-        response.setStatus(projektPZResponse.getResult());
-        return projektPZResponse.getResponseList();
+    @RequestMapping(value = "/buy", method = RequestMethod.POST)
+    public void buyTicket(@RequestBody String requestBody, HttpServletResponse response) {
+        flightService.buyTicket(requestBody, response);
     }
 
     @RequestMapping(value = "/flights", method = RequestMethod.GET)
@@ -59,42 +50,6 @@ public class FlightController {
                                       @RequestParam String _class,
                                       @RequestParam String numberOfPassengers) {
 
-        FlightToSearchUVM flightToSearchUVM = new FlightToSearchUVM.FlightUVMBuilder()
-                .dateStart(dateStart)
-                .dateEnd(dateEnd)
-                .from(from)
-                .to(to)
-                ._class(_class)
-                .numberOfPassengers(numberOfPassengers)
-                .build();
-
-        FlightRequest flightRequest = new FlightRequest();
-        flightRequest.setFlightToSearchUVM(flightToSearchUVM);
-
-        FlightResponse flightResponse = flightOperations.getFlights(flightRequest);
-        response.setStatus(flightResponse.getResult());
-
-        return flightResponse.getFlightUVMResultList();
-    }
-
-    @RequestMapping(value = "/buy", method = RequestMethod.POST)
-    public void buyTicket(HttpServletResponse response, @RequestBody String requestBody) {
-        ProjektPZResponse projektPZResponse = airportOperations.addTicket(parseToTicketUVM(requestBody));
-        response.setStatus(projektPZResponse.getResult());
-    }
-
-    public TicketUVM parseToTicketUVM(String requestBody) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        TicketUVM user = null;
-
-        try {
-            user = mapper.readValue(requestBody, TicketUVM.class);
-        } catch (IOException e) {
-            logger.log(Level.ERROR, e.toString());
-        }
-
-        return user;
+        return flightService.getFlights(response, dateStart, dateEnd, from, to, _class, numberOfPassengers);
     }
 }

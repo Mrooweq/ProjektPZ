@@ -54,6 +54,11 @@ export class Registration {
           this.registrationForm.controls['username'].reset();
           this.registrationForm.controls['password'].reset();
           this.registrationForm.controls['conpassword'].reset();
+        } else if (this.errorMessage == 'Email is alredy used') {
+          this.registrationForm.controls['email'].reset();
+          this.registrationForm.controls['conemail'].reset();
+          this.registrationForm.controls['password'].reset();
+          this.registrationForm.controls['conpassword'].reset();
         }
       }
     ));

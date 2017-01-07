@@ -8,6 +8,10 @@
   background-size: cover;
 }
 
+#formHeader{
+  font-size: 15px;
+}
+
 .col-md-9 {
   background-color: white;
   min-height: 100vh;

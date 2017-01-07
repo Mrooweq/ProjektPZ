@@ -22,49 +22,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping(value="/api")
 public class UserController {
 
-	private Logger logger = Logger.getLogger(UserController.class);
-
 	@Autowired
-	private UserOperations userOperations;
-
-	@Autowired
-	private SessionTable sessionTable;
+	private UserService userService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public SessionStorage login(@RequestBody String requestBody, HttpServletResponse response) {
-		UserResponse userResponse = userOperations.loginUser(parseToUserUVM(requestBody));
-		int result = userResponse.getResult();
-		response.setStatus(result);
-
-		if(result == HttpServletResponse.SC_OK)
-			return sessionTable.getUserSession(userResponse.getUserUVM());
-		else
-			return null;
+		return userService.login(requestBody, response);
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public void register(@RequestBody String requestBody, HttpServletResponse response) {
-		int result = userOperations.registerUser(parseToUserUVM(requestBody));
-		response.setStatus(result);
+		userService.register(requestBody, response);
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public void logout(@RequestBody String requestBody, HttpServletResponse response) {
-		userOperations.logoutUser(parseToUserUVM(requestBody));
-	}
-
-	public UserUVM parseToUserUVM(String requestBody) {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-		UserUVM user = null;
-
-		try {
-			user = mapper.readValue(requestBody, UserUVM.class);
-		} catch (IOException e) {
-			logger.log(Level.ERROR, e.toString());
-		}
-
-		return user;
+	public void logout(@RequestBody String requestBody) {
+		userService.logout(requestBody);
 	}
 }

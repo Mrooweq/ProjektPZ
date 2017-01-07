@@ -1,13 +1,9 @@
 package com.malinki.pz;
 
-import com.malinki.pz.bll.AirportOperations;
+import com.malinki.pz.bll.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-
-import com.malinki.pz.bll.BllConfig;
-import com.malinki.pz.bll.SessionTable;
-import com.malinki.pz.bll.UserOperations;
 
 @Configuration
 @Import(BllConfig.class)
@@ -19,12 +15,17 @@ public class ApiConfig {
     }
 
     @Bean
-    public AirportOperations ticketOperations() {
-        return new AirportOperations();
-    }
-    
-    @Bean
     public SessionTable userContext() {
         return new SessionTable();
+    }
+
+    @Bean
+    public UserService userService() {
+        return new UserService();
+    }
+
+    @Bean
+    public FlightService flightService() {
+        return new FlightService();
     }
 }
