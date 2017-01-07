@@ -2,23 +2,25 @@ package com.malinki.pz.lib;
 
 
 public class TicketUVM {
-    private String flightNumber;
+    private int flightNumber;
     private String flightClass;
     private String username;
     private String airlineShortcut;
+    private int numberOfPlaces;
 
     private TicketUVM(TicketUVM.TicketUVMBuilder builder) {
         this.flightNumber = builder.flightNumber;
         this.flightClass = builder.flightClass;
         this.username = builder.username;
         this.airlineShortcut = builder.airlineShortcut;
+        this.numberOfPlaces = builder.numberOfPlaces;
     }
 
-    public String getFlightNumber() {
+    public int getFlightNumber() {
         return flightNumber;
     }
 
-    public void setFlightNumber(String flightNumber) {
+    public void setFlightNumber(int flightNumber) {
         this.flightNumber = flightNumber;
     }
 
@@ -46,13 +48,22 @@ public class TicketUVM {
         this.airlineShortcut = airlineShortcut;
     }
 
+    public int getNumberOfPlaces() {
+        return numberOfPlaces;
+    }
+
+    public void setNumberOfPlaces(int numberOfPlaces) {
+        this.numberOfPlaces = numberOfPlaces;
+    }
+
     public static class TicketUVMBuilder {
-        private String flightNumber;
+        private int flightNumber;
         private String flightClass;
         private String username;
         private String airlineShortcut;
+        private int numberOfPlaces;
 
-        public TicketUVM.TicketUVMBuilder flightNumber(String flightNumber) {
+        public TicketUVM.TicketUVMBuilder flightNumber(int flightNumber) {
             this.flightNumber = flightNumber;
             return this;
         }
@@ -69,6 +80,11 @@ public class TicketUVM {
 
         public TicketUVM.TicketUVMBuilder airlineShortcut(String airlineShortcut) {
             this.airlineShortcut = airlineShortcut;
+            return this;
+        }
+
+        public TicketUVM.TicketUVMBuilder numberOfPlaces(int numberOfPlaces) {
+            this.numberOfPlaces = numberOfPlaces;
             return this;
         }
 

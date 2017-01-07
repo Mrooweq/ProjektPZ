@@ -75,14 +75,26 @@ public class FlightService {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        TicketUVM user = null;
+        BuyTicketResponse buyTicketResponse = null;
 
         try {
-            user = mapper.readValue(requestBody, TicketUVM.class);
+            buyTicketResponse = mapper.readValue(requestBody, BuyTicketResponse.class);
         } catch (IOException e) {
             logger.log(Level.ERROR, e.toString());
         }
 
-        return user;
+        FlightUVM flightUVM = buyTicketResponse.getFlight();
+        UserUVM userUVM = buyTicketResponse.getUser();
+        FlightClass flightClass = buyTicketResponse.getFlightClass();
+
+        TicketUVM ticketUVM = new TicketUVM.TicketUVMBuilder()
+                .numberOfPlaces(flightUVM.getNumberOfPlaces())
+                .flightNumber(flightUVM.getFlightNumber())
+                .airlineShortcut(flightUVM.getAirlineShortcut())
+                .flightClass(flightClass.getFlightClass())
+                .username(userUVM.getUsername())
+                .build();
+
+        return ticketUVM;
     }
 }

@@ -10,7 +10,7 @@ public class FlightDTO {
     private String airlineShortcut;
     private String from;
     private String to;
-    private int freePlaces;
+    private int numberOfPlaces;
 
     public FlightDTO(){}
 
@@ -22,7 +22,7 @@ public class FlightDTO {
         this.airlineName = builder.airlineName;
         this.from = builder.from;
         this.to = builder.to;
-        this.freePlaces = builder.freePlaces;
+        this.numberOfPlaces = builder.numberOfPlaces;
         this.airlineShortcut = builder.airlineShortcut;
     }
 
@@ -82,12 +82,12 @@ public class FlightDTO {
         this.to = to;
     }
 
-    public int getFreePlaces() {
-        return freePlaces;
+    public int getNumberOfPlaces() {
+        return numberOfPlaces;
     }
 
-    public void setFreePlaces(int freePlaces) {
-        this.freePlaces = freePlaces;
+    public void setNumberOfPlaces(int numberOfPlaces) {
+        this.numberOfPlaces = numberOfPlaces;
     }
 
     public String getAirlineShortcut() {
@@ -106,7 +106,7 @@ public class FlightDTO {
         private String airlineName;
         private String from;
         private String to;
-        private int freePlaces;
+        private int numberOfPlaces;
         private String airlineShortcut;
 
         public FlightDTO.FlightDTOBuilder flightNumber(int flightNumber) {
@@ -139,8 +139,8 @@ public class FlightDTO {
             return this;
         }
 
-        public FlightDTO.FlightDTOBuilder freePlaces(int freePlaces) {
-            this.freePlaces = freePlaces;
+        public FlightDTO.FlightDTOBuilder numberOfPlaces(int freePlaces) {
+            this.numberOfPlaces = freePlaces;
             return this;
         }
 

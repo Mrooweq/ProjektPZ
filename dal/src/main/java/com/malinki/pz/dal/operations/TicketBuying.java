@@ -28,6 +28,6 @@ public class TicketBuying extends DatabaseSearcherOperation {
             databaseOperationResultEnum = DatabaseOperationResultEnum.TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR;
         }
 
-        return null;
+        return new MalinkiSimpleResponse();
     }
 }

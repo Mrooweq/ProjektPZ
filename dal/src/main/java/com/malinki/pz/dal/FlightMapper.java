@@ -56,6 +56,7 @@ public interface FlightMapper {
 
     @Select("INSERT INTO Ticket VALUES (" +
             "getMinTicketID, " +
+            "#{numberOfPlaces}, " +
             "(SELECT ID_Flight FROM Flight, Airline WHERE FLIGHT_NUMBER = #{flightNumber} AND Airline.NAME_SHORTCUT = #{airlineShortcut}), " +
             "(SELECT ID_Class FROM Class WHERE Name = #{flightClass}), " +
             "(SELECT ID_User FROM \"User\" WHERE Username = #{username}))")

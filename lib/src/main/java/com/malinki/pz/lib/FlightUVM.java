@@ -10,7 +10,7 @@ public class FlightUVM {
     private String airlineShortcut;
     private String from;
     private String to;
-    private int freePlaces;
+    private int numberOfPlaces;
 
     public FlightUVM(){}
 
@@ -22,7 +22,7 @@ public class FlightUVM {
         this.airlineName = builder.airlineName;
         this.from = builder.from;
         this.to = builder.to;
-        this.freePlaces = builder.freePlaces;
+        this.numberOfPlaces = builder.numberOfPlaces;
         this.airlineShortcut = builder.airlineShortcut;
     }
 
@@ -82,12 +82,12 @@ public class FlightUVM {
         this.to = to;
     }
 
-    public int getFreePlaces() {
-        return freePlaces;
+    public int getNumberOfPlaces() {
+        return numberOfPlaces;
     }
 
-    public void setFreePlaces(int freePlaces) {
-        this.freePlaces = freePlaces;
+    public void setNumberOfPlaces(int numberOfPlaces) {
+        this.numberOfPlaces = numberOfPlaces;
     }
 
     public String getAirlineShortcut() {
@@ -106,7 +106,7 @@ public class FlightUVM {
         private String airlineName;
         private String from;
         private String to;
-        private int freePlaces;
+        private int numberOfPlaces;
         private String airlineShortcut;
 
         public FlightUVM.FlightUVMBuilder flightNumber(int flightNumber) {
@@ -139,8 +139,8 @@ public class FlightUVM {
             return this;
         }
 
-        public FlightUVM.FlightUVMBuilder freePlaces(int freePlaces) {
-            this.freePlaces = freePlaces;
+        public FlightUVM.FlightUVMBuilder numberOfPlaces(int freePlaces) {
+            this.numberOfPlaces = freePlaces;
             return this;
         }
 
