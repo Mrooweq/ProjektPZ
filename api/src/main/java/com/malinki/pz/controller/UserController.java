@@ -30,4 +30,9 @@ public class UserController {
 	public void logout(@RequestBody String requestBody) {
 		userService.logout(requestBody);
 	}
+
+	@RequestMapping(value = "/validate", method = RequestMethod.POST)
+	public void validateUserByToken(@RequestBody String requestBody) {
+		userService.validateUserByToken(requestBody);
+	}
 }
