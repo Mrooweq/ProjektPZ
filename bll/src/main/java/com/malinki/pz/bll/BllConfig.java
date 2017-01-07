@@ -1,6 +1,5 @@
 package com.malinki.pz.bll;
 
-import com.malinki.pz.dal.AirportRepository;
 import com.malinki.pz.dal.FlightRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,11 +12,6 @@ public class BllConfig {
     @Bean
     public UserRepository userRepository() {
         return new UserRepository();
-    }
-
-    @Bean
-    public AirportRepository airportRepository() {
-        return new AirportRepository();
     }
 
     @Bean

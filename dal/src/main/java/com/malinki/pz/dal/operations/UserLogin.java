@@ -1,7 +1,7 @@
 package com.malinki.pz.dal.operations;
 
+import com.malinki.pz.lib.MalinkiComplexResponse;
 import com.malinki.pz.lib.UserDTO;
-import com.malinki.pz.lib.UserResponse;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -18,7 +18,7 @@ public class UserLogin extends DatabaseUserOperation {
 	}
 
 	@Override
-	protected UserResponse mainAction() {
+	protected MalinkiComplexResponse mainAction() {
 		boolean isUsernameAndPasswordCorrect = false;
 		boolean hasErrorOccurred = false;
 
@@ -45,8 +45,8 @@ public class UserLogin extends DatabaseUserOperation {
 		else
 			databaseOperationResultEnum = DatabaseOperationResultEnum.USER_LOG_IN_ATTEMPT_FAILED_DUE_TO_WRONG_USERNAME_OR_PASSWORD;
 
-		UserResponse userResponse = new UserResponse();
-		userResponse.setUserDTO(user);
+		MalinkiComplexResponse userResponse = new MalinkiComplexResponse();
+		userResponse.setDtoResult(user);
 
 		return userResponse;
 	}

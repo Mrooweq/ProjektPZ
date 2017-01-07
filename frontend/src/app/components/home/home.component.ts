@@ -1,7 +1,8 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterViewInit} from '@angular/core';
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'home',
@@ -29,13 +30,16 @@ export class Home implements OnInit,OnDestroy {
   };
 
   constructor(private fb: FormBuilder,
+              private router: Router,
               private searchService: SearchService) {
   }
 
-  callback(value, name: String) {
+  callback(value: any, name: String) {
+    if (!value)
+      value = '';
     if (name == 'source')
       this.searchForm.controls['source'].setValue(value);
-    if (name == 'destination')
+    else if (name == 'destination')
       this.searchForm.controls['destination'].setValue(value);
   }
 
@@ -43,7 +47,7 @@ export class Home implements OnInit,OnDestroy {
     console.log(value);
     this._subscriptions.push(this.searchService.getFlights(value).subscribe(
       flights => {
-        console.log(flights);
+        this.router.navigate(['/results']);
       },
       error => {
         console.log(error);
@@ -87,12 +91,12 @@ export class Home implements OnInit,OnDestroy {
     ));
 
     this.searchForm = this.fb.group({
-      source: [null],
-      destination: [null],
-      start: [null],
-      end: [null],
-      class: [null],
-      travelers: [null]
+      source: [''],
+      destination: [''],
+      start: [''],
+      end: [''],
+      _class: [''],
+      travelers: ['']
     });
   }
 

@@ -1,21 +1,20 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, AfterViewInit, AfterViewChecked} from '@angular/core';
 import {AuthenticationService} from '../../_services/authentication.service';
-import {Router} from "@angular/router";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
+declare var $: JQueryStatic;
 
 @Component({
   selector: 'login',
   templateUrl: 'login-form.component.html',
   styleUrls: ['login-form.component.css']
 })
-export class LoginForm implements OnDestroy{
-  errorMessage: string;
+export class LoginForm implements OnDestroy,AfterViewInit {
+  errorMessage: string = null;
   loginForm: FormGroup;
   _subscriptions: Subscription[] = [];
 
   constructor(private fb: FormBuilder,
-              private router: Router,
               private authenticationService: AuthenticationService) {
     this.loginForm = fb.group({
       'username': [null, [Validators.required, Validators.pattern('[a-zA-Z0-9)]+')]],
@@ -23,8 +22,11 @@ export class LoginForm implements OnDestroy{
     });
   }
 
-  goBack(): void {
-    this.router.navigate(['/']);
+  ngAfterViewInit(): void {
+    $('#myModal').on('hidden.bs.modal', () => {
+      this.loginForm.reset();
+      this.errorMessage = null;
+    });
   }
 
   login(loginFormValue: any): void {
@@ -32,14 +34,15 @@ export class LoginForm implements OnDestroy{
     this._subscriptions.push(this.authenticationService.login(loginFormValue.username, loginFormValue.password)
       .subscribe(
         () => {
+          $('#myModal').modal('hide');
           this.loginForm.reset();
-          this.goBack();
         },
         error => {
           this.errorMessage = error;
           this.loginForm.reset();
         }));
   }
+
   ngOnDestroy() {
     this._subscriptions.forEach(s => s.unsubscribe());
   }

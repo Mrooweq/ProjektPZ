@@ -4,32 +4,32 @@ import java.io.InputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.malinki.pz.lib.ProjektPZResponse;
+import com.malinki.pz.lib.MalinkiSimpleResponse;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 
-public abstract class DatabaseAirportOperation extends DatabaseOperation {
-    private Logger logger = Logger.getLogger(DatabaseAirportOperation.class);
+public abstract class DatabaseSearcherOperation extends DatabaseOperation {
+    private Logger logger = Logger.getLogger(DatabaseSearcherOperation.class);
     protected FlightMapper flightMapper;
     protected DatabaseOperationResultEnum databaseOperationResultEnum;
 
-    public ProjektPZResponse performAction() {
+    public MalinkiSimpleResponse performAction() {
         InputStream inputStream = openInputStream();
         SqlSession session = establishSession(inputStream);
         flightMapper = session.getMapper(FlightMapper.class);
 
-        ProjektPZResponse projektPZResponse;
+        MalinkiSimpleResponse malinkiSimpleResponse;
 
-        projektPZResponse = mainAction();
-        projektPZResponse.setResult(getResultCode());
+        malinkiSimpleResponse = mainAction();
+        malinkiSimpleResponse.setResult(getResultCode());
 
         session.close();
         closeInputStream(inputStream);
 
-        return projektPZResponse;
+        return malinkiSimpleResponse;
     }
 
 
@@ -66,5 +66,5 @@ public abstract class DatabaseAirportOperation extends DatabaseOperation {
         return result;
     }
 
-    abstract protected ProjektPZResponse mainAction();
+    abstract protected MalinkiSimpleResponse mainAction();
 }

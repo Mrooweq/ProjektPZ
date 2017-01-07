@@ -118,7 +118,9 @@
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-secondary float-xs-right" [disabled]="!registrationForm.valid">Submit
+          <button type="submit" class="btn btn-primary float-xs-right" [disabled]="!registrationForm.valid">Submit
+          </button>
+          <button type="button" class="btn btn-secondary float-xs-right" (click)="goBack()">Close
           </button>
         </form>
       </div>

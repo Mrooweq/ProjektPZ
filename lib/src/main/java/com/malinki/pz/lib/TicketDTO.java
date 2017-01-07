@@ -2,23 +2,25 @@ package com.malinki.pz.lib;
 
 
 public class TicketDTO {
-    private String flightNumber;
+    private int flightNumber;
     private String flightClass;
     private String username;
     private String airlineShortcut;
+    private int numberOfPlaces;
 
     private TicketDTO(TicketDTO.TicketDTOBuilder builder) {
         this.flightNumber = builder.flightNumber;
         this.flightClass = builder.flightClass;
         this.username = builder.username;
         this.airlineShortcut = builder.airlineShortcut;
+        this.numberOfPlaces = builder.numberOfPlaces;
     }
 
-    public String getFlightNumber() {
+    public int getFlightNumber() {
         return flightNumber;
     }
 
-    public void setFlightNumber(String flightNumber) {
+    public void setFlightNumber(int flightNumber) {
         this.flightNumber = flightNumber;
     }
 
@@ -46,13 +48,22 @@ public class TicketDTO {
         this.airlineShortcut = airlineShortcut;
     }
 
+    public int getNumberOfPlaces() {
+        return numberOfPlaces;
+    }
+
+    public void setNumberOfPlaces(int numberOfPlaces) {
+        this.numberOfPlaces = numberOfPlaces;
+    }
+
     public static class TicketDTOBuilder {
-        private String flightNumber;
+        private int flightNumber;
         private String flightClass;
         private String username;
         private String airlineShortcut;
+        private int numberOfPlaces;
 
-        public TicketDTO.TicketDTOBuilder flightNumber(String flightNumber) {
+        public TicketDTO.TicketDTOBuilder flightNumber(int flightNumber) {
             this.flightNumber = flightNumber;
             return this;
         }
@@ -69,6 +80,11 @@ public class TicketDTO {
 
         public TicketDTO.TicketDTOBuilder airlineShortcut(String airlineShortcut) {
             this.airlineShortcut = airlineShortcut;
+            return this;
+        }
+
+        public TicketDTO.TicketDTOBuilder numberOfPlaces(int numberOfPlaces) {
+            this.numberOfPlaces = numberOfPlaces;
             return this;
         }
 
