@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 
 public class FlightService {
@@ -18,6 +20,9 @@ public class FlightService {
 
     @Autowired
     private FlightOperations flightOperations;
+
+    @Autowired
+    private UserOperations userOperations;
 
     public List<String> getPossibleDestinations(String src, HttpServletResponse response){
         MalinkiSimpleResponse malinkiSimpleResponse = flightOperations.getPossibleDestinations(src);
@@ -66,9 +71,22 @@ public class FlightService {
         return (List<FlightUVM>) malinkiComplexResponse.getUvmResult();
     }
 
-    public void buyTicket(@RequestBody String requestBody, HttpServletResponse response) {
-        MalinkiSimpleResponse malinkiSimpleResponse = flightOperations.addTicket(parseToTicketUVM(requestBody));
-        response.setStatus(malinkiSimpleResponse.getResult());
+    public void buyTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+        String token = request.getHeader("authorization");
+        token = token.substring(7);                      // do usuniecia
+
+        TicketUVM ticket = parseToTicketUVM(requestBody);
+        String username = ticket.getUsername();
+
+        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
+
+        if(isUserValidatedProperly){
+            MalinkiSimpleResponse malinkiSimpleResponse = flightOperations.addTicket(ticket);
+            response.setStatus(malinkiSimpleResponse.getResult());
+        }
+        else{
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
     }
 
     private TicketUVM parseToTicketUVM(String requestBody) {
@@ -91,7 +109,7 @@ public class FlightService {
                 .numberOfPlaces(flightUVM.getNumberOfPlaces())
                 .flightNumber(flightUVM.getFlightNumber())
                 .airlineShortcut(flightUVM.getAirlineShortcut())
-                .flightClass(flightClass.getFlightClass())
+                .flightClass("VIP")   // do usuniecia
                 .username(userUVM.getUsername())
                 .build();
 
