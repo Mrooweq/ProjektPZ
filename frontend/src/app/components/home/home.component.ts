@@ -1,5 +1,5 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {FormGroup, FormBuilder} from "@angular/forms";
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
@@ -38,6 +38,7 @@ export class Home implements OnInit,OnDestroy {
       dateFormat: 'yyyy-mm-dd',
       firstDayOfWeek: 'mo',
       sunHighlight: true,
+      inputValueRequired: true,
       inline: false,
       showDateFormatPlaceholder: true,
       disableUntil: {
@@ -59,6 +60,7 @@ export class Home implements OnInit,OnDestroy {
   }
 
   submit(value: any) {
+    console.log(value);
     this._subscriptions.push(this.searchService.getFlights(value).subscribe(
       flights => {
         this.router.navigate(['/results']);
@@ -75,10 +77,10 @@ export class Home implements OnInit,OnDestroy {
     this.searchForm = this.fb.group({
       source: [''],
       destination: [''],
-      start: [this._today],
-      end: [this._tomorrow],
-      _class: [''],
-      travelers: [1]
+      start: [this._today, Validators.required],
+      end: [this._tomorrow, Validators.required],
+      _class: ['', Validators.required],
+      travelers: [1, Validators.required]
     });
   }
 

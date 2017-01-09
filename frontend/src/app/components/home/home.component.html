@@ -16,6 +16,7 @@
                          [source]="_sources"
                          placeholder="Cities"
                          class="form-control"
+                         [accept-user-input]=false
                          (valueChanged)="callback($event,'source')">
                 </div>
               </div>
@@ -27,6 +28,7 @@
                          [source]="_dest"
                          placeholder="Cities"
                          class="form-control"
+                         [accept-user-input]=false
                          (valueChanged)="callback($event,'destination')">
                 </div>
               </div>
