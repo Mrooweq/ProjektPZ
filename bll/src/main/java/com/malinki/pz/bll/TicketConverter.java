@@ -14,6 +14,7 @@ public class TicketConverter {
                     .airlineShortcut(ticket.getAirlineShortcut())
                     .flightClass(ticket.getFlightClass())
                     .username(ticket.getUsername())
+                    .numberOfPlaces(ticket.getNumberOfPlaces())
                     .build();
     }
 
@@ -26,6 +27,7 @@ public class TicketConverter {
                     .airlineShortcut(ticket.getAirlineShortcut())
                     .flightClass(ticket.getFlightClass())
                     .username(ticket.getUsername())
+                    .numberOfPlaces(ticket.getNumberOfPlaces())
                     .build();
     }
 }

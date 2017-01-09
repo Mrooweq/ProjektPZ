@@ -7,4 +7,5 @@ public interface IUserOperations {
 	public int registerUser(UserUVM user);
 	public MalinkiComplexResponse loginUser(UserUVM user);
 	public void logoutUser(UserUVM user);
+	public boolean validateUserByToken(String username, String token);
 }

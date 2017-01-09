@@ -46,4 +46,9 @@ public class UserOperations implements IUserOperations {
 	public void logoutUser(UserUVM user) {
 		sessionTable.deleteUserSession(user);
 	}
+
+	@Override
+	public boolean validateUserByToken(String username, String token) {
+		return sessionTable.validateUserByToken(username, token);
+	}
 }

@@ -1,5 +1,6 @@
 package com.malinki.pz.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 
 @RestController
@@ -37,8 +39,8 @@ public class FlightController {
     }
 
     @RequestMapping(value = "/buy", method = RequestMethod.POST)
-    public void buyTicket(@RequestBody String requestBody, HttpServletResponse response) {
-        flightService.buyTicket(requestBody, response);
+    public void buyTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+        flightService.buyTicket(requestBody, request, response);
     }
 
     @RequestMapping(value = "/flights", method = RequestMethod.GET)
