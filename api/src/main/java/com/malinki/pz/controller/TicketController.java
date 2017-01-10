@@ -39,4 +39,15 @@ public class TicketController {
        
         response.setStatus(result);
     }
+    
+    @RequestMapping(value = "/test")
+    public void test(){
+    	GettingImageTest test = new GettingImageTest();
+    	try {
+			test.getImage();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }

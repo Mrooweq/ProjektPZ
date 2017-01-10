@@ -15,4 +15,12 @@ public class Strings {
 	public static final String TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR = "Ticket not bought successfully due to error";
 	
 	public static final String JSON_RESPONSE = "{\"responseMessage\":\"%s\"}";
+
+	public static final String AIRLINE_DATA_NOT_FOUND = "Ailrine data not found in database";
+
+	public static final String FLIGHT_DATA_NOT_FOUND = "Flight data not found in database";
+
+	public static final String USER_DATA_NOT_FOUND = "User data not found in database";
+
+	public static final String AIRPORT_DATA_NOT_FOUND = "Airport data not found in database";
 }

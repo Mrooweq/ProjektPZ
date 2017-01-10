@@ -1,6 +1,8 @@
 package com.malinki.pz.dal;
 
+import com.malinki.pz.lib.BlobDTO;
 import com.malinki.pz.lib.UserDTO;
+
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -25,15 +27,7 @@ public interface Mapper {
 	@Select("INSERT INTO TICKET VALUES (getMinTicketID, #{flight}, #{flightClass}, (select ID_User from \"User\" where Username = #{username}))")
 	void addTicket(@Param("flight") String flight,
 			@Param("flightClass") String flightClass,
-			@Param("username") String username/*,
-			@Param("firstname") String firstname,
-			@Param("lastName") String lastName,
-			@Param("nrIDCard") String nrIDCard,
-			@Param("email") String email,
-			@Param("sourceAirport") String sourceAirport,
-			@Param("destinyAirport") String destinyAirport,
-			@Param("flightDate") String flightDate,
-			@Param("airlineName") String airlineName*/);
+			@Param("username") String username);
 
 	@Select("COMMIT")
 	void commit();
@@ -45,4 +39,28 @@ public interface Mapper {
 
 	@Select("DELETE \"User\"")
 	void deleteAllUsers();
+	
+	@Select("SELECT LOGO FROM Airline WHERE ID_Airline = #{ID_Airline}")
+	BlobDTO getAirlineLogo(@Param("ID_Airline") int airlineID);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

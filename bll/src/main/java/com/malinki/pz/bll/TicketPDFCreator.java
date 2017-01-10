@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.itextpdf.barcodes.*;
 
 import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.color.DeviceCmyk;
@@ -19,15 +18,25 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
+import com.malinki.pz.dal.operations.DataForTicketGetter;
+import com.malinki.pz.lib.DataForPDFTicket;
 import com.malinki.pz.lib.TicketUVM;
 
 public class TicketPDFCreator {
 	Color grayColor;
 	TicketUVM ticket;
+	DataForPDFTicket dataForPDFTicket;
 
 	public TicketPDFCreator(TicketUVM ticket) {
 		this.grayColor = new DeviceCmyk(0.f, 0.f, 0.f, 0.875f);
 		this.ticket = ticket;
+		DataForTicketGetter getter = new DataForTicketGetter(ticket);
+		try {
+			dataForPDFTicket = getter.getAllDataForPdfTicket();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressWarnings("resource")
@@ -37,8 +46,25 @@ public class TicketPDFCreator {
 		PdfDocument pdf = new PdfDocument(writer);
 		Document document = new Document(pdf);
 		PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
+		
+		/*File image = new File("C:\\java.png");
+	      FileOutputStream fos = new FileOutputStream(image);
 
-		Image logo = new Image(ImageDataFactory.create("./graphics/logo.png"));
+	      byte[] buffer = new byte[1];
+	      InputStream is;
+		try {
+			is = getter.getImage(1).getBinaryStream();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			is = null;
+		}
+	      while (is.read(buffer) > 0) {
+	        fos.write(buffer);
+	      }
+	      fos.close();*/
+		 
+		Image logo = dataForPDFTicket.getAirlineLogo();
 
 		document.add(new Paragraph().setFixedPosition(40, 718, 1000).add(createBarcode(pdf).setWidth(200)));
 
@@ -47,7 +73,7 @@ public class TicketPDFCreator {
 		document = writeAirlineName(document, font);
 		document = writeCustomerName(document, font);
 		document = writeCustomerSurname(document, font);
-		document = writeDocumentID(document, font);
+		//document = writeDocumentID(document, font);
 		document = writeFlyDate(document, font);
 		document = writeSourceAirport(document, font);
 		document = writeDestinyAirport(document, font);
@@ -58,11 +84,21 @@ public class TicketPDFCreator {
 
 	private Image createBarcode(PdfDocument pdf) {
 
-		// TODO get code of airline and ticket from database 59 + airlineCode(5)
-		// + tickedCode(5) + control digit
 		String airlineCountryCode = "59";
-		String ticketCode = "12345";
-		String airlineCode = "67890";
+		String ticketCode = ticket.getFlight();
+		while(ticketCode.length()<5) {
+			ticketCode += "0";
+		}
+		if(ticketCode.length()>5){
+			ticketCode = ticketCode.substring(0, 5);
+		}
+		String airlineCode = dataForPDFTicket.getAirlineID();
+		while(airlineCode.length()<5) {
+			airlineCode += "0";
+		}
+		if(airlineCode.length()>5){
+			airlineCode = airlineCode.substring(0, 5);
+		}
 		String codeWithoutChecksum = airlineCountryCode + airlineCode + ticketCode;
 		String controlNumber = calculateControlNumberForBarcode(codeWithoutChecksum);
 		String fullCode = codeWithoutChecksum + controlNumber;
@@ -88,7 +124,7 @@ public class TicketPDFCreator {
 	}
 
 	private Document writeAirlineName(Document document, PdfFont font) {
-		document.add(new Paragraph(ticket.getAirlineName()).setFont(font).setFontSize(40).setFixedPosition(40, 592, 220)
+		document.add(new Paragraph(dataForPDFTicket.getAirlineName()).setFont(font).setFontSize(40).setFixedPosition(40, 592, 220)
 				.setItalic());
 
 		return document;
@@ -98,7 +134,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph("Name:").setFont(font).setFontSize(15).setFixedPosition(40, 553.5f, 80)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(ticket.getName()).setFont(font).setFontSize(20).setFixedPosition(120, 552, 170));
+		document.add(new Paragraph(dataForPDFTicket.getFirstname()).setFont(font).setFontSize(20).setFixedPosition(120, 552, 170));
 
 		return document;
 	}
@@ -107,7 +143,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph("Last name:").setFont(font).setFontSize(15).setFixedPosition(40, 533.5f, 80)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(ticket.getLastName()).setFont(font).setFontSize(20).setFixedPosition(120, 532, 170));
+		document.add(new Paragraph(dataForPDFTicket.getLastName()).setFont(font).setFontSize(20).setFixedPosition(120, 532, 170));
 
 		return document;
 	}
@@ -116,7 +152,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph("Document ID:").setFont(font).setFontSize(15).setFixedPosition(260, 553.5f, 100)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(ticket.getNrIDCard()).setFont(font).setFontSize(20).setFixedPosition(360, 552, 340));
+		document.add(new Paragraph(dataForPDFTicket.getNrIDCard()).setFont(font).setFontSize(20).setFixedPosition(360, 552, 340));
 
 		return document;
 	}
@@ -125,7 +161,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph("Fly date:").setFont(font).setFontSize(15).setFixedPosition(260, 533.5f, 100)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(ticket.getFlyDate()).setFont(font).setFontSize(20).setFixedPosition(360, 532, 340)
+		document.add(new Paragraph(dataForPDFTicket.getFlightDate()).setFont(font).setFontSize(20).setFixedPosition(360, 532, 340)
 				.setBold());
 
 		return document;
@@ -136,7 +172,7 @@ public class TicketPDFCreator {
 				.setFontColor(grayColor));
 
 		document.add(
-				new Paragraph(ticket.getSuroceAirport()).setFont(font).setFontSize(20).setFixedPosition(60, 462, 495));
+				new Paragraph(dataForPDFTicket.getSourceAirport()).setFont(font).setFontSize(20).setFixedPosition(60, 462, 495));
 
 		return document;
 	}
@@ -146,7 +182,7 @@ public class TicketPDFCreator {
 				.setFontColor(grayColor));
 
 		document.add(
-				new Paragraph(ticket.getDestinyAirport()).setFont(font).setFontSize(20).setFixedPosition(60, 422, 495));
+				new Paragraph(dataForPDFTicket.getDestinyAirport()).setFont(font).setFontSize(20).setFixedPosition(60, 422, 495));
 
 		return document;
 	}

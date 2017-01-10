@@ -3,14 +3,14 @@ package com.malinki.pz.lib;
 
 public class TicketUVM {
 	
-	private String sourceAirport;
+	/*private String sourceAirport;
 	private String destinyAirport;
 	private String flightDate;
 	private String airlineName;
 	private String firstname;
 	private String lastName;
 	private String nrIDCard;
-	private String email;
+	private String email;*/
 	
     private String flight;
     private String flightClass;
@@ -24,14 +24,14 @@ public class TicketUVM {
         this.flightClass = builder.flightClass;
         this.user = builder.user;
         
-        this.sourceAirport = builder.sourceAirport;
+        /*this.sourceAirport = builder.sourceAirport;
         this.destinyAirport = builder.destinyAirport;
         this.flightDate = builder.flightDate;
         this.airlineName = builder.airlineName;
         this.firstname = builder.firstname;
         this.lastName = builder.lastName;
         this.nrIDCard = builder.nrIDCard;
-        this.email = builder.email;
+        this.email = builder.email;*/
     }
 
     public String getFlight() {
@@ -66,7 +66,7 @@ public class TicketUVM {
         this.priceMultiplier = priceMultiplier;
     }
 
-    public String getSuroceAirport() {
+    /*public String getSuroceAirport() {
 		return sourceAirport;
 	}
 
@@ -128,21 +128,21 @@ public class TicketUVM {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
+	}*/
 
 	public static class TicketDTOTicketDTOBuilder {
         private String flight;
         private String flightClass;
         private String user;
         
-        private String sourceAirport;
+        /*private String sourceAirport;
     	private String destinyAirport;
     	private String flightDate;
     	private String airlineName;
     	private String firstname;
     	private String lastName;
     	private String nrIDCard;
-    	private String email;
+    	private String email;*/
 
         public TicketDTOTicketDTOBuilder flight(String flight) {
             this.flight = flight;
@@ -159,7 +159,7 @@ public class TicketUVM {
             return this;
         }
         
-        public TicketDTOTicketDTOBuilder sourceAirport(String sourceAirport) {
+        /*public TicketDTOTicketDTOBuilder sourceAirport(String sourceAirport) {
             this.sourceAirport = sourceAirport;
             return this;
         }
@@ -197,7 +197,7 @@ public class TicketUVM {
         public TicketDTOTicketDTOBuilder email(String email) {
             this.email = email;
             return this;
-        }
+        }*/
 
 
         public TicketUVM build() {
