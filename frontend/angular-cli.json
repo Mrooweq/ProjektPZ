@@ -17,12 +17,12 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "../src/_css/styles.css",
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+        "../node_modules/bootstrap/dist/css/bootstrap.css",
+        "../src/_css/styles.css"
       ],
       "scripts": [
-        "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.js",
         "../src/_js/javascript.js"
       ],
       "environments": {
