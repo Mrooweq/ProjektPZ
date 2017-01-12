@@ -1,4 +1,3 @@
-///<reference path="../../../../node_modules/@angular/core/src/metadata/lifecycle_hooks.d.ts"/>
 import {Component, OnInit, OnDestroy, AfterViewChecked, AfterViewInit} from '@angular/core';
 import {Flight} from "../../_mocks/flight";
 import {SearchService} from "../../_services/search.service";
@@ -76,7 +75,6 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewChecked,AfterVie
     this._flights = [];
     this._subscriptions.push(this.searchService.flights().subscribe(flights => {
       this._flights = flights;
-      console.log(this._flights);
     }));
   }
 

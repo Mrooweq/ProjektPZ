@@ -22,7 +22,7 @@ export class TicketService {
   private jwt() {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser && currentUser.tokenContainer.token) {
-      let headers = new Headers({'Authorization': 'Bearer ' + currentUser.tokenContainer.token});
+      let headers = new Headers({'Authorization': currentUser.tokenContainer.token});
       return new RequestOptions({headers: headers});
     }
   }

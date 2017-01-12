@@ -36,3 +36,8 @@
   text-overflow: ellipsis;
   text-align: center;
 }
+
+.ng-invalid:not(form).ng-touched, .ng-invalid:not(form).ng-dirty {
+  border: 1px solid red;
+}
+

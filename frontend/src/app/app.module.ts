@@ -21,6 +21,7 @@ import {SearchResults} from "./components/search_results/search-results.componen
 import {TicketService} from "./_services/tickets.service";
 import {AuthGuard} from "./_services/auth_guard.service";
 import {UserAccount} from "./components/user_account/user_account.component";
+import {DatePipe} from "@angular/common";
 
 
 @NgModule({
@@ -44,7 +45,7 @@ import {UserAccount} from "./components/user_account/user_account.component";
     UserAccount,
     EqualValidator
   ],
-  providers: [AuthenticationService, SearchService, TicketService, AuthGuard],
+  providers: [AuthenticationService, SearchService, TicketService, AuthGuard,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

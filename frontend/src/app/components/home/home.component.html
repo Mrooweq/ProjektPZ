@@ -4,7 +4,9 @@
     <div class="col-md-10">
       <div class="wrapper">
         <div id="container">
-          <form [formGroup]="searchForm" (ngSubmit)="submit(searchForm.value)">
+          <form [formGroup]="searchForm" (ngSubmit)="submit(searchForm.value);
+          start.clearDate();
+          end.clearDate();">
             <div class="row">
               <div class="col-md-2">
                 <div class="form-group">
@@ -14,6 +16,7 @@
                          [source]="_sources"
                          placeholder="Cities"
                          class="form-control"
+                         [accept-user-input]=false
                          (valueChanged)="callback($event,'source')">
                 </div>
               </div>
@@ -25,22 +28,23 @@
                          [source]="_dest"
                          placeholder="Cities"
                          class="form-control"
+                         [accept-user-input]=false
                          (valueChanged)="callback($event,'destination')">
                 </div>
               </div>
               <div class="col-md-2">
                 <div class="form-group">
                   <label>Start</label>
-                  <my-date-picker [options]="myDatePickerOptions"
-                                  [selDate]="selectedDate"
+                  <my-date-picker #start [options]="myDatePickerOptions"
+                                  [selDate]="selectedDate || _today"
                                   (dateChanged)="onDateChanged($event,'start')"></my-date-picker>
                 </div>
               </div>
               <div class="col-md-2">
                 <div class="form-group">
                   <label>End</label>
-                  <my-date-picker [options]="myDatePickerOptions"
-                                  [selDate]="selectedDate"
+                  <my-date-picker #end [options]="myDatePickerOptions"
+                                  [selDate]="selectedDate || _tomorrow"
                                   (dateChanged)="onDateChanged($event,'end')"></my-date-picker>
                 </div>
               </div>
@@ -63,7 +67,7 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <button type="submit" class="btn btn-secondary float-xs-right" [disabled]="!searchForm.valid" data-dismiss="my-date-picker">
+                <button type="submit" class="btn btn-secondary float-xs-right" [disabled]="!searchForm.valid">
                   Search
                 </button>
               </div>

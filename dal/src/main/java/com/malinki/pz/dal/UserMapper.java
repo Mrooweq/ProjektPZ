@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface UserMapper {
-	@Select("INSERT INTO \"User\" VALUES (getMinUserID, #{username}, #{password}, #{firstname}, #{lastname}, #{email})")
+	@Select("INSERT INTO \"User\" VALUES (seq_User.NEXTVAL, #{username}, #{password}, #{firstname}, #{lastname}, #{email})")
 	UserDTO registerUser(UserDTO user);
 
 	@Select("SELECT isLoginAlreadyUsed(#{str}) FROM DUAL")
