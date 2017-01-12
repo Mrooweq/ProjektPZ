@@ -1,5 +1,8 @@
 ALTER SESSION SET nls_date_format = 'yyyy-mm-dd hh24:mi:ss';
 
+CREATE SEQUENCE seq_User;
+CREATE SEQUENCE seq_Ticket;
+
 CREATE TABLE "User" (ID_User number(10) NOT NULL, Username varchar2(50) NOT NULL, Password varchar2(50) NOT NULL, Firstname varchar2(50) NOT NULL, Lastname varchar2(50) NOT NULL, Email varchar2(50) NOT NULL, PRIMARY KEY (ID_User));
 CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, Number_Of_Places number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
 CREATE TABLE Class (ID_Class number(10) NOT NULL, Name varchar2(50) NOT NULL, ID_Multiplier number(10) NOT NULL, PRIMARY KEY (ID_Class));
@@ -32,45 +35,16 @@ INSERT INTO Airline VALUES (1, 'British Airways', 'BAW');
 INSERT INTO Multiplier VALUES (1, 1);
 INSERT INTO Multiplier VALUES (2, 2);
 
-INSERT INTO Class VALUES (1, 'Ekonomiczna', 1);
+INSERT INTO Class VALUES (1, 'Economic', 1);
 INSERT INTO Class VALUES (2, 'VIP', 2);
 
-INSERT INTO Flight VALUES (1, 1000, '2016-01-01 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 2);
-INSERT INTO Flight VALUES (2, 2000, '2016-01-01 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 2, 3);
-INSERT INTO Flight VALUES (3, 3000, '2016-01-01 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 8, 9);
-INSERT INTO Flight VALUES (4, 4000, '2016-01-01 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 5);
-INSERT INTO Flight VALUES (5, 5000, '2016-01-01 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 5);
+INSERT INTO Flight VALUES (1, 1000, '2017-01-12 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 2);
+INSERT INTO Flight VALUES (2, 2000, '2017-01-12 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 2, 3);
+INSERT INTO Flight VALUES (3, 3000, '2017-01-12 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 8, 9);
+INSERT INTO Flight VALUES (4, 4000, '2017-01-12 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 5);
+INSERT INTO Flight VALUES (5, 5000, '2017-01-12 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 5);
 
-------------------------
-
-create or replace FUNCTION getMinUserID 
-return number is 
-
-cnt number := 0;
-v_flag integer := 1;
-
-begin 
-
-loop 
-
-cnt := cnt + 1;
-
-SELECT 
-   CASE WHEN EXISTS(SELECT 1 FROM "User" where ID_User = cnt)
-     THEN 1  
-     ELSE 0  
-   END  
-into v_flag FROM dual;
-
-
-EXIT when v_flag = 0;                     
-end loop;
- 
-return cnt; 
-end; 
-/
-
-------------------
+-------------
 
 create or replace FUNCTION isLoginAlreadyUsed (str IN VARCHAR2)
 return integer is
@@ -130,31 +104,3 @@ return v_flag;
 end;
 /
 
---------------------
-
-create or replace FUNCTION getMinTicketID
-return number is
-
-cnt number := 0;
-v_flag integer := 1;
-
-begin
-
-loop
-
-cnt := cnt + 1;
-
-SELECT
-   CASE WHEN EXISTS(SELECT 1 FROM Ticket where ID_Ticket = cnt)
-     THEN 1
-     ELSE 0
-   END
-into v_flag FROM dual;
-
-
-EXIT when v_flag = 0;
-end loop;
-
-return cnt;
-end;
-/

@@ -1,8 +1,9 @@
-import {Component, OnInit, OnDestroy, AfterViewInit} from '@angular/core';
-import {FormGroup, FormBuilder} from "@angular/forms";
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'home',
@@ -16,28 +17,43 @@ export class Home implements OnInit,OnDestroy {
   _dest: String[];
   _classes: String[];
   _subscriptions: Subscription[] = [];
-
-
-  myDatePickerOptions = {
-    todayBtnTxt: 'Today',
-    dateFormat: 'yyyy-mm-dd',
-    firstDayOfWeek: 'mo',
-    sunHighlight: true,
-    inline: false,
-    customPlaceholderTxt: 'yyyy-mm-dd',
-    disableUntil: {year: 2015, month: 11, day: 1},
-    selectionTxtFontSize: '14px'
-  };
+  _today: String;
+  _todayDate: Date;
+  _tomorrow: String;
+  myDatePickerOptions: any;
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              private searchService: SearchService) {
+              private searchService: SearchService,
+              private datepipe: DatePipe) {
+
+    this._todayDate = new Date();
+    this._today = this.datepipe.transform(this._todayDate, 'yyyy-MM-dd');
+    let tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    this._tomorrow = this.datepipe.transform(tomorrow, 'yyyy-MM-dd');
+
+    this.myDatePickerOptions = {
+      todayBtnTxt: 'Today',
+      dateFormat: 'yyyy-mm-dd',
+      firstDayOfWeek: 'mo',
+      sunHighlight: true,
+      inputValueRequired: true,
+      inline: false,
+      showDateFormatPlaceholder: true,
+      disableUntil: {
+        year: this._todayDate.getFullYear(),
+        month: (this._todayDate.getMonth() + 1),
+        day: (this._todayDate.getDate() - 1)
+      },
+      selectionTxtFontSize: '14px'
+    };
   }
 
   callback(value: any, name: String) {
     if (!value)
       value = '';
-    if (name == 'source')
+    else if (name == 'source')
       this.searchForm.controls['source'].setValue(value);
     else if (name == 'destination')
       this.searchForm.controls['destination'].setValue(value);
@@ -51,19 +67,31 @@ export class Home implements OnInit,OnDestroy {
       },
       error => {
         console.log(error);
+        this.makeForm();
+        this.searchForm.controls['_class'].setValue(this._classes[0]);
       }
     ));
-    this.searchForm.reset();
+  }
+
+  makeForm() {
+    this.searchForm = this.fb.group({
+      source: [''],
+      destination: [''],
+      start: [this._today, Validators.required],
+      end: [this._tomorrow, Validators.required],
+      _class: ['', Validators.required],
+      travelers: [1, Validators.required]
+    });
   }
 
   onDateChanged(value: any, name: String) {
-    if (name == 'start')
-      this.searchForm.controls['start'].setValue(value.formatted);
-    if (name == 'end')
-      this.searchForm.controls['end'].setValue(value.formatted);
+    if (name == 'start') this.searchForm.controls['start'].setValue(value.formatted);
+    if (name == 'end') this.searchForm.controls['end'].setValue(value.formatted);
   }
 
   ngOnInit(): void {
+    this.makeForm();
+
     this._subscriptions.push(this.searchService.getSourceAirport().subscribe(
       sources => {
         this._sources = sources;
@@ -84,20 +112,12 @@ export class Home implements OnInit,OnDestroy {
     this._subscriptions.push(this.searchService.getClasses().subscribe(
       classes => {
         this._classes = classes;
+        this.searchForm.controls['_class'].setValue(this._classes[0]);
       },
       error => {
         console.log(error);
       }
     ));
-
-    this.searchForm = this.fb.group({
-      source: [''],
-      destination: [''],
-      start: [''],
-      end: [''],
-      _class: [''],
-      travelers: ['']
-    });
   }
 
   ngOnDestroy() {

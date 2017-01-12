@@ -55,7 +55,7 @@ public interface FlightMapper {
     ArrayList<String> getClasses();
 
     @Select("INSERT INTO Ticket VALUES (" +
-            "getMinTicketID, " +
+            "seq_Ticket.NEXTVAL, " +
             "#{numberOfPlaces}, " +
             "(SELECT ID_Flight FROM Flight, Airline WHERE FLIGHT_NUMBER = #{flightNumber} AND Airline.NAME_SHORTCUT = #{airlineShortcut}), " +
             "(SELECT ID_Class FROM Class WHERE Name = #{flightClass}), " +
