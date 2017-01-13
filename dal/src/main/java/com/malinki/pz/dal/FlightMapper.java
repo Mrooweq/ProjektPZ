@@ -3,6 +3,7 @@ package com.malinki.pz.dal;
 import com.malinki.pz.lib.FlightDTO;
 import com.malinki.pz.lib.FlightToSearchDTO;
 import com.malinki.pz.lib.TicketRequestDTO;
+import com.malinki.pz.lib.TicketResponseDTO;
 import org.apache.ibatis.annotations.Lang;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -38,7 +39,7 @@ public interface FlightMapper {
             "    AND dest.NAME = #{to}" +
             " </if>" +
             "<if test=\"dateStart != null and dateEnd != null\">" +
-            "    AND Departure_Date BETWEEN #{dateStart} AND #{dateEnd} " +
+            "    AND TO_CHAR (Departure_Date, 'YYYY-MM-DD') BETWEEN #{dateStart} AND #{dateEnd} " +
             " </if>" +
             "<if test=\"_class != null\">" +
             "   AND \"CLASS\".Name = #{_class}" +
@@ -48,7 +49,6 @@ public interface FlightMapper {
             "</if>" +
             "</script>")
     ArrayList<FlightDTO> getFlights(FlightToSearchDTO flightToSearchDTO);
-
 
     @Select("SELECT Name FROM Class")
     ArrayList<String> getClasses();
@@ -61,11 +61,6 @@ public interface FlightMapper {
             "(SELECT ID_User FROM \"User\" WHERE Username = #{username}))")
     void addTicket(TicketRequestDTO ticket);
 
-
-
-
-
-
     @Select("select Name_Shortcut as airlineShortcut, Flight_number as flightNumber, departure_date as departureDate, arrival_date as arrivalDate,\n" +
             "(base_price * multiplier) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, Airline.Name as airline, src.Name as \"from\", dest.Name as \"to\"\n" +
             "from Ticket, Flight, Class, \"User\", Airline, Multiplier, Airport src, Airport dest\n" +
@@ -77,7 +72,7 @@ public interface FlightMapper {
             "and Flight.\"From\" = src.ID_AIRPORT\n" +
             "and Flight.\"To\" = dest.ID_AIRPORT\n" +
             "and Username = #{username}\n")
-    List <TicketRequestDTO> getArchivalTickets(String username);
+    List <TicketResponseDTO> getArchivalTickets(String username);
 
 
 

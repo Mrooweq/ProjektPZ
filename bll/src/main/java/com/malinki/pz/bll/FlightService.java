@@ -87,7 +87,7 @@ public class FlightService {
         }
     }
 
-    public MalinkiComplexResponse showArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+    public List<TicketRequestUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("authorization");
 
         UserUVM userUVM = parseToUserUVM(requestBody);
@@ -95,7 +95,7 @@ public class FlightService {
 
         boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
 
-        MalinkiComplexResponse malinkiSimpleResponse = null;
+        MalinkiComplexResponse malinkiSimpleResponse;
 
         if(isUserValidatedProperly){
             malinkiSimpleResponse = flightOperations.getArchivalTickets(username);
@@ -103,9 +103,10 @@ public class FlightService {
         }
         else{
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return null;
         }
 
-        return malinkiSimpleResponse;
+        return (List<TicketRequestUVM>) malinkiSimpleResponse.getUvmResult();
     }
 
     private TicketRequestUVM parseToTicketUVM(String requestBody) {

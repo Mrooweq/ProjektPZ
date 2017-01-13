@@ -56,6 +56,17 @@ public class FlightOperations implements IFlightOperations {
 
     @Override
     public MalinkiComplexResponse getArchivalTickets(String username) {
-        return flightRepository.getArchivalTickets(username);
+        MalinkiComplexResponse malinkiComplexResponse = flightRepository.getArchivalTickets(username);
+
+        List<TicketResponseDTO> dtoResultList = (List<TicketResponseDTO>) malinkiComplexResponse.getDtoResult();
+
+        List<TicketResponseUVM> uvmResultList = new ArrayList<>();
+
+        for(TicketResponseDTO ticketResponseDTO : dtoResultList)
+            uvmResultList.add(TicketConverter.fromTicketResponseDTOToTicketResponseUVM(ticketResponseDTO));
+
+        malinkiComplexResponse.setUvmResult(uvmResultList);
+
+        return malinkiComplexResponse;
     }
 }

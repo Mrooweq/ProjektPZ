@@ -18,17 +18,17 @@ public class FetchingArchivalTickets extends DatabaseFlightOperation {
 
     @Override
     protected MalinkiComplexResponse mainAction() {
-        List<TicketRequestDTO> ticketRequestDTOResultList;
+        List<TicketResponseDTO> ticketRequestDTOResultList;
         MalinkiComplexResponse malinkiComplexResponse = new MalinkiComplexResponse();
 
         try{
             ticketRequestDTOResultList = flightMapper.getArchivalTickets(username);
             malinkiComplexResponse.setDtoResult(ticketRequestDTOResultList);
 
-            databaseOperationResultEnum = DatabaseOperationResultEnum.FLIGTS_FETCHED_SUCCESSFULLY;
+            databaseOperationResultEnum = DatabaseOperationResultEnum.TICKETS_FETCHED_SUCCESSFULLY;
         } catch (Exception e){
             logger.log(Level.ERROR, e.toString());
-            databaseOperationResultEnum = DatabaseOperationResultEnum.FLIGTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR;
+            databaseOperationResultEnum = DatabaseOperationResultEnum.TICKETS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR;
         }
 
         return malinkiComplexResponse;

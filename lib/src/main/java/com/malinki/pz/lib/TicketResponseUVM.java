@@ -13,6 +13,8 @@ public class TicketResponseUVM {
     private String from;
     private String to;
 
+    public TicketResponseUVM(){}
+
     private TicketResponseUVM(TicketResponseUVM.TicketResponseUVMBuilder builder) {
         this.airlineShortcut = builder.airlineShortcut;
         this.flightNumber = builder.flightNumber;

@@ -17,6 +17,9 @@ public class FlightController {
     @Autowired
     private FlightService flightService;
 
+    @Autowired
+    private FlightOperations flightOperations;
+
     @RequestMapping(value = "/dest", method = RequestMethod.GET)
     public List<String> getPossibleDestinations(@RequestParam String src, HttpServletResponse response) {
         return flightService.getPossibleDestinations(src, response);
@@ -50,8 +53,7 @@ public class FlightController {
     }
 
     @RequestMapping(value = "/archival", method = RequestMethod.POST)
-    public List<TicketRequestUVM> showArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
-        MalinkiComplexResponse malinkiComplexResponse = flightService.showArchivalTickets(requestBody, request, response);
-        return (List<TicketRequestUVM>) malinkiComplexResponse.getUvmResult();
+    public List<TicketRequestUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+        return flightService.getArchivalTickets(requestBody, request, response);
     }
 }

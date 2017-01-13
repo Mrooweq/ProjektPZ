@@ -13,6 +13,8 @@ public class TicketResponseDTO {
     private String from;
     private String to;
 
+    public TicketResponseDTO(){}
+
     private TicketResponseDTO(TicketResponseDTO.TicketResponseDTOBuilder builder) {
         this.airlineShortcut = builder.airlineShortcut;
         this.flightNumber = builder.flightNumber;
