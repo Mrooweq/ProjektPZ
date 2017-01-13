@@ -44,6 +44,14 @@ public abstract class DatabaseFlightOperation extends DatabaseOperation {
             case FLIGTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR:
                 result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
                 break;
+
+            case TICKETS_FETCHED_SUCCESSFULLY:
+                result = HttpServletResponse.SC_OK;
+                break;
+            case TICKETS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR:
+                result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+                break;
+
             default:
                 break;
         }

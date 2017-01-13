@@ -10,3 +10,8 @@ DROP FUNCTION getMinUserID;
 DROP FUNCTION isLoginAlreadyUsed;
 DROP FUNCTION isUsernameAndPasswordCorrect;
 
+DROP SEQUENCE seq_User;
+DROP SEQUENCE seq_Ticket;
+
+
+

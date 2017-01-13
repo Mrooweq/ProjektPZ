@@ -40,12 +40,6 @@ public class UserService {
         userOperations.logoutUser(parseToUserUVM(requestBody));
     }
 
-    public boolean validateUserByToken(String requestBody){
-        UserUVM userUVM = parseToUserUVM(requestBody);
-//        return sessionTable.getUserSession(userUVM).getTokenContainer().getToken().equals();
-        return true;
-    }
-
     private UserUVM parseToUserUVM(String requestBody) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

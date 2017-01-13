@@ -6,7 +6,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {AppRoutingModule}   from './app-routing.module';
-import {Ng2Bs3ModalModule} from "ng2-bs3-modal/ng2-bs3-modal";
 import {MyDatePickerModule} from 'mydatepicker';
 import {Ng2AutoCompleteModule} from 'ng2-auto-complete';
 
@@ -32,7 +31,6 @@ import {DatePipe} from "@angular/common";
     HttpModule,
     AppRoutingModule,
     NgbModule.forRoot(),
-    Ng2Bs3ModalModule,
     MyDatePickerModule,
     Ng2AutoCompleteModule
   ],
