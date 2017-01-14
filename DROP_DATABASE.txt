@@ -1,5 +1,3 @@
-DROP TABLE Invoice_Pos;
-DROP TABLE Invoice;
 DROP TABLE Ticket;
 DROP TABLE Class;
 DROP TABLE Flight;

@@ -4,6 +4,7 @@ import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {DatePipe} from "@angular/common";
+import {Flight} from "../../_mocks/flight";
 
 @Component({
   selector: 'home',
@@ -13,8 +14,8 @@ import {DatePipe} from "@angular/common";
 export class Home implements OnInit,OnDestroy {
 
   private searchForm: FormGroup;
-  _sources: String[];
-  _dest: String[];
+  _sources: String[] = [];
+  _dest: String[] = [];
   _classes: String[];
   _subscriptions: Subscription[] = [];
   _today: String;
@@ -38,7 +39,6 @@ export class Home implements OnInit,OnDestroy {
       dateFormat: 'yyyy-mm-dd',
       firstDayOfWeek: 'mo',
       sunHighlight: true,
-      inputValueRequired: true,
       inline: false,
       showDateFormatPlaceholder: true,
       disableUntil: {

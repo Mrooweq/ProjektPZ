@@ -23,4 +23,13 @@ public class SessionTable {
 	public void deleteUserSession(UserUVM user){
 		sessionTable.remove(user.getUsername());
 	}
+
+	public boolean validateUserByToken(String username, String token){
+		SessionStorage sessionStorage = sessionTable.get(username);
+
+		if(sessionStorage != null)
+			return sessionStorage.getTokenContainer().getToken().equals(token);
+		else
+			return false;
+	}
 }

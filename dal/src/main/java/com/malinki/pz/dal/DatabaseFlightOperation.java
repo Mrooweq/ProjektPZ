@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.malinki.pz.lib.FlightResponse;
+import com.malinki.pz.lib.MalinkiComplexResponse;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -12,24 +12,24 @@ import org.apache.log4j.Logger;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 
 public abstract class DatabaseFlightOperation extends DatabaseOperation {
-    private Logger logger = Logger.getLogger(DatabaseAirportOperation.class);
+    private Logger logger = Logger.getLogger(DatabaseSearcherOperation.class);
     protected FlightMapper flightMapper;
     protected DatabaseOperationResultEnum databaseOperationResultEnum;
 
-    public FlightResponse performAction() {
+    public MalinkiComplexResponse performAction() {
         InputStream inputStream = openInputStream();
         SqlSession session = establishSession(inputStream);
         flightMapper = session.getMapper(FlightMapper.class);
 
-        FlightResponse flightResponse;
+        MalinkiComplexResponse malinkiComplexResponse;
 
-        flightResponse = mainAction();
-        flightResponse.setResult(getResultCode());
+        malinkiComplexResponse = mainAction();
+        malinkiComplexResponse.setResult(getResultCode());
 
         session.close();
         closeInputStream(inputStream);
 
-        return flightResponse;
+        return malinkiComplexResponse;
     }
 
     private int getResultCode() {
@@ -51,5 +51,5 @@ public abstract class DatabaseFlightOperation extends DatabaseOperation {
         return result;
     }
 
-    abstract protected FlightResponse mainAction();
+    abstract protected MalinkiComplexResponse mainAction();
 }

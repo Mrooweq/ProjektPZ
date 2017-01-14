@@ -5,9 +5,9 @@
 }
 
 .ng-invalid:not(form).ng-touched, .ng-invalid:not(form).ng-dirty {
-  border-left: 6px solid #a94442;
+  border: 2px solid indianred;
 }
 
 .ng-valid.ng-dirty:not(form) {
-  border-left: 6px solid #42A948;
+  border: 2px solid limegreen;
 }

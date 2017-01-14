@@ -24,11 +24,11 @@
 }
 
 .registration-background {
-  background: #9483a1 url(../app/components/registration/registration-form.background.png);
+  background: #c2c4c6 url(../app/components/registration/registration-form.background.png);
 }
 
 .jumbotron {
-  background: #9483a1 url(../app/components/home/airplane_background.jpg) no-repeat center center;
+  background: #c2c4c6 url(../app/components/home/airplane_background.jpg) no-repeat center center;
 }
 
 #formHeader {

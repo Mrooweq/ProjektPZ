@@ -1,7 +1,7 @@
 package com.malinki.pz.dal.operations;
 
+import com.malinki.pz.lib.MalinkiComplexResponse;
 import com.malinki.pz.lib.UserDTO;
-import com.malinki.pz.lib.UserResponse;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -22,7 +22,7 @@ public class UserRegistration extends DatabaseUserOperation {
 	}
 
 	@Override
-	protected UserResponse mainAction() {
+	protected MalinkiComplexResponse mainAction() {
 		boolean hasErrorOccurred = false;
 
 		try{
@@ -49,7 +49,7 @@ public class UserRegistration extends DatabaseUserOperation {
 		else if (isEmailAlreadyUsed)
 			databaseOperationResultEnum = DatabaseOperationResultEnum.EMAIL_ALREADY_USED;
 
-		return new UserResponse();
+		return new MalinkiComplexResponse();
 	}
 
 	private void validateUser(UserDTO user) {

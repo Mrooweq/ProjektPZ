@@ -18,6 +18,7 @@
       "mobile": false,
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.css",
+        "../src/_css/auto-complete.styles.css",
         "../src/_css/styles.css"
       ],
       "scripts": [

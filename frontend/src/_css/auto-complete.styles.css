@@ -1,0 +1,66 @@
+@keyframes slideDown {
+  0% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.ng2-auto-complete ng2-auto-complete {
+  background-color: transparent;
+}
+
+.ng2-auto-complete ng2-auto-complete input {
+  font-weight: 700;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  text-align: center;
+  outline: none;
+  border: 0;
+  padding: 2px;
+  box-sizing: border-box;
+  background-clip: content-box;
+  color: black;
+}
+
+.ng2-auto-complete ng2-auto-complete ul {
+  background-color: #fff;
+  margin: 0;
+  width: 100%;
+  overflow-y: auto;
+  list-style-type: none;
+  padding: 0;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  animation: slideDown 0.1s;
+}
+
+.ng2-auto-complete ng2-auto-complete ul li {
+  font-weight: 700;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  text-align: center;
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  line-height: 1.25;
+  color: #55595c;
+  background-color: #fff;
+  background-image: none;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+
+.ng2-auto-complete ng2-auto-complete ul li.selected {
+  background-color: #ccc;
+}
+
+.ng2-auto-complete ng2-auto-complete ul li:last-child {
+  border-bottom: none;
+}
+
+.ng2-auto-complete ng2-auto-complete ul li:hover {
+  background-color: #ccc;
+}

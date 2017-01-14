@@ -1,19 +1,19 @@
 package com.malinki.pz.dal.operations;
 
-import com.malinki.pz.dal.DatabaseAirportOperation;
+import com.malinki.pz.dal.DatabaseSearcherOperation;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
-import com.malinki.pz.lib.ProjektPZResponse;
+import com.malinki.pz.lib.MalinkiSimpleResponse;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.util.List;
 
 
-public class FetchingOfClasses extends DatabaseAirportOperation {
+public class FetchingOfClasses extends DatabaseSearcherOperation {
     private Logger logger = Logger.getLogger(UserRegistration.class);
 
     @Override
-    protected ProjektPZResponse mainAction() {
+    protected MalinkiSimpleResponse mainAction() {
         List<String> classesList = null;
 
         try{
@@ -24,10 +24,10 @@ public class FetchingOfClasses extends DatabaseAirportOperation {
             databaseOperationResultEnum = DatabaseOperationResultEnum.CLASSES_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR;
         }
 
-        ProjektPZResponse projektPZResponse = new ProjektPZResponse();
-        projektPZResponse.setResponseList(classesList);
+        MalinkiSimpleResponse malinkiSimpleResponse = new MalinkiSimpleResponse();
+        malinkiSimpleResponse.setResponseList(classesList);
 
-        return projektPZResponse;
+        return malinkiSimpleResponse;
     }
 }
 

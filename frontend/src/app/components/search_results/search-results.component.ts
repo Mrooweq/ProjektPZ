@@ -13,7 +13,8 @@ declare var $: JQueryStatic;
   styleUrls: ['search-results.component.css']
 })
 export class SearchResults implements OnInit,OnDestroy,AfterViewChecked,AfterViewInit {
-  private _flights: Flight[] = [new Flight('NieLot', 100, '2016-01-01', 1000, 'Warsaw', 'Geneva')];
+  // private _flights: Flight[] = new Flight('NieLot', 100, '2016-01-01', 1000, 'Warsaw', 'Geneva')];
+  private _flights: Flight[];
   private _subscriptions: Subscription[] = [];
   private loggedUser: User;
 
@@ -75,6 +76,7 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewChecked,AfterVie
     this._flights = [];
     this._subscriptions.push(this.searchService.flights().subscribe(flights => {
       this._flights = flights;
+      console.log(flights);
     }));
   }
 

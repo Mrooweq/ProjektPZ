@@ -40,13 +40,14 @@ public class FlightConverter {
         else
             return new FlightDTO.FlightDTOBuilder()
                     .flightNumber(flightUVM.getFlightNumber())
-                    .flightDate(flightUVM.getFlightDate())
+                    .departureDate(flightUVM.getDepartureDate())
+                    .arrivalDate(flightUVM.getArrivalDate())
                     .basePrice(flightUVM.getPrice())
                     .airlineName(flightUVM.getAirlineName())
                     .airlineShortcut(flightUVM.getAirlineShortcut())
                     .from(flightUVM.getFrom())
                     .to(flightUVM.getTo())
-                    .freePlaces(flightUVM.getFreePlaces())
+                    .numberOfPlaces(flightUVM.getNumberOfPlaces())
                     .build();
     }
 
@@ -56,13 +57,14 @@ public class FlightConverter {
         else
             return new FlightUVM.FlightUVMBuilder()
                     .flightNumber(flightDTO.getFlightNumber())
-                    .flightDate(flightDTO.getFlightDate())
+                    .departureDate(flightDTO.getDepartureDate())
+                    .arrivalDate(flightDTO.getArrivalDate())
                     .basePrice(flightDTO.getPrice())
                     .airlineName(flightDTO.getAirlineName())
                     .airlineShortcut(flightDTO.getAirlineShortcut())
                     .from(flightDTO.getFrom())
                     .to(flightDTO.getTo())
-                    .freePlaces(flightDTO.getFreePlaces())
+                    .numberOfPlaces(flightDTO.getNumberOfPlaces())
                     .build();
     }
 }
