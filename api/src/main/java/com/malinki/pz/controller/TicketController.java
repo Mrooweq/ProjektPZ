@@ -34,9 +34,13 @@ public class TicketController {
         int result = ticketOperations.addTicket(ticketUVM);
         
         SendPDFByEmail sendPDFByEmail = new SendPDFByEmail(ticketUVM, response);
-        
-        
-       
+
+        try {
+            sendPDFByEmail.email();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         response.setStatus(result);
     }
     

@@ -1,5 +1,6 @@
 package com.malinki.pz.dal.operations;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -34,129 +35,29 @@ public class DataForTicketGetter {
 	}
 
 	public DataForPDFTicket getAllDataForPdfTicket() throws Exception {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection conn = DriverManager.getConnection(url, username, password);
-		
-		String airlineID = getAirlineID(conn);
-		
-		getAirlineData(conn, airlineID);
-		
-		getUserData(conn, ticket.getUser());
-		
-		String sourceAirport = getSourceAirport(conn);
-		
-		getNameOfSourceAirport(conn, sourceAirport);
-		
-		String destinyAirport = getDestinyAirport(conn);
-		
-		getNameOfDestinyAirport(conn, destinyAirport);
-		
-		conn.close();
-		
-		return dataForPDFTicket;
-	}
-
-	private String getAirlineID(Connection conn) throws SQLException {
-		String sql = "SELECT ID_Airline FROM Flight WHERE ID_Flight = " + ticket.getFlight();
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		ResultSet resultSet = null;
-		try {
-			resultSet = stmt.executeQuery();
-		} catch (Exception e) {
-			logger.log(Level.INFO, Strings.FLIGHT_DATA_NOT_FOUND);
-		}
-		String name = resultSet.getString(1);
-		dataForPDFTicket.setAirlineID(name);
-		
-		return name;
-	}
-
-	private void getAirlineData(Connection conn, String airlineID) throws Exception {
-		String sql = "SELECT Name, Logo FROM Airline WHERE ID_Airline = " + airlineID;
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		ResultSet resultSet = null;
-		try {
-			resultSet = stmt.executeQuery();
-		} catch (Exception e) {
-			logger.log(Level.INFO, Strings.AIRLINE_DATA_NOT_FOUND);
-		}
-		
-		dataForPDFTicket.setAirlineName(resultSet.getString(1));
-		
-		InputStream is = resultSet.getBinaryStream(2);
+		InputStream is = new FileInputStream("C:\\Users\\Lenovo\\Desktop\\do_wywalenia\\logo.png");
 		byte[] bytes = IOUtils.toByteArray(is);
 		Image image = new Image(ImageDataFactory.create(bytes));
+
+		DataForPDFTicket dataForPDFTicket = new DataForPDFTicket();
+		dataForPDFTicket.setFirstname("Jan");
+		dataForPDFTicket.setAirlineID("1");
+		dataForPDFTicket.setAirlineName("LOT");
+		dataForPDFTicket.setDestinyAirport("Geneva");
+
+		dataForPDFTicket.setEmail("adamalfons95@gmail.com");
+
+		dataForPDFTicket.setFlight("1000");
+		dataForPDFTicket.setFlightDate("Data");
+		dataForPDFTicket.setLastName("Kowalski");
+		dataForPDFTicket.setNrIDCard("100");
+		dataForPDFTicket.setSourceAirport("Warsaw");
+		dataForPDFTicket.setPrice(199);
+		dataForPDFTicket.setFlightClass("VIP");
 		dataForPDFTicket.setAirlineLogo(image);
-	}
 
-	private void getUserData(Connection conn, String user) throws SQLException {
-		String sql = "SELECT Firstname, Lastname, Email FROM User WHERE ID_User = " + user;
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		ResultSet resultSet = null;
-		try {
-			resultSet = stmt.executeQuery();
-		} catch (Exception e) {
-			logger.log(Level.INFO, Strings.USER_DATA_NOT_FOUND);
-		}
-		
-		dataForPDFTicket.setFirstname(resultSet.getString(1));
-		dataForPDFTicket.setLastName(resultSet.getString(2));
-		dataForPDFTicket.setEmail(resultSet.getString(3));
-		
+		return dataForPDFTicket;
 	}
-
-	private String getSourceAirport(Connection conn) throws SQLException {
-		String sql = "SELECT From FROM Flight WHERE ID_Flight = " + ticket.getFlight();
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		ResultSet resultSet = null;
-		try {
-			resultSet = stmt.executeQuery();
-		} catch (Exception e) {
-			logger.log(Level.INFO, Strings.AIRPORT_DATA_NOT_FOUND);
-		}
-		String name = resultSet.getString(1);
-		return name;
-	}
-
-	private void getNameOfSourceAirport(Connection conn, String sourceAirport) throws SQLException {
-		String sql = "SELECT Name FROM Airport WHERE ID_Airport = " + sourceAirport;
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		ResultSet resultSet = null;
-		try {
-			resultSet = stmt.executeQuery();
-		} catch (Exception e) {
-			logger.log(Level.INFO, Strings.AIRLINE_DATA_NOT_FOUND);
-		}
-		
-		dataForPDFTicket.setSourceAirport(resultSet.getString(1));
-	}
-	private String getDestinyAirport(Connection conn) throws SQLException {
-		String sql = "SELECT To FROM Flight WHERE ID_Flight = " + ticket.getFlight();
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		ResultSet resultSet = null;
-		try {
-			resultSet = stmt.executeQuery();
-		} catch (Exception e) {
-			logger.log(Level.INFO, Strings.AIRPORT_DATA_NOT_FOUND);
-		}
-		String name = resultSet.getString(1);
-		return name;
-	}
-
-	private void getNameOfDestinyAirport(Connection conn, String destinyAirport) throws SQLException {
-		String sql = "SELECT Name FROM Airport WHERE ID_Airport = " + destinyAirport;
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		ResultSet resultSet = null;
-		try {
-			resultSet = stmt.executeQuery();
-		} catch (Exception e) {
-			logger.log(Level.INFO, Strings.AIRLINE_DATA_NOT_FOUND);
-		}
-		
-		dataForPDFTicket.setDestinyAirport(resultSet.getString(1));
-	}
-
-	
 }
 
 

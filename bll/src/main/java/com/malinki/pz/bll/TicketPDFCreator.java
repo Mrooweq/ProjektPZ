@@ -179,13 +179,13 @@ public class TicketPDFCreator {
 		document.add(new Paragraph("Class:").setFont(font).setFontSize(15).setFixedPosition(40, 383.5f, 40)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(String.valueOf(ticket.getFlightClass())).setFont(font).setFontSize(20)
+		document.add(new Paragraph(String.valueOf(dataForPDFTicket.getFlightClass())).setFont(font).setFontSize(20)
 				.setFixedPosition(80, 382, 40));
 
 		document.add(new Paragraph("Price:").setFont(font).setFontSize(15).setFixedPosition(400, 383.5f, 40)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(String.valueOf(ticket.getPriceMultiplier()) + " PLN").setFont(font).setFontSize(20)
+		document.add(new Paragraph(String.valueOf(dataForPDFTicket.getPrice()) + " PLN").setFont(font).setFontSize(20)
 				.setFixedPosition(440, 382, 100));
 
 		return document;

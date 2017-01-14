@@ -16,6 +16,24 @@ public class DataForPDFTicket {
 	private String nrIDCard;
 	private String email;
 	private String flight;
+	private int price;
+	private String flightClass;
+
+	public String getFlightClass() {
+		return flightClass;
+	}
+
+	public void setFlightClass(String flightClass) {
+		this.flightClass = flightClass;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
 	
 	public String getAirlineID() {
 		return airlineID;
