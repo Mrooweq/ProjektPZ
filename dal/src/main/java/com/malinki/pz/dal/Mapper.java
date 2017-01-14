@@ -1,6 +1,5 @@
 package com.malinki.pz.dal;
 
-import com.malinki.pz.lib.BlobDTO;
 import com.malinki.pz.lib.UserDTO;
 
 import org.apache.ibatis.annotations.Param;
@@ -40,8 +39,6 @@ public interface Mapper {
 	@Select("DELETE \"User\"")
 	void deleteAllUsers();
 	
-	@Select("SELECT LOGO FROM Airline WHERE ID_Airline = #{ID_Airline}")
-	BlobDTO getAirlineLogo(@Param("ID_Airline") int airlineID);
 }
 
 

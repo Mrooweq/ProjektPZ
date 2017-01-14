@@ -1,4 +1,5 @@
 package com.malinki.pz.bll;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,30 +17,31 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
+import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.malinki.pz.lib.TicketUVM;
 
-
-
 public class SendPDFByEmail {
-	
+
 	final String senderEmailID = "malinkibooking";
 	final String senderPassword = "znaczek6598";
 	final String emailSMTPserver = "smtp.gmail.com";
 	final String emailServerPort = "465";
 	String senderEmail = "malinkibooking@gmail.com";
-	String receiverEmailID = "sajgon338@gmail.com";
-	String emailSubject = "Test Mail";
-	String emailBody = ":)";
+	String receiverEmail = null;
+	String emailSubject = "Your Ticket";
+	String emailBody = "Hello! \n You just buy ticket from MalinkiBooking. The ticket is attached in this email. Have a nice day!";
 	TicketUVM ticket;
+	HttpServletResponse response;
 
-	public SendPDFByEmail(TicketUVM ticketUVM) {
+	public SendPDFByEmail(TicketUVM ticketUVM, HttpServletResponse response) {
 		this.ticket = ticketUVM;
+		this.response = response;
 	}
 
 	public void email() throws Exception {
-		
+
 		Properties props = setConnectionSettings();
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -51,41 +53,46 @@ public class SendPDFByEmail {
 		ByteArrayOutputStream outputStream = null;
 
 		try {
-			//construct the text body part
-            MimeBodyPart textBodyPart = new MimeBodyPart();
-            textBodyPart.setText(emailBody);
-             
-            //write the PDF content to the output stream
-            outputStream = new ByteArrayOutputStream();
-            TicketPDFCreator pdfCreator = new TicketPDFCreator(ticket);
-            pdfCreator.generatePDF(outputStream);
-            byte[] bytes = outputStream.toByteArray();
-             
-            //construct the pdf body part
-            DataSource dataSource = new ByteArrayDataSource(bytes, "application/pdf");
-            MimeBodyPart pdfBodyPart = new MimeBodyPart();
-            pdfBodyPart.setDataHandler(new DataHandler(dataSource));
-            //TODO get ticket number
-            pdfBodyPart.setFileName("ticketNumber.pdf");
-            FileOutputStream fos = new FileOutputStream (new File("ticketNumber.pdf")); 
-            try {
-                outputStream.writeTo(fos);
-            } catch(IOException ioe) {
-                // Handle exception here
-                ioe.printStackTrace();
-            } finally {
-                fos.close();
-            }
-                         
-            //construct the mime multi part of messege
-            MimeMultipart mimeMultipart = new MimeMultipart();
-            mimeMultipart.addBodyPart(textBodyPart);
-            mimeMultipart.addBodyPart(pdfBodyPart);
-            
-            //create message
+			// construct the text body part
+			MimeBodyPart textBodyPart = new MimeBodyPart();
+			textBodyPart.setText(emailBody);
+
+			// write the PDF content to the output stream
+			outputStream = new ByteArrayOutputStream();
+			TicketPDFCreator pdfCreator = new TicketPDFCreator(ticket);
+			pdfCreator.generatePDF(outputStream);
+			receiverEmail = pdfCreator.getDataForPDFTicket().getEmail();
+			byte[] bytes = outputStream.toByteArray();
+
+			// construct the pdf body part
+			DataSource dataSource = new ByteArrayDataSource(bytes, "application/pdf");
+			MimeBodyPart pdfBodyPart = new MimeBodyPart();
+			pdfBodyPart.setDataHandler(new DataHandler(dataSource));
+			// TODO get ticket number
+			pdfBodyPart.setFileName("ticket.pdf");
+			SendFileToFront fileToFront = new SendFileToFront(outputStream);
+
+			fileToFront.doGet(response);
+
+			FileOutputStream fos = new FileOutputStream(new File("ticketNumber.pdf"));
+			try {
+				outputStream.writeTo(fos);
+			} catch (IOException ioe) {
+				// Handle exception here
+				ioe.printStackTrace();
+			} finally {
+				fos.close();
+			}
+
+			// construct the mime multi part of messege
+			MimeMultipart mimeMultipart = new MimeMultipart();
+			mimeMultipart.addBodyPart(textBodyPart);
+			mimeMultipart.addBodyPart(pdfBodyPart);
+
+			// create message
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(senderEmail));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverEmailID));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverEmail));
 			message.setSubject(emailSubject);
 			message.setContent(mimeMultipart);
 

@@ -2,9 +2,6 @@ package com.malinki.pz.bll;
 
 import java.io.IOException;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
 import com.itextpdf.barcodes.*;
 
 import com.itextpdf.io.font.FontConstants;
@@ -39,6 +36,14 @@ public class TicketPDFCreator {
 		}
 	}
 
+	public DataForPDFTicket getDataForPDFTicket() {
+		return dataForPDFTicket;
+	}
+
+	public void setDataForPDFTicket(DataForPDFTicket dataForPDFTicket) {
+		this.dataForPDFTicket = dataForPDFTicket;
+	}
+
 	@SuppressWarnings("resource")
 	public void generatePDF(ByteArrayOutputStream outputStream) throws IOException {
 		ByteArrayOutputStream out = outputStream;
@@ -47,23 +52,6 @@ public class TicketPDFCreator {
 		Document document = new Document(pdf);
 		PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
 		
-		/*File image = new File("C:\\java.png");
-	      FileOutputStream fos = new FileOutputStream(image);
-
-	      byte[] buffer = new byte[1];
-	      InputStream is;
-		try {
-			is = getter.getImage(1).getBinaryStream();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			is = null;
-		}
-	      while (is.read(buffer) > 0) {
-	        fos.write(buffer);
-	      }
-	      fos.close();*/
-		 
 		Image logo = dataForPDFTicket.getAirlineLogo();
 
 		document.add(new Paragraph().setFixedPosition(40, 718, 1000).add(createBarcode(pdf).setWidth(200)));

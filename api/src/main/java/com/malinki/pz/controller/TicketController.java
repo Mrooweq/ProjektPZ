@@ -33,7 +33,7 @@ public class TicketController {
 
         int result = ticketOperations.addTicket(ticketUVM);
         
-        SendPDFByEmail sendPDFByEmail = new SendPDFByEmail(ticketUVM);
+        SendPDFByEmail sendPDFByEmail = new SendPDFByEmail(ticketUVM, response);
         
         
        

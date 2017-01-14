@@ -17,17 +17,12 @@ public class DataForPDFTicket {
 	private String email;
 	private String flight;
 	
-
 	public String getAirlineID() {
 		return airlineID;
 	}
 
 	public void setAirlineID(String airlineID) {
 		this.airlineID = airlineID;
-	}
-	
-	public DataForPDFTicket() {
-		
 	}
 	
 	public Image getAirlineLogo() {
