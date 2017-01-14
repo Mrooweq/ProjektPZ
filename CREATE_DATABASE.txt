@@ -104,3 +104,14 @@ return v_flag;
 end;
 /
 
+------------------
+
+CREATE OR REPLACE TRIGGER Ticket_trigger
+AFTER INSERT ON Ticket
+FOR EACH ROW
+BEGIN
+
+update Flight set free_places = free_places - :NEW.number_of_places
+where :NEW.ID_Flight = Flight.ID_FLIGHT;
+
+END;

@@ -27,7 +27,9 @@ public interface FlightMapper {
 
     @Lang(XMLLanguageDriver.class)
     @Select("<script>" +
-            "SELECT Flight_Number AS flightNumber, departure_date AS departureDate, arrival_date AS arrivalDate, (base_price * Multiplier.Multiplier) AS price, Airline.name AS airlineName, src.Name AS \"From\", dest.Name AS \"To\", free_places AS freePlaces, Airline.name_Shortcut AS airlineShortcut FROM Flight, Airline, Airport src, Airport dest, Multiplier, \"CLASS\" " +
+            "SELECT Flight_Number AS flightNumber, departure_date AS departureDate, arrival_date AS arrivalDate, (base_price * Multiplier.Multiplier) AS price, " +
+            "Airline.name AS airlineName, src.Name AS \"From\", dest.Name AS \"To\", free_places AS freePlaces, Airline.name_Shortcut AS airlineShortcut FROM Flight, " +
+            "Airline, Airport src, Airport dest, Multiplier, \"CLASS\" " +
             "WHERE " +
             "Flight.ID_Airline = Airline.ID_Airline AND Flight.ID_Airline = Airline.ID_Airline " +
             "AND src.ID_AIRPORT = \"From\" AND dest.ID_AIRPORT = \"To\" " +
@@ -61,17 +63,18 @@ public interface FlightMapper {
             "(SELECT ID_User FROM \"User\" WHERE Username = #{username}))")
     void addTicket(TicketRequestDTO ticket);
 
-    @Select("select Name_Shortcut as airlineShortcut, Flight_number as flightNumber, departure_date as departureDate, arrival_date as arrivalDate,\n" +
-            "(base_price * multiplier) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, Airline.Name as airline, src.Name as \"from\", dest.Name as \"to\"\n" +
-            "from Ticket, Flight, Class, \"User\", Airline, Multiplier, Airport src, Airport dest\n" +
-            "where Ticket.ID_FLIGHT = Flight.ID_FLIGHT\n" +
-            "and Ticket.ID_CLASS = Class.ID_CLASS \n" +
-            "and Ticket.ID_USER = \"User\".ID_USER\n" +
-            "and Flight.ID_AIRLINE = Airline.ID_AIRLINE\n" +
-            "and Multiplier.ID_MULTIPLIER = Class.ID_MULTIPLIER\n" +
-            "and Flight.\"From\" = src.ID_AIRPORT\n" +
-            "and Flight.\"To\" = dest.ID_AIRPORT\n" +
-            "and Username = #{username}\n")
+    @Select("select Name_Shortcut as airlineShortcut, Flight_number as flightNumber, departure_date as departureDate, arrival_date as arrivalDate, " +
+            "(base_price * multiplier) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, " +
+            "Airline.Name as airline, src.Name as \"from\", dest.Name as \"to\" " +
+            "from Ticket, Flight, Class, \"User\", Airline, Multiplier, Airport src, Airport dest " +
+            "where Ticket.ID_FLIGHT = Flight.ID_FLIGHT " +
+            "and Ticket.ID_CLASS = Class.ID_CLASS " +
+            "and Ticket.ID_USER = \"User\".ID_USER " +
+            "and Flight.ID_AIRLINE = Airline.ID_AIRLINE " +
+            "and Multiplier.ID_MULTIPLIER = Class.ID_MULTIPLIER " +
+            "and Flight.\"From\" = src.ID_AIRPORT " +
+            "and Flight.\"To\" = dest.ID_AIRPORT " +
+            "and Username = #{username} ")
     List <TicketResponseDTO> getArchivalTickets(String username);
 
 
