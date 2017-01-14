@@ -4,7 +4,6 @@ import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {DatePipe} from "@angular/common";
-import {Flight} from "../../_mocks/flight";
 
 @Component({
   selector: 'home',
@@ -60,7 +59,6 @@ export class Home implements OnInit,OnDestroy {
   }
 
   submit(value: any) {
-    console.log(value);
     this._subscriptions.push(this.searchService.getFlights(value).subscribe(
       flights => {
         this.router.navigate(['/results']);

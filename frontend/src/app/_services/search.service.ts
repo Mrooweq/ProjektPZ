@@ -49,6 +49,7 @@ export class SearchService {
     params.set('to', flight.destination);
     params.set('_class', flight._class);
     params.set('numberOfPassengers', flight.travelers);
+    console.log(params);
 
     return this.http.get(this.flightsUrl, {search: params})
       .map(res => {

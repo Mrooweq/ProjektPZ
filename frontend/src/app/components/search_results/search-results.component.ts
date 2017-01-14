@@ -5,6 +5,7 @@ import {Subscription} from "rxjs";
 import {User} from "../../_mocks/user";
 import {AuthenticationService} from "../../_services/authentication.service";
 import {TicketService} from "../../_services/tickets.service";
+import {Http} from "@angular/http";
 declare var $: JQueryStatic;
 
 @Component({
@@ -72,11 +73,9 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewChecked,AfterVie
       this.loggedUser = currentUser.user;
     }
     this._subscriptions.push(this.authenticationService.isLoggedIn().subscribe(loggedIn => this.setUser(loggedIn)));
-
     this._flights = [];
     this._subscriptions.push(this.searchService.flights().subscribe(flights => {
       this._flights = flights;
-      console.log(flights);
     }));
   }
 

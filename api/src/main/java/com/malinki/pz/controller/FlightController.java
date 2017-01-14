@@ -3,17 +3,11 @@ package com.malinki.pz.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.malinki.pz.bll.*;
 import com.malinki.pz.lib.*;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.Enumeration;
 import java.util.List;
 
 @RestController
@@ -22,6 +16,9 @@ public class FlightController {
 
     @Autowired
     private FlightService flightService;
+
+    @Autowired
+    private FlightOperations flightOperations;
 
     @RequestMapping(value = "/dest", method = RequestMethod.GET)
     public List<String> getPossibleDestinations(@RequestParam String src, HttpServletResponse response) {
@@ -53,5 +50,10 @@ public class FlightController {
                                       @RequestParam String numberOfPassengers) {
 
         return flightService.getFlights(response, dateStart, dateEnd, from, to, _class, numberOfPassengers);
+    }
+
+    @RequestMapping(value = "/archival", method = RequestMethod.POST)
+    public List<TicketRequestUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+        return flightService.getArchivalTickets(requestBody, request, response);
     }
 }

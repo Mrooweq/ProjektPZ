@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.List;
 
 public class FlightService {
@@ -73,9 +72,8 @@ public class FlightService {
 
     public void buyTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("authorization");
-        token = token.substring(7);                      // do usuniecia
 
-        TicketUVM ticket = parseToTicketUVM(requestBody);
+        TicketRequestUVM ticket = parseToTicketUVM(requestBody);
         String username = ticket.getUsername();
 
         boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
@@ -89,7 +87,29 @@ public class FlightService {
         }
     }
 
-    private TicketUVM parseToTicketUVM(String requestBody) {
+    public List<TicketRequestUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+        String token = request.getHeader("authorization");
+
+        UserUVM userUVM = parseToUserUVM(requestBody);
+        String username = userUVM.getUsername();
+
+        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
+
+        MalinkiComplexResponse malinkiSimpleResponse;
+
+        if(isUserValidatedProperly){
+            malinkiSimpleResponse = flightOperations.getArchivalTickets(username);
+            response.setStatus(malinkiSimpleResponse.getResult());
+        }
+        else{
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return null;
+        }
+
+        return (List<TicketRequestUVM>) malinkiSimpleResponse.getUvmResult();
+    }
+
+    private TicketRequestUVM parseToTicketUVM(String requestBody) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
@@ -105,7 +125,7 @@ public class FlightService {
         UserUVM userUVM = buyTicketResponse.getUser();
         FlightClass flightClass = buyTicketResponse.getFlightClass();
 
-        TicketUVM ticketUVM = new TicketUVM.TicketUVMBuilder()
+        TicketRequestUVM ticketRequestUVM = new TicketRequestUVM.TicketUVMBuilder()
                 .numberOfPlaces(flightUVM.getNumberOfPlaces())
                 .flightNumber(flightUVM.getFlightNumber())
                 .airlineShortcut(flightUVM.getAirlineShortcut())
@@ -113,6 +133,21 @@ public class FlightService {
                 .username(userUVM.getUsername())
                 .build();
 
-        return ticketUVM;
+        return ticketRequestUVM;
+    }
+
+    private UserUVM parseToUserUVM(String requestBody) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        UserUVM user = null;
+
+        try {
+            user = mapper.readValue(requestBody, UserUVM.class);
+        } catch (IOException e) {
+            logger.log(Level.ERROR, e.toString());
+        }
+
+        return user;
     }
 }

@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule, Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -22,7 +22,6 @@ import {AuthGuard} from "./_services/auth_guard.service";
 import {UserAccount} from "./components/user_account/user_account.component";
 import {DatePipe} from "@angular/common";
 
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -43,7 +42,7 @@ import {DatePipe} from "@angular/common";
     UserAccount,
     EqualValidator
   ],
-  providers: [AuthenticationService, SearchService, TicketService, AuthGuard,DatePipe],
+  providers: [AuthenticationService, SearchService, TicketService, AuthGuard, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

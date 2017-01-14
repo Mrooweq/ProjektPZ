@@ -35,8 +35,8 @@ public class FlightOperations implements IFlightOperations {
     }
 
     @Override
-    public MalinkiSimpleResponse addTicket(TicketUVM ticketUVM) {
-        return flightRepository.addTicket(TicketConverter.fromTicketUVMToTicketDTO(ticketUVM));
+    public MalinkiSimpleResponse addTicket(TicketRequestUVM ticketRequestUVM) {
+        return flightRepository.addTicket(TicketConverter.fromTicketRequestUVMToTicketRequestDTO(ticketRequestUVM));
     }
 
     @Override
@@ -52,5 +52,21 @@ public class FlightOperations implements IFlightOperations {
     @Override
     public MalinkiSimpleResponse getClasses() {
         return flightRepository.getClasses();
+    }
+
+    @Override
+    public MalinkiComplexResponse getArchivalTickets(String username) {
+        MalinkiComplexResponse malinkiComplexResponse = flightRepository.getArchivalTickets(username);
+
+        List<TicketResponseDTO> dtoResultList = (List<TicketResponseDTO>) malinkiComplexResponse.getDtoResult();
+
+        List<TicketResponseUVM> uvmResultList = new ArrayList<>();
+
+        for(TicketResponseDTO ticketResponseDTO : dtoResultList)
+            uvmResultList.add(TicketConverter.fromTicketResponseDTOToTicketResponseUVM(ticketResponseDTO));
+
+        malinkiComplexResponse.setUvmResult(uvmResultList);
+
+        return malinkiComplexResponse;
     }
 }

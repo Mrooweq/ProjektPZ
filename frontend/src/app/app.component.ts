@@ -21,7 +21,6 @@ export class AppComponent implements OnInit,OnDestroy {
   logout() {
     this._subscriptions.push(this.authenticationService.logout(this.activeUser.username).subscribe(
       () => {
-        this.activeUser = null;
         this.router.navigate(['/']);
       },
       error => {

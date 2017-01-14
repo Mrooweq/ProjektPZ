@@ -20,7 +20,10 @@ public enum DatabaseOperationResultEnum {
 	FLIGTS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR("Flights not fetched successfully due to error"),
 
 	TICKET_BOUGHT_SUCCESSFULLY("Ticket generated successfully"),
-	TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR("Ticket not generated successfully due to error");
+	TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR("Ticket not generated successfully due to error"),
+
+	TICKETS_FETCHED_SUCCESSFULLY("Tickets fetched successfully"),
+	TICKETS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR("Tickets not fetched successfully due to error");
 
 	private String name;
 

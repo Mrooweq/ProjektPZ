@@ -1,11 +1,11 @@
 import {Injectable, OnInit} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Http, Headers, RequestOptions} from '@angular/http';
 
 import {Observable, Subject} from "rxjs";
 import {User} from "../_mocks/user";
 
 @Injectable()
-export class AuthenticationService{
+export class AuthenticationService {
   private httpLoginUrl = 'api/login';
   private httpLogoutUrl = 'api/logout';
   private httpRegisterUrl = 'api/register';
@@ -17,6 +17,14 @@ export class AuthenticationService{
       this.loggedIn = true;
     else
       this.loggedIn = false;
+  }
+
+  requestOptions() {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser && currentUser.tokenContainer.token) {
+      let headers = new Headers({'Authorization': currentUser.tokenContainer.token});
+      return new RequestOptions({headers: headers});
+    }
   }
 
   isCurrentUser() {
@@ -43,7 +51,7 @@ export class AuthenticationService{
       }).catch(this.handleError);
   }
 
-  logout(username: String) {
+  public logout(username: String) {
     let body = JSON.stringify({'username': username});
 
     return this.http.post(this.httpLogoutUrl, body)
@@ -55,6 +63,13 @@ export class AuthenticationService{
         }
       })
       .catch(this.handleError);
+  }
+
+  public logoutLocal() {
+    localStorage.removeItem('currentUser');
+    this.loggedIn = false;
+    this.logger.next(this.loggedIn);
+
   }
 
   createNewUser(user: User) {

@@ -1,14 +1,14 @@
 package com.malinki.pz.lib;
 
 
-public class TicketDTO {
+public class TicketRequestUVM {
     private int flightNumber;
     private String flightClass;
     private String username;
     private String airlineShortcut;
     private int numberOfPlaces;
 
-    private TicketDTO(TicketDTO.TicketDTOBuilder builder) {
+    private TicketRequestUVM(TicketRequestUVM.TicketUVMBuilder builder) {
         this.flightNumber = builder.flightNumber;
         this.flightClass = builder.flightClass;
         this.username = builder.username;
@@ -56,40 +56,40 @@ public class TicketDTO {
         this.numberOfPlaces = numberOfPlaces;
     }
 
-    public static class TicketDTOBuilder {
+    public static class TicketUVMBuilder {
         private int flightNumber;
         private String flightClass;
         private String username;
         private String airlineShortcut;
         private int numberOfPlaces;
 
-        public TicketDTO.TicketDTOBuilder flightNumber(int flightNumber) {
+        public TicketRequestUVM.TicketUVMBuilder flightNumber(int flightNumber) {
             this.flightNumber = flightNumber;
             return this;
         }
 
-        public TicketDTO.TicketDTOBuilder flightClass(String flightClass) {
+        public TicketRequestUVM.TicketUVMBuilder flightClass(String flightClass) {
             this.flightClass = flightClass;
             return this;
         }
 
-        public TicketDTO.TicketDTOBuilder username(String user) {
+        public TicketRequestUVM.TicketUVMBuilder username(String user) {
             this.username = user;
             return this;
         }
 
-        public TicketDTO.TicketDTOBuilder airlineShortcut(String airlineShortcut) {
+        public TicketRequestUVM.TicketUVMBuilder airlineShortcut(String airlineShortcut) {
             this.airlineShortcut = airlineShortcut;
             return this;
         }
 
-        public TicketDTO.TicketDTOBuilder numberOfPlaces(int numberOfPlaces) {
+        public TicketRequestUVM.TicketUVMBuilder numberOfPlaces(int numberOfPlaces) {
             this.numberOfPlaces = numberOfPlaces;
             return this;
         }
 
-        public TicketDTO build() {
-            return new TicketDTO(this);
+        public TicketRequestUVM build() {
+            return new TicketRequestUVM(this);
         }
     }
 }
