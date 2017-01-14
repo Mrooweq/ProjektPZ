@@ -80,7 +80,7 @@ public class TicketPDFCreator {
 		if(ticketCode.length()>5){
 			ticketCode = ticketCode.substring(0, 5);
 		}
-		String airlineCode = dataForPDFTicket.getAirlineID();
+		String airlineCode = dataForPDFTicket.getTicketID();
 		while(airlineCode.length()<5) {
 			airlineCode += "0";
 		}
@@ -185,7 +185,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph("Price:").setFont(font).setFontSize(15).setFixedPosition(400, 383.5f, 40)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(String.valueOf(dataForPDFTicket.getPrice()) + " PLN").setFont(font).setFontSize(20)
+		document.add(new Paragraph(String.valueOf(dataForPDFTicket.getPrice()) + ".00 PLN").setFont(font).setFontSize(20)
 				.setFixedPosition(440, 382, 100));
 
 		return document;

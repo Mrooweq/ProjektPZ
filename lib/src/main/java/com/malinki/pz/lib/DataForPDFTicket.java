@@ -5,7 +5,7 @@ import com.itextpdf.layout.element.Image;
 public class DataForPDFTicket {
 
 	private Image airlineLogo;
-	private String airlineID;
+	private String ticketID;
 
 	private String sourceAirport;
 	private String destinyAirport;
@@ -16,7 +16,7 @@ public class DataForPDFTicket {
 	private String nrIDCard;
 	private String email;
 	private String flight;
-	private int price;
+	private String price;
 	private String flightClass;
 
 	public String getFlightClass() {
@@ -27,20 +27,20 @@ public class DataForPDFTicket {
 		this.flightClass = flightClass;
 	}
 
-	public int getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	
-	public String getAirlineID() {
-		return airlineID;
+	public String getTicketID() {
+		return ticketID;
 	}
 
-	public void setAirlineID(String airlineID) {
-		this.airlineID = airlineID;
+	public void setTicketID(String ticketID) {
+		this.ticketID = ticketID;
 	}
 	
 	public Image getAirlineLogo() {
