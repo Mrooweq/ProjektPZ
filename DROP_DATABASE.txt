@@ -1,13 +1,17 @@
-DROP TABLE Invoice_Pos;
-DROP TABLE Invoice;
 DROP TABLE Ticket;
 DROP TABLE Class;
 DROP TABLE Flight;
 DROP TABLE Airport;
 DROP TABLE Airline;
+DROP TABLE Multiplier;
 DROP TABLE "User";
 
 DROP FUNCTION getMinUserID;
 DROP FUNCTION isLoginAlreadyUsed;
 DROP FUNCTION isUsernameAndPasswordCorrect;
+
+DROP SEQUENCE seq_User;
+DROP SEQUENCE seq_Ticket;
+
+
 

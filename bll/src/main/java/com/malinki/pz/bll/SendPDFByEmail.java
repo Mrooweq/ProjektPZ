@@ -20,6 +20,7 @@ import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.io.source.ByteArrayOutputStream;
+import com.malinki.pz.lib.TicketResponseUVM;
 import com.malinki.pz.lib.TicketUVM;
 
 public class SendPDFByEmail {
@@ -32,11 +33,11 @@ public class SendPDFByEmail {
 	String receiverEmail = null;
 	String emailSubject = "Your Ticket";
 	String emailBody = "Hello! \n You just buy ticket from MalinkiBooking. The ticket is attached in this email. Have a nice day!";
-	TicketUVM ticket;
+	TicketResponseUVM ticketResponseUVM;
 	HttpServletResponse response;
 
-	public SendPDFByEmail(TicketUVM ticketUVM, HttpServletResponse response) {
-		this.ticket = ticketUVM;
+	public SendPDFByEmail(TicketResponseUVM ticketResponseUVM, HttpServletResponse response) {
+		this.ticketResponseUVM = ticketResponseUVM;
 		this.response = response;
 	}
 
@@ -59,7 +60,7 @@ public class SendPDFByEmail {
 
 			// write the PDF content to the output stream
 			outputStream = new ByteArrayOutputStream();
-			TicketPDFCreator pdfCreator = new TicketPDFCreator(ticket);
+			TicketPDFCreator pdfCreator = new TicketPDFCreator(ticketResponseUVM);
 			pdfCreator.generatePDF(outputStream);
 			receiverEmail = pdfCreator.getDataForPDFTicket().getEmail();
 			byte[] bytes = outputStream.toByteArray();

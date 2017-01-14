@@ -1,7 +1,6 @@
 package com.malinki.pz.controller;
 
-import java.io.IOException;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.malinki.pz.bll.*;
@@ -17,41 +16,10 @@ public class TicketController {
     private Logger logger = Logger.getLogger(UserController.class);
 
     @Autowired
-    private TicketOperations ticketOperations;
+    private TicketService ticketService;
 
-    @RequestMapping(value = "/buy", method = RequestMethod.GET)
-    public void buyTicket(HttpServletResponse response,
-                          @RequestParam String flight,
-                          @RequestParam String flightClass,
-                          @RequestParam String user) {
-
-        TicketUVM ticketUVM = new TicketUVM.TicketDTOTicketDTOBuilder()
-                .flight(flight)
-                .flightClass(flightClass)
-                .user(user)
-                .build();
-
-        int result = ticketOperations.addTicket(ticketUVM);
-        
-        SendPDFByEmail sendPDFByEmail = new SendPDFByEmail(ticketUVM, response);
-
-        try {
-            sendPDFByEmail.email();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        response.setStatus(result);
-    }
-    
-    @RequestMapping(value = "/test")
-    public void test(){
-    	GettingImageTest test = new GettingImageTest();
-    	try {
-			test.getImage();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    @RequestMapping(value = "/buy", method = RequestMethod.POST)
+    public void addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+        ticketService.addTicket(requestBody, request, response);
     }
 }

@@ -17,17 +17,18 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.malinki.pz.dal.operations.DataForTicketGetter;
 import com.malinki.pz.lib.DataForPDFTicket;
+import com.malinki.pz.lib.TicketResponseUVM;
 import com.malinki.pz.lib.TicketUVM;
 
 public class TicketPDFCreator {
 	Color grayColor;
-	TicketUVM ticket;
+	TicketResponseUVM ticketResponseUVM;
 	DataForPDFTicket dataForPDFTicket;
 
-	public TicketPDFCreator(TicketUVM ticket) {
+	public TicketPDFCreator(TicketResponseUVM ticketResponseUVM) {
 		this.grayColor = new DeviceCmyk(0.f, 0.f, 0.f, 0.875f);
-		this.ticket = ticket;
-		DataForTicketGetter getter = new DataForTicketGetter(ticket);
+		this.ticketResponseUVM = ticketResponseUVM;
+		DataForTicketGetter getter = new DataForTicketGetter(ticketResponseUVM);
 		try {
 			dataForPDFTicket = getter.getAllDataForPdfTicket();
 		} catch (Exception e) {
@@ -73,7 +74,7 @@ public class TicketPDFCreator {
 	private Image createBarcode(PdfDocument pdf) {
 
 		String airlineCountryCode = "59";
-		String ticketCode = ticket.getFlight();
+		String ticketCode = String.valueOf(ticketResponseUVM.getFlightNumber());
 		while(ticketCode.length()<5) {
 			ticketCode += "0";
 		}

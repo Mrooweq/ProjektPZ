@@ -1,6 +1,6 @@
 package com.malinki.pz.bll;
 
-import com.malinki.pz.lib.UserResponse;
+import com.malinki.pz.lib.MalinkiComplexResponse;
 import com.malinki.pz.lib.UserDTO;
 import com.malinki.pz.lib.UserUVM;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import com.malinki.pz.dal.UserRepository;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
-public class UserOperations implements IUserRepository {
+public class UserOperations implements IUserOperations {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -21,16 +21,20 @@ public class UserOperations implements IUserRepository {
 
 	@Override
 	public int registerUser(UserUVM user) {
-		UserResponse userResponse = userRepository.registerUser(UserConverter.fromUserUVMToUserDTO(user));
+		UserValidation validation = new UserValidation(user);
+		MalinkiComplexResponse userResponse = new MalinkiComplexResponse();
+		if(validation.checkUser()) {
+			userResponse = userRepository.registerUser(UserConverter.fromUserUVMToUserDTO(user));
+		}
 		return userResponse.getResult();
 	}
 
 	@Override
-	public UserResponse loginUser(UserUVM userForLoginValidation) {
-		UserResponse userResponse = userRepository.loginUser(UserConverter.fromUserUVMToUserDTO(userForLoginValidation));
+	public MalinkiComplexResponse loginUser(UserUVM userForLoginValidation) {
+		MalinkiComplexResponse userResponse = userRepository.loginUser(UserConverter.fromUserUVMToUserDTO(userForLoginValidation));
 
-		UserUVM loggedUserUVM = UserConverter.fromUserDTOToUserUVM(userResponse.getUserDTO());
-		userResponse.setUserUVM(loggedUserUVM);
+		UserUVM loggedUserUVM = UserConverter.fromUserDTOToUserUVM((UserDTO) userResponse.getDtoResult());
+		userResponse.setUvmResult(loggedUserUVM);
 
 		if(userResponse.getResult() == HttpServletResponse.SC_OK)
 			sessionTable.addUser(loggedUserUVM);
@@ -41,5 +45,10 @@ public class UserOperations implements IUserRepository {
 	@Override
 	public void logoutUser(UserUVM user) {
 		sessionTable.deleteUserSession(user);
+	}
+
+	@Override
+	public boolean validateUserByToken(String username, String token) {
+		return sessionTable.validateUserByToken(username, token);
 	}
 }

@@ -3,24 +3,24 @@ package com.malinki.pz.dal.operations;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import com.malinki.pz.lib.TicketResponseUVM;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.layout.element.Image;
-import com.malinki.pz.dal.DatabaseTicketOperation;
 import com.malinki.pz.lib.DataForPDFTicket;
 import com.malinki.pz.lib.TicketUVM;
 
 public class DataForTicketGetter {
-	private Logger logger = Logger.getLogger(DatabaseTicketOperation.class);
+	private Logger logger = Logger.getLogger(DataForTicketGetter.class);
 
-	private TicketUVM ticket;
+	private TicketResponseUVM ticketResponseUVM;
 	DataForPDFTicket dataForPDFTicket;
 	
 	
-	public DataForTicketGetter(TicketUVM ticket) {
-		this.ticket = ticket;
+	public DataForTicketGetter(TicketResponseUVM ticketResponseUVM) {
+		this.ticketResponseUVM = ticketResponseUVM;
 		this.dataForPDFTicket = new DataForPDFTicket();
 	}
 
