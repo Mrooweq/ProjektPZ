@@ -8,9 +8,11 @@ import { TableData } from './table-data';
 export class TicketHistory implements OnInit {
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    {title: 'Office', name: 'office', sort: 'asc'},
-    {title: 'Position', name: 'position', sort: false},
-    {title: 'Extn.', name: 'ext', sort: ''},
+    {title: 'Id', name: 'id', sort: 'asc'},
+    {title: 'Departure Date', name: 'departureDate', sort: false},
+    {title: 'Arrival Date', name: 'arrivalDate', sort: false},
+    {title: 'From', name: 'from', sort: false},
+    {title: 'To', name: 'to', sort: false}
   ];
   public TableData: Array<any> = [];
   public page: number = 1;

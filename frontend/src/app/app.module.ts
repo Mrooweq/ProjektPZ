@@ -21,7 +21,7 @@ import {TicketService} from "./_services/tickets.service";
 import {AuthGuard} from "./_services/auth_guard.service";
 import {UserAccount} from "./components/user_account/user_account.component";
 import {DatePipe} from "@angular/common";
-import {TicketHistory} from "./components/user_account/ticket_history/ticket_histor.component";
+import {TicketHistory} from "./components/user_account/ticket_history/ticket_history.component";
 import {Ng2TableModule} from 'ng2-table/ng2-table';
 
 

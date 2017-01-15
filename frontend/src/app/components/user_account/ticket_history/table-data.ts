@@ -1,15 +1,21 @@
 export const TableData: Array<any> = [
   {
-    'position': 'Integer Corporation',
-    'office': 'Croatia',
-    'ext': `0839`,
+    'id': 1,
+    'departureDate':'2017-01-01',
+    'arrivalDate': '2017-01-02',
+    'from': 'Warsaw',
+    'to': 'Geneva'
   }, {
-    'position': 'In PC',
-    'office': 'Cambodia',
-    'ext': `8262`,
+    'id': 2,
+    'departureDate':'2017-01-09',
+    'arrivalDate': '2017-01-10',
+    'from': 'Warsaw',
+    'to': 'Moscow'
   }, {
-    'position': 'Lorem Inc.',
-    'office': 'Korea, North',
-    'ext': '8968',
+    'id': 3,
+    'departureDate':'2017-01-21',
+    'arrivalDate': '2017-01-21',
+    'from': 'Paris',
+    'to': 'Berlin'
   }
 ];
