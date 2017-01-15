@@ -18,9 +18,8 @@ public class DataForTicketGetter {
 	private Logger logger = Logger.getLogger(DataForTicketGetter.class);
 
 	private TicketResponseUVM ticketResponseUVM;
-	DataForPDFTicket dataForPDFTicket;
-	
-	
+	private DataForPDFTicket dataForPDFTicket;
+
 	public DataForTicketGetter(TicketResponseUVM ticketResponseUVM) {
 		this.ticketResponseUVM = ticketResponseUVM;
 		this.dataForPDFTicket = new DataForPDFTicket();
@@ -34,7 +33,7 @@ public class DataForTicketGetter {
 
 		DataForPDFTicket dataForPDFTicket = new DataForPDFTicket();
 		dataForPDFTicket.setFirstname("San");
-		dataForPDFTicket.setLastName("Juarez");
+		dataForPDFTicket.setLastName("Dupa");
 		dataForPDFTicket.setTicketID("1");
 		dataForPDFTicket.setAirlineName("British Airways");
 		dataForPDFTicket.setSourceAirport("Warsaw");

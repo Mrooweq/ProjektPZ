@@ -23,6 +23,9 @@ public class TicketService {
     @Autowired
     private UserOperations userOperations;
 
+    @Autowired
+    private SendPDFByEmail sendPDFByEmail;
+
     public void addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("authorization");
 
@@ -110,7 +113,7 @@ public class TicketService {
 
     private void sendPdfByEmail(TicketResponseUVM uvmResult, HttpServletResponse response){
         try {
-            (new SendPDFByEmail(uvmResult, response)).sendEmail();
+            sendPDFByEmail.sendEmail(uvmResult, response);
         } catch (Exception e) {
             logger.log(Level.ERROR, e.toString());
         }
