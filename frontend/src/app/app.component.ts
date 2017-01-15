@@ -29,23 +29,15 @@ export class AppComponent implements OnInit,OnDestroy {
     ));
   }
 
-  setUser(logged: any) {
-    if (logged) {
-      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      this.activeUser = currentUser.user;
-    }
-    else {
-      this.activeUser = null;
-    }
-  }
-
   ngOnInit(): void {
     if (this.authenticationService.isCurrentUser()) {
       let currentUser = JSON.parse(localStorage.getItem('currentUser'));
       this.activeUser = currentUser.user;
     }
 
-    this._subscriptions.push(this.authenticationService.isLoggedIn().subscribe(loggedIn => this.setUser(loggedIn)));
+    this._subscriptions.push(this.authenticationService.isLoggedIn().subscribe(user => {
+      this.activeUser = user;
+    }));
   }
 
   ngOnDestroy() {

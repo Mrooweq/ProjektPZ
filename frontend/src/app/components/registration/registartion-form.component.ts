@@ -47,6 +47,9 @@ export class Registration {
       data => {
         this.succesMessage = data.message || 'Registration successful';
         this.registrationForm.reset();
+        setTimeout(()=>{
+          this.router.navigate(['/']);
+        }, 2000)
       },
       error => {
         this.errorMessage = <any>error;

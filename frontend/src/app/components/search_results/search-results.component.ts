@@ -5,7 +5,6 @@ import {Subscription} from "rxjs";
 import {User} from "../../_mocks/user";
 import {AuthenticationService} from "../../_services/authentication.service";
 import {TicketService} from "../../_services/tickets.service";
-import {Http} from "@angular/http";
 declare var $: JQueryStatic;
 
 @Component({
@@ -25,7 +24,7 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewChecked,AfterVie
               private authenticationService: AuthenticationService) {
   }
 
-  buyTickect(flight: Flight) {
+  buyTicket(flight: Flight) {
     this._subscriptions.push(this.ticketService.buyTicket(flight, this.loggedUser).subscribe(
       () => {
         console.log('hi');
@@ -36,28 +35,15 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewChecked,AfterVie
     ))
   }
 
-  setUser(logged: any) {
-    if (logged) {
-      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      this.loggedUser = currentUser.user;
-    }
-    else {
-      this.loggedUser = null;
-    }
-  }
-
-  setheight() {
-    let width = $('.arrow').width();
-    $('.arrow').height(0.2 * width);
-  }
-
   ngAfterViewInit(): void {
     $(document).ready(() => {
-      this.setheight();
+      let width = $('.arrow').width();
+      $('.arrow').height(0.2 * width);
     });
 
     $(window).resize(() => {
-      this.setheight();
+      let width = $('.arrow').width();
+      $('.arrow').height(0.2 * width);
     });
   }
 
@@ -72,7 +58,10 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewChecked,AfterVie
       let currentUser = JSON.parse(localStorage.getItem('currentUser'));
       this.loggedUser = currentUser.user;
     }
-    this._subscriptions.push(this.authenticationService.isLoggedIn().subscribe(loggedIn => this.setUser(loggedIn)));
+
+    this._subscriptions.push(this.authenticationService.isLoggedIn().subscribe(user => {
+      this.loggedUser = user;
+    }));
     this._flights = [];
     this._subscriptions.push(this.searchService.flights().subscribe(flights => {
       this._flights = flights;

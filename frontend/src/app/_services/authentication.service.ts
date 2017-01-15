@@ -10,7 +10,7 @@ export class AuthenticationService {
   private httpLogoutUrl = 'api/logout';
   private httpRegisterUrl = 'api/register';
   private loggedIn: boolean;
-  private logger = new Subject<boolean>();
+  private logger = new Subject<User>();
 
   constructor(private http: Http) {
     if (localStorage.getItem('currentUser'))
@@ -31,7 +31,7 @@ export class AuthenticationService {
     return this.loggedIn;
   }
 
-  isLoggedIn(): Observable<boolean> {
+  isLoggedIn(): Observable<User> {
     return this.logger.asObservable();
   }
 
@@ -46,7 +46,7 @@ export class AuthenticationService {
         if (user && user.tokenContainer.token) {
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.loggedIn = true;
-          this.logger.next(this.loggedIn);
+          this.logger.next(JSON.parse(localStorage.getItem('currentUser')).user);
         }
       }).catch(this.handleError);
   }
@@ -57,9 +57,7 @@ export class AuthenticationService {
     return this.http.post(this.httpLogoutUrl, body)
       .map(res => {
         if (res.status === 200) {
-          localStorage.removeItem('currentUser');
-          this.loggedIn = false;
-          this.logger.next(this.loggedIn);
+          this.logoutLocal();
         }
       })
       .catch(this.handleError);
@@ -68,7 +66,7 @@ export class AuthenticationService {
   public logoutLocal() {
     localStorage.removeItem('currentUser');
     this.loggedIn = false;
-    this.logger.next(this.loggedIn);
+    this.logger.next(null);
 
   }
 
