@@ -20,7 +20,6 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
   _todayDate: Date;
   _tomorrow: String;
   myDatePickerOptions: any;
-  myDatePickerOptionsEnd: any;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -47,21 +46,6 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
       },
       selectionTxtFontSize: '14px'
     };
-
-    this.myDatePickerOptionsEnd = {
-      todayBtnTxt: 'Today',
-      dateFormat: 'yyyy-mm-dd',
-      firstDayOfWeek: 'mo',
-      sunHighlight: true,
-      inline: false,
-      showDateFormatPlaceholder: true,
-      disableUntil: {
-        year: this._todayDate.getFullYear(),
-        month: (this._todayDate.getMonth() + 1),
-        day: (this._todayDate.getDate() - 1)
-      },
-      selectionTxtFontSize: '14px'
-    };
   }
 
   callback(value: any, name: String) {
@@ -75,7 +59,7 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
 
   submit(value: any) {
     this._subscriptions.push(this.searchService.getFlights(value).subscribe(
-      flights => {
+      () => {
         this.router.navigate(['/results']);
       },
       error => {
@@ -108,11 +92,11 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // $('#end').click(() => {
-    //   let date = $('#start').attr('[selDate]');
-    //   console.log(date);
-    //
-    // })
+    $('#end').click(() => {
+      let date = $('#start').text();
+      console.log(date);
+
+    })
   }
 
   ngOnInit(): void {

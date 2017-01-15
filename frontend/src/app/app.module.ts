@@ -21,6 +21,9 @@ import {TicketService} from "./_services/tickets.service";
 import {AuthGuard} from "./_services/auth_guard.service";
 import {UserAccount} from "./components/user_account/user_account.component";
 import {DatePipe} from "@angular/common";
+import {TicketHistory} from "./components/user_account/ticket_history/ticket_histor.component";
+import {Ng2TableModule} from 'ng2-table/ng2-table';
+
 
 @NgModule({
   imports: [
@@ -31,7 +34,8 @@ import {DatePipe} from "@angular/common";
     AppRoutingModule,
     NgbModule.forRoot(),
     MyDatePickerModule,
-    Ng2AutoCompleteModule
+    Ng2AutoCompleteModule,
+    Ng2TableModule
   ],
   declarations: [
     AppComponent,
@@ -40,6 +44,7 @@ import {DatePipe} from "@angular/common";
     Home,
     SearchResults,
     UserAccount,
+    TicketHistory,
     EqualValidator
   ],
   providers: [AuthenticationService, SearchService, TicketService, AuthGuard, DatePipe],
