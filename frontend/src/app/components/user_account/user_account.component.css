@@ -23,13 +23,6 @@
   border-right: 2px solid #87898a;
 }
 
-@media (max-width: 768px) {
-  .col-md-10 {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
 .error-message {
   color: #a94442;
   font-style: italic;

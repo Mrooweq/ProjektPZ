@@ -12,7 +12,8 @@ export class TicketHistory implements OnInit {
     {title: 'Departure Date', name: 'departureDate', sort: false},
     {title: 'Arrival Date', name: 'arrivalDate', sort: false},
     {title: 'From', name: 'from', sort: false},
-    {title: 'To', name: 'to', sort: false}
+    {title: 'To', name: 'to', sort: false},
+    {title: 'Ticket', name: 'ticket', sort: false},
   ];
   public TableData: Array<any> = [];
   public page: number = 1;
