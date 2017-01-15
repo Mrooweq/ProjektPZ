@@ -8,4 +8,7 @@ public class Strings {
 	public static final String FLIGHT_DATA_NOT_FOUND = "Flight data not found in database";
 	public static final String USER_DATA_NOT_FOUND = "User data not found in database";
 	public static final String AIRPORT_DATA_NOT_FOUND = "Airport data not found in database";
+
+
+	public static final String USER_NOT_AUTHORIZED = "User not authorized";
 }

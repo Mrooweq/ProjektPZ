@@ -2,14 +2,12 @@ package com.malinki.pz.bll;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.malinki.pz.dal.constants.Strings;
 import com.malinki.pz.lib.*;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,27 +29,19 @@ public class TicketService {
         TicketRequestUVM ticket = parseToTicketUVM(requestBody);
         String username = ticket.getUsername();
 
-        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
+//        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
+        boolean isUserValidatedProperly = true;
 
         if(isUserValidatedProperly){
             MalinkiComplexResponse malinkiComplexResponse = ticketOperations.addTicket(ticket);
             response.setStatus(malinkiComplexResponse.getResult());
 
             TicketResponseUVM uvmResult = (TicketResponseUVM) malinkiComplexResponse.getUvmResult();
-
-
-            ///////
-            SendPDFByEmail sendPDFByEmail = new SendPDFByEmail(uvmResult, response);
-
-            try {
-                sendPDFByEmail.email();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            ///////
+            sendPdfByEmail(uvmResult, response);
         }
         else{
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            logger.log(Level.ERROR, Strings.USER_NOT_AUTHORIZED);
         }
     }
 
@@ -109,7 +99,6 @@ public class TicketService {
         FlightClass flightClass = buyTicketResponse.getFlightClass();
 
         TicketRequestUVM ticketRequestUVM = new TicketRequestUVM.TicketUVMBuilder()
-                .numberOfPlaces(flightUVM.getNumberOfPlaces())
                 .flightNumber(flightUVM.getFlightNumber())
                 .airlineShortcut(flightUVM.getAirlineShortcut())
                 .flightClass("VIP")   // do usuniecia
@@ -117,5 +106,13 @@ public class TicketService {
                 .build();
 
         return ticketRequestUVM;
+    }
+
+    private void sendPdfByEmail(TicketResponseUVM uvmResult, HttpServletResponse response){
+        try {
+            (new SendPDFByEmail(uvmResult, response)).sendEmail();
+        } catch (Exception e) {
+            logger.log(Level.ERROR, e.toString());
+        }
     }
 }

@@ -19,6 +19,7 @@ public class UserRegistration extends DatabaseComplexResponseOperation {
 	private boolean isEmailAlreadyUsed;
 
 	public UserRegistration(UserDTO user) {
+		super(UserMapper.class);
 		this.user = user;
 	}
 

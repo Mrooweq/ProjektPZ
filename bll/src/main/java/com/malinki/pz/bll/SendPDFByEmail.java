@@ -22,8 +22,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.malinki.pz.lib.TicketResponseUVM;
 import com.malinki.pz.lib.TicketUVM;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 public class SendPDFByEmail {
+	private Logger logger = Logger.getLogger(SendPDFByEmail.class);
 
 	final String senderEmailID = "malinkibooking";
 	final String senderPassword = "znaczek6598";
@@ -32,7 +35,7 @@ public class SendPDFByEmail {
 	String senderEmail = "malinkibooking@gmail.com";
 	String receiverEmail = null;
 	String emailSubject = "Your Ticket";
-	String emailBody = "Hello! \n You just buy ticket from MalinkiBooking. The ticket is attached in this email. Have a nice day!";
+	String emailBody = "Hello! \n You just buy ticket from MalinkiBooking. The ticket is attached in this sendEmail. Have a nice day!";
 	TicketResponseUVM ticketResponseUVM;
 	HttpServletResponse response;
 
@@ -41,8 +44,7 @@ public class SendPDFByEmail {
 		this.response = response;
 	}
 
-	public void email() throws Exception {
-
+	public void sendEmail() throws Exception {
 		Properties props = setConnectionSettings();
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -104,7 +106,7 @@ public class SendPDFByEmail {
 			System.out.println("Done");
 
 		} catch (MessagingException e) {
-			e.printStackTrace();
+			logger.log(Level.ERROR, e.toString());
 		}
 
 	}

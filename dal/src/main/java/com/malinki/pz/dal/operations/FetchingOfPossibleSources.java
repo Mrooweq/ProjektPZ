@@ -17,6 +17,7 @@ public class FetchingOfPossibleSources extends DatabaseSimpleResponseOperation {
     private String dest;
 
     public FetchingOfPossibleSources(String dest) {
+        super(FlightMapper.class);
         this.dest = dest;
     }
 

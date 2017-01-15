@@ -1,6 +1,8 @@
 package com.malinki.pz.dal.operations;
 
 import com.malinki.pz.dal.DatabaseComplexResponseOperation;
+import com.malinki.pz.dal.FlightMapper;
+import com.malinki.pz.dal.TicketMapper;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 import com.malinki.pz.lib.FlightDTO;
 import com.malinki.pz.lib.FlightRequest;
@@ -15,6 +17,7 @@ public class FetchingFlights extends DatabaseComplexResponseOperation {
     private FlightRequest flightRequest;
 
     public FetchingFlights(FlightRequest flightRequest){
+        super(FlightMapper.class);
         this.flightRequest = flightRequest;
     }
 
@@ -24,7 +27,7 @@ public class FetchingFlights extends DatabaseComplexResponseOperation {
         MalinkiComplexResponse malinkiComplexResponse = new MalinkiComplexResponse();
 
         try{
-            flightDTOResultList = mapper.getFlights(flightRequest.getFlightToSearchDTO());
+            flightDTOResultList = ((FlightMapper)mapper).getFlights(flightRequest.getFlightToSearchDTO());
             malinkiComplexResponse.setDtoResult(flightDTOResultList);
 
             databaseOperationResultEnum = DatabaseOperationResultEnum.FLIGTS_FETCHED_SUCCESSFULLY;

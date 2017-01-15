@@ -16,6 +16,7 @@ public class FetchingOfPossibleDestinations extends DatabaseSimpleResponseOperat
     private String src;
 
     public FetchingOfPossibleDestinations(String src) {
+        super(FlightMapper.class);
         this.src = src;
     }
 

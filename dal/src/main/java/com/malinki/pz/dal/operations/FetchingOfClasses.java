@@ -13,6 +13,10 @@ import java.util.List;
 public class FetchingOfClasses extends DatabaseSimpleResponseOperation {
     private Logger logger = Logger.getLogger(UserRegistration.class);
 
+    public FetchingOfClasses() {
+        super(FlightMapper.class);
+    }
+
     @Override
     protected MalinkiSimpleResponse mainAction() {
         List<String> classesList = null;

@@ -25,7 +25,7 @@ public class DataForTicketGetter {
 	}
 
 	public DataForPDFTicket getAllDataForPdfTicket() throws Exception {
-		InputStream is = new FileInputStream("C:\\Users\\Lenovo\\Desktop\\do_wywalenia\\logo.png");
+		InputStream is = new FileInputStream("C:\\Users\\Lenovo\\Desktop\\logo.png");
 		byte[] bytes = IOUtils.toByteArray(is);
 		Image image = new Image(ImageDataFactory.create(bytes));
 

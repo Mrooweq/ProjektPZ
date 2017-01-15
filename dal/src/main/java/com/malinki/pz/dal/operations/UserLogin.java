@@ -1,6 +1,7 @@
 package com.malinki.pz.dal.operations;
 
 import com.malinki.pz.dal.DatabaseComplexResponseOperation;
+import com.malinki.pz.dal.TicketMapper;
 import com.malinki.pz.dal.UserMapper;
 import com.malinki.pz.lib.MalinkiComplexResponse;
 import com.malinki.pz.lib.UserDTO;
@@ -15,6 +16,7 @@ public class UserLogin extends DatabaseComplexResponseOperation {
 	private Logger logger = Logger.getLogger(UserLogin.class);
 
 	public UserLogin(UserDTO user) {
+		super(UserMapper.class);
 		this.userForLoginValidation = user;
 	}
 

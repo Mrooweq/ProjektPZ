@@ -17,22 +17,23 @@ public class TicketOperations implements ITicketOperations {
 
     @Override
     public MalinkiComplexResponse addTicket(TicketRequestUVM ticketRequestUVM) {
-        return ticketRepository.addTicket(TicketConverter.fromTicketRequestUVMToTicketRequestDTO(ticketRequestUVM));
+        MalinkiComplexResponse malinkiComplexResponse = ticketRepository.addTicket(TicketConverter.fromTicketRequestUVMToTicketRequestDTO(ticketRequestUVM));
+        TicketResponseDTO dtoResult = (TicketResponseDTO) malinkiComplexResponse.getDtoResult();
+        TicketResponseUVM uvmResult = TicketConverter.fromTicketResponseDTOToTicketResponseUVM(dtoResult);
+        malinkiComplexResponse.setUvmResult(uvmResult);
+        return malinkiComplexResponse;
     }
 
     @Override
     public MalinkiComplexResponse getArchivalTickets(String username) {
         MalinkiComplexResponse malinkiComplexResponse = ticketRepository.getArchivalTickets(username);
-
         List<TicketResponseDTO> dtoResultList = (List<TicketResponseDTO>) malinkiComplexResponse.getDtoResult();
-
         List<TicketResponseUVM> uvmResultList = new ArrayList<>();
 
         for(TicketResponseDTO ticketResponseDTO : dtoResultList)
             uvmResultList.add(TicketConverter.fromTicketResponseDTOToTicketResponseUVM(ticketResponseDTO));
 
         malinkiComplexResponse.setUvmResult(uvmResultList);
-
         return malinkiComplexResponse;
     }
 }

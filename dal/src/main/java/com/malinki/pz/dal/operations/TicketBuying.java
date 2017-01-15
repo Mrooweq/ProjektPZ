@@ -1,11 +1,10 @@
 package com.malinki.pz.dal.operations;
 
 import com.malinki.pz.dal.DatabaseComplexResponseOperation;
-import com.malinki.pz.dal.DatabaseSimpleResponseOperation;
 import com.malinki.pz.dal.TicketMapper;
 import com.malinki.pz.lib.MalinkiComplexResponse;
-import com.malinki.pz.lib.MalinkiSimpleResponse;
 import com.malinki.pz.lib.TicketRequestDTO;
+import com.malinki.pz.lib.TicketResponseDTO;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -17,14 +16,20 @@ public class TicketBuying extends DatabaseComplexResponseOperation {
     private TicketRequestDTO ticket;
 
     public TicketBuying(TicketRequestDTO ticket) {
+        super(TicketMapper.class);
         this.ticket = ticket;
     }
 
     @Override
     protected MalinkiComplexResponse mainAction() {
+        MalinkiComplexResponse malinkiComplexResponse = new MalinkiComplexResponse();
+        TicketResponseDTO ticketResponseDTO = new TicketResponseDTO();
+
         try{
             ((TicketMapper)mapper).addTicket(ticket);
             ((TicketMapper)mapper).commit();
+
+            ticketResponseDTO = ((TicketMapper) mapper).getTicketByID(ticket.getId());
 
             databaseOperationResultEnum = DatabaseOperationResultEnum.TICKET_BOUGHT_SUCCESSFULLY;
         } catch (Exception e){
@@ -32,6 +37,8 @@ public class TicketBuying extends DatabaseComplexResponseOperation {
             databaseOperationResultEnum = DatabaseOperationResultEnum.TICKET_NOT_BOUGHT_SUCCESSFULLY_DUE_TO_ERROR;
         }
 
-        return new MalinkiComplexResponse();
+        malinkiComplexResponse.setDtoResult(ticketResponseDTO);
+
+        return malinkiComplexResponse;
     }
 }

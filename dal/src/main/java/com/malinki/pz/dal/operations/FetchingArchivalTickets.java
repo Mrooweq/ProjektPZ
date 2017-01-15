@@ -14,6 +14,7 @@ public class FetchingArchivalTickets extends DatabaseComplexResponseOperation {
     private String username;
 
     public FetchingArchivalTickets(String username){
+        super(TicketMapper.class);
         this.username = username;
     }
 

@@ -4,19 +4,10 @@ CREATE SEQUENCE seq_User;
 CREATE SEQUENCE seq_Ticket;
 
 CREATE TABLE "User" (ID_User number(10) NOT NULL, Username varchar2(50) NOT NULL, Password varchar2(50) NOT NULL, Firstname varchar2(50) NOT NULL, Lastname varchar2(50) NOT NULL, Email varchar2(50) NOT NULL, PRIMARY KEY (ID_User));
-<<<<<<< HEAD
-CREATE TABLE Invoice (ID_Invoice number(10) NOT NULL, Invoice_Date date NOT NULL, Invoice_Value number(7) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Invoice));
-CREATE TABLE Invoice_Pos (ID_Invoice_Pos number(10) NOT NULL, InvoiceID_Invoice number(10) NOT NULL, Amount number(10) NOT NULL, Position_Price number(10) NOT NULL, ID_Ticket number(10) NOT NULL, ID_Flight number(10) NOT NULL, PRIMARY KEY (ID_Invoice_Pos, InvoiceID_Invoice));
-CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
-CREATE TABLE Class (ID_Class number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Class));
-CREATE TABLE Airline (ID_Airline number(10) NOT NULL, Name varchar2(50) NOT NULL, Logo BLOB NOT NULL, PRIMARY KEY (ID_Airline));
-CREATE TABLE Flight (ID_Flight number(10) NOT NULL, Flight_Number number(10) NOT NULL, Flight_Date date NOT NULL, Base_Price number(10) NOT NULL, ID_Airline number(10) NOT NULL, "From" number(10) NOT NULL, "To" number(10) NOT NULL, PRIMARY KEY (ID_Flight));
-=======
 CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, Number_Of_Places number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
 CREATE TABLE Class (ID_Class number(10) NOT NULL, Name varchar2(50) NOT NULL, ID_Multiplier number(10) NOT NULL, PRIMARY KEY (ID_Class));
-CREATE TABLE Airline (ID_Airline number(10) NOT NULL, Name varchar2(50) NOT NULL, Name_Shortcut varchar2(3) NOT NULL, PRIMARY KEY (ID_Airline));
+CREATE TABLE Airline (ID_Airline number(10) NOT NULL, Name varchar2(50) NOT NULL, Logo BLOB NOT NULL, Name_Shortcut varchar2(3) NOT NULL, PRIMARY KEY (ID_Airline));
 CREATE TABLE Flight (ID_Flight number(10) NOT NULL, Flight_Number varchar2(4) NOT NULL, Departure_Date date NOT NULL, Arrival_Date date NOT NULL, Base_Price number(10) NOT NULL, Free_Places number(10) NOT NULL, ID_Airline number(10) NOT NULL, "From" number(10) NOT NULL, "To" number(10) NOT NULL, PRIMARY KEY (ID_Flight));
->>>>>>> f9a9abe9b6d4aec67b50614d6ea823b1d428f974
 CREATE TABLE Airport (ID_Airport number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Airport));
 CREATE TABLE Multiplier (ID_Multiplier number(10) NOT NULL, Multiplier number(10) NOT NULL, PRIMARY KEY (ID_Multiplier));
 
@@ -26,9 +17,6 @@ ALTER TABLE Ticket ADD CONSTRAINT FKTicket704378 FOREIGN KEY (ID_Class) REFERENC
 ALTER TABLE Ticket ADD CONSTRAINT FKTicket572044 FOREIGN KEY (ID_User) REFERENCES "User" (ID_User);
 ALTER TABLE Flight ADD CONSTRAINT FKFlight5365 FOREIGN KEY ("From") REFERENCES Airport (ID_Airport);
 ALTER TABLE Flight ADD CONSTRAINT FKFlight809603 FOREIGN KEY ("To") REFERENCES Airport (ID_Airport);
-<<<<<<< HEAD
-----------------------
-=======
 ALTER TABLE Class ADD CONSTRAINT FKClass256632 FOREIGN KEY (ID_Multiplier) REFERENCES Multiplier (ID_Multiplier);
 
 INSERT INTO Airport VALUES (1, 'Warsaw');
@@ -42,11 +30,10 @@ INSERT INTO Airport VALUES (8, 'Rome');
 INSERT INTO Airport VALUES (9, 'Athens');
 INSERT INTO Airport VALUES (10, 'Oslo');
 
-INSERT INTO Airline VALUES (1, 'British Airways', 'BAW');
+INSERT INTO Airline VALUES (1, 'British Airways', utl_raw.cast_to_raw('C:\Users\Lenovo\Desktop\logo.png'), 'BAW');
 
 INSERT INTO Multiplier VALUES (1, 1);
 INSERT INTO Multiplier VALUES (2, 2);
->>>>>>> f9a9abe9b6d4aec67b50614d6ea823b1d428f974
 
 INSERT INTO Class VALUES (1, 'Economic', 1);
 INSERT INTO Class VALUES (2, 'VIP', 2);
@@ -68,9 +55,9 @@ begin
 
 SELECT
    CASE WHEN EXISTS(SELECT 1 FROM "User" where Username = str)
-     THEN 1  
-     ELSE 0  
-   END  
+     THEN 1
+     ELSE 0
+   END
 into v_flag FROM dual;
 
 return v_flag;
@@ -79,39 +66,7 @@ end;
 
 ------------------
 
-<<<<<<< HEAD
-create or replace FUNCTION getMinTicketID 
-return number is 
-
-cnt number := 0;
-v_flag integer := 1;
-
-begin 
-
-loop 
-
-cnt := cnt + 1;
-
-SELECT 
-   CASE WHEN EXISTS(SELECT 1 FROM "Ticket" where ID_Ticket = cnt)
-     THEN 1  
-     ELSE 0  
-   END  
-into v_flag FROM dual;
-
-
-EXIT when v_flag = 0;                     
-end loop;
- 
-return cnt; 
-end; 
-/
-
-------------------
-create or replace FUNCTION isLoginAlreadyUsed (str IN VARCHAR2)
-=======
 create or replace FUNCTION isEmailAlreadyUsed (str IN VARCHAR2)
->>>>>>> f9a9abe9b6d4aec67b50614d6ea823b1d428f974
 return integer is
 
 v_flag integer := 0;
@@ -120,9 +75,9 @@ begin
 
 SELECT
    CASE WHEN EXISTS(SELECT 1 FROM "User" where Email = str)
-     THEN 1  
-     ELSE 0  
-   END  
+     THEN 1
+     ELSE 0
+   END
 into v_flag FROM dual;
 
 return v_flag;
@@ -137,7 +92,7 @@ return integer is
 v_flag integer := 0;
 
 begin
-  
+
 SELECT
    CASE WHEN EXISTS(SELECT 1 FROM "User" where Username = v_username and Password = v_password)
      THEN 1
@@ -149,70 +104,5 @@ return v_flag;
 end;
 /
 
-<<<<<<< HEAD
--------------------
-
-create or replace FUNCTION getAirlineLogo (id IN NUMBER)
-return BLOB is
-
-bf		BFILE;
-pos 	INTEGER; 
-amt 	BINARY_INTEGER; 
-buffer	RAW();
-bb		BLOB;
-
-BEGIN
-   SELECT Logo
-   INTO bf
-     FROM Airline
-      WHERE ID_Airline = id;
-   dbms_lob.open(bf, dbms_lob.lob_readonly);
-   DBMS_LOB.CREATETEMPORARY(bb, TRUE, DBMS_LOB.SESSION);
-
-   LOOP
-      BEGIN
-         dbms_lob.read(bf, amt, pos, buffer);
-      EXCEPTION 
-         WHEN NO_DATA_FOUND THEN
-            EXIT;
-      END;
-      dbms_lob.writeappend(bb, amt, buffer);
-      pos := pos + amt; 
-   END LOOP;
-
-   dbms_lob.close(bf);
-
-   RETURN bb;
-END;
-/
-
--------------------
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
->>>>>>> f9a9abe9b6d4aec67b50614d6ea823b1d428f974

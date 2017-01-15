@@ -72,7 +72,6 @@ public class TicketPDFCreator {
 	}
 
 	private Image createBarcode(PdfDocument pdf) {
-
 		String airlineCountryCode = "59";
 		String ticketCode = String.valueOf(ticketResponseUVM.getFlightNumber());
 		while(ticketCode.length()<5) {
