@@ -28,16 +28,17 @@ import org.apache.log4j.Logger;
 public class SendPDFByEmail {
 	private Logger logger = Logger.getLogger(SendPDFByEmail.class);
 
-	final String senderEmailID = "malinkibooking";
-	final String senderPassword = "znaczek6598";
-	final String emailSMTPserver = "smtp.gmail.com";
-	final String emailServerPort = "465";
-	String senderEmail = "malinkibooking@gmail.com";
-	String receiverEmail = null;
-	String emailSubject = "Your Ticket";
-	String emailBody = "Hello! \n You just buy ticket from MalinkiBooking. The ticket is attached in this sendEmail. Have a nice day!";
-	TicketResponseUVM ticketResponseUVM;
-	HttpServletResponse response;
+	private String senderEmailID = "malinkibooking";
+	private String senderPassword = "znaczek6598";
+	private String emailSMTPserver = "smtp.gmail.com";
+	private String emailServerPort = "465";
+	private String emailSubject = "Your Ticket";
+	private String emailBody = "Hello! \n You just buy ticket from MalinkiBooking. The ticket is attached in this sendEmail. Have a nice day!";
+	private String senderEmail = "malinkibooking@gmail.com";
+	private String receiverEmail;
+
+	private TicketResponseUVM ticketResponseUVM;
+	private HttpServletResponse response;
 
 	public SendPDFByEmail(TicketResponseUVM ticketResponseUVM, HttpServletResponse response) {
 		this.ticketResponseUVM = ticketResponseUVM;
@@ -81,7 +82,6 @@ public class SendPDFByEmail {
 			try {
 				outputStream.writeTo(fos);
 			} catch (IOException ioe) {
-				// Handle exception here
 				ioe.printStackTrace();
 			} finally {
 				fos.close();

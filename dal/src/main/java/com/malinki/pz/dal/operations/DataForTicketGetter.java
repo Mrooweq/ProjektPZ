@@ -34,7 +34,7 @@ public class DataForTicketGetter {
 
 		DataForPDFTicket dataForPDFTicket = new DataForPDFTicket();
 		dataForPDFTicket.setFirstname("San");
-		dataForPDFTicket.setLastName("Escobar");
+		dataForPDFTicket.setLastName("Juarez");
 		dataForPDFTicket.setTicketID("1");
 		dataForPDFTicket.setAirlineName("British Airways");
 		dataForPDFTicket.setSourceAirport("Warsaw");
