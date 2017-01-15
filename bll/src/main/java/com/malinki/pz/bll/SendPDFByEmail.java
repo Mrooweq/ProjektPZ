@@ -26,13 +26,6 @@ public class SendPDFByEmail {
 	public void sendEmail(TicketResponseUVM ticketResponseUVM, HttpServletResponse response) throws Exception {
 		MimeBodyPart pdfBodyPart = emailAndPdfService.generatePdf(ticketResponseUVM, response);
 		MimeMessage message = emailAndPdfService.generateEmail(pdfBodyPart);
-
-		System.out.println("Sending");
-		Transport.send(message);
-		System.out.println("Done");
-
-//			File file = new File("ticketNumber.pdf");
-//			if(file.exists())
-//				file.delete();
+		emailAndPdfService.sendEmail(message);
 	}
 }

@@ -24,7 +24,11 @@
 }
 
 .registration-background {
-  background: #c2c4c6 url(../app/components/registration/registration-form.background.png);
+  background: #c2c4c6 url(../app/components/registration/registration-form.background.png) no-repeat center center;
+}
+
+.user-background {
+  background: #c2c4c6 url(../app/components/user_account/user-background.jpg) no-repeat center center;
 }
 
 .jumbotron {

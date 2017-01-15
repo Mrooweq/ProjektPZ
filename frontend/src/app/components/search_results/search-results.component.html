@@ -21,7 +21,7 @@
         </div>
         <div class="row float-xs-right price">
           <span style="margin-right: 5px">Price: {{flight.price}} €</span>
-          <button *ngIf="loggedUser" class="btn btn-primary buy_button" (click)="buyTickect(flight)">
+          <button *ngIf="loggedUser" class="btn btn-primary buy_button" (click)="buyTicket(flight)">
             Buy
           </button>
           <button *ngIf="!loggedUser" class="btn btn-primary log_in_button">

@@ -8,25 +8,19 @@
   background-size: cover;
 }
 
-#formHeader{
+#formHeader {
   font-size: 15px;
 }
 
-.col-md-9 {
+.col-md-10 {
   background-color: white;
   min-height: 100vh;
   padding-left: 40px;
   padding-right: 20px;
   margin-top: -30px;
   padding-top: 80px;
-  border-left: 2px solid #9483a1;
-}
-
-@media (max-width: 768px) {
-  .col-md-9 {
-    padding-left: 0px;
-    padding-right: 0px;
-  }
+  border-left: 2px solid #87898a;
+  border-right: 2px solid #87898a;
 }
 
 .error-message {

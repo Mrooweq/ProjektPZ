@@ -1,10 +1,12 @@
 package com.malinki.pz.bll;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import com.itextpdf.barcodes.*;
 
 import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.color.DeviceCmyk;
@@ -15,34 +17,17 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
-import com.malinki.pz.dal.operations.DataForTicketGetter;
-import com.malinki.pz.lib.DataForPDFTicket;
 import com.malinki.pz.lib.TicketResponseUVM;
-import com.malinki.pz.lib.TicketUVM;
+import org.apache.commons.io.IOUtils;
+import org.apache.ibatis.io.Resources;
 
 public class TicketPDFCreator {
 	Color grayColor;
 	TicketResponseUVM ticketResponseUVM;
-	DataForPDFTicket dataForPDFTicket;
 
 	public TicketPDFCreator(TicketResponseUVM ticketResponseUVM) {
 		this.grayColor = new DeviceCmyk(0.f, 0.f, 0.f, 0.875f);
 		this.ticketResponseUVM = ticketResponseUVM;
-		DataForTicketGetter getter = new DataForTicketGetter(ticketResponseUVM);
-		try {
-			dataForPDFTicket = getter.getAllDataForPdfTicket();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public DataForPDFTicket getDataForPDFTicket() {
-		return dataForPDFTicket;
-	}
-
-	public void setDataForPDFTicket(DataForPDFTicket dataForPDFTicket) {
-		this.dataForPDFTicket = dataForPDFTicket;
 	}
 
 	@SuppressWarnings("resource")
@@ -52,17 +37,18 @@ public class TicketPDFCreator {
 		PdfDocument pdf = new PdfDocument(writer);
 		Document document = new Document(pdf);
 		PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
-		
-		Image logo = dataForPDFTicket.getAirlineLogo();
+
+		InputStream is = Resources.getResourceAsStream("logo.png");
+		byte[] bytes = IOUtils.toByteArray(is);
+		Image logo = new Image(ImageDataFactory.create(bytes));
 
 		document.add(new Paragraph().setFixedPosition(40, 718, 1000).add(createBarcode(pdf).setWidth(200)));
-
 		document.add(new Paragraph().setFixedPosition(355, 602, 200).add(logo.setWidth(200)));
 
 		document = writeAirlineName(document, font);
 		document = writeCustomerName(document, font);
 		document = writeCustomerSurname(document, font);
-		//document = writeDocumentID(document, font);
+		document = writeDocumentID(document, font);
 		document = writeFlyDate(document, font);
 		document = writeSourceAirport(document, font);
 		document = writeDestinyAirport(document, font);
@@ -80,7 +66,7 @@ public class TicketPDFCreator {
 		if(ticketCode.length()>5){
 			ticketCode = ticketCode.substring(0, 5);
 		}
-		String airlineCode = dataForPDFTicket.getTicketID();
+		String airlineCode = String.valueOf(ticketResponseUVM.getFlightNumber());
 		while(airlineCode.length()<5) {
 			airlineCode += "0";
 		}
@@ -112,7 +98,7 @@ public class TicketPDFCreator {
 	}
 
 	private Document writeAirlineName(Document document, PdfFont font) {
-		document.add(new Paragraph(dataForPDFTicket.getAirlineName()).setFont(font).setFontSize(40).setFixedPosition(40, 592, 220)
+		document.add(new Paragraph(ticketResponseUVM.getAirline()).setFont(font).setFontSize(40).setFixedPosition(40, 592, 220)
 				.setItalic());
 
 		return document;
@@ -122,7 +108,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph("Name:").setFont(font).setFontSize(15).setFixedPosition(40, 553.5f, 80)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(dataForPDFTicket.getFirstname()).setFont(font).setFontSize(20).setFixedPosition(120, 552, 170));
+		document.add(new Paragraph(ticketResponseUVM.getFirstname()).setFont(font).setFontSize(20).setFixedPosition(120, 552, 170));
 
 		return document;
 	}
@@ -131,7 +117,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph("Last name:").setFont(font).setFontSize(15).setFixedPosition(40, 533.5f, 80)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(dataForPDFTicket.getLastName()).setFont(font).setFontSize(20).setFixedPosition(120, 532, 170));
+		document.add(new Paragraph(ticketResponseUVM.getLastname()).setFont(font).setFontSize(20).setFixedPosition(120, 532, 170));
 
 		return document;
 	}
@@ -140,7 +126,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph("Document ID:").setFont(font).setFontSize(15).setFixedPosition(260, 553.5f, 100)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(dataForPDFTicket.getNrIDCard()).setFont(font).setFontSize(20).setFixedPosition(360, 552, 340));
+		document.add(new Paragraph(String.valueOf(ticketResponseUVM.getId())).setFont(font).setFontSize(20).setFixedPosition(360, 552, 340));
 
 		return document;
 	}
@@ -149,7 +135,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph("Fly date:").setFont(font).setFontSize(15).setFixedPosition(260, 533.5f, 100)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(dataForPDFTicket.getFlightDate()).setFont(font).setFontSize(20).setFixedPosition(360, 532, 340)
+		document.add(new Paragraph(ticketResponseUVM.getDepartureDate()).setFont(font).setFontSize(20).setFixedPosition(360, 532, 340)
 				.setBold());
 
 		return document;
@@ -160,7 +146,7 @@ public class TicketPDFCreator {
 				.setFontColor(grayColor));
 
 		document.add(
-				new Paragraph(dataForPDFTicket.getSourceAirport()).setFont(font).setFontSize(20).setFixedPosition(60, 462, 495));
+				new Paragraph(ticketResponseUVM.getFrom()).setFont(font).setFontSize(20).setFixedPosition(60, 462, 495));
 
 		return document;
 	}
@@ -170,7 +156,7 @@ public class TicketPDFCreator {
 				.setFontColor(grayColor));
 
 		document.add(
-				new Paragraph(dataForPDFTicket.getDestinyAirport()).setFont(font).setFontSize(20).setFixedPosition(60, 422, 495));
+				new Paragraph(ticketResponseUVM.getTo()).setFont(font).setFontSize(20).setFixedPosition(60, 422, 495));
 
 		return document;
 	}
@@ -179,13 +165,13 @@ public class TicketPDFCreator {
 		document.add(new Paragraph("Class:").setFont(font).setFontSize(15).setFixedPosition(40, 383.5f, 40)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(String.valueOf(dataForPDFTicket.getFlightClass())).setFont(font).setFontSize(20)
+		document.add(new Paragraph(ticketResponseUVM.getFlightClass()).setFont(font).setFontSize(20)
 				.setFixedPosition(80, 382, 40));
 
 		document.add(new Paragraph("Price:").setFont(font).setFontSize(15).setFixedPosition(400, 383.5f, 40)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(String.valueOf(dataForPDFTicket.getPrice()) + ".00 PLN").setFont(font).setFontSize(20)
+		document.add(new Paragraph(String.valueOf(ticketResponseUVM.getPrice()) + ".00 PLN").setFont(font).setFontSize(20)
 				.setFixedPosition(440, 382, 100));
 
 		return document;

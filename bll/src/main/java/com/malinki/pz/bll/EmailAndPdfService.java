@@ -2,16 +2,16 @@ package com.malinki.pz.bll;
 
 
 import com.itextpdf.io.source.ByteArrayOutputStream;
+import com.malinki.pz.dal.constants.Strings;
 import com.malinki.pz.lib.TicketResponseUVM;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class EmailAndPdfService {
+    private Logger logger = Logger.getLogger(EmailAndPdfService.class);
+
     private String senderEmailID = "malinkibooking";
     private String senderPassword = "znaczek6598";
     private String emailSMTPserver = "smtp.gmail.com";
@@ -32,6 +34,10 @@ public class EmailAndPdfService {
     private String emailSubject = "Your Ticket";
     private String emailBody = "Hello! \n You just buy ticket from MalinkiBooking. The ticket is attached in this sendEmail. Have a nice day!";
     private String senderEmail = "malinkibooking@gmail.com";
+
+    private String attachmentFileName = "ticket.pdf";
+    private String tempFileName = "ticketNumber.pdf";
+
     private String receiverEmail;
 
     public MimeMessage generateEmail(MimeBodyPart pdfBodyPart){
@@ -97,7 +103,7 @@ public class EmailAndPdfService {
             e.printStackTrace();
         }
 
-        receiverEmail = pdfCreator.getDataForPDFTicket().getEmail();
+        receiverEmail = pdfCreator.ticketResponseUVM.getEmail();
         byte[] bytes = outputStream.toByteArray();
 
         DataSource dataSource = new ByteArrayDataSource(bytes, "application/pdf");
@@ -110,7 +116,7 @@ public class EmailAndPdfService {
         }
 
         try {
-            pdfBodyPart.setFileName("ticket.pdf");
+            pdfBodyPart.setFileName(attachmentFileName);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -121,7 +127,7 @@ public class EmailAndPdfService {
         FileOutputStream fos = null;
 
         try {
-            fos = new FileOutputStream(new File("ticketNumber.pdf"));
+            fos = new FileOutputStream(new File(tempFileName));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -139,6 +145,27 @@ public class EmailAndPdfService {
         }
 
         return pdfBodyPart;
+    }
+
+    public void sendEmail(MimeMessage message){
+        logger.log(Level.INFO, "Sending");
+
+        try {
+            Transport.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        finally {
+//            deleteTempFile();
+        }
+
+        logger.log(Level.INFO, "Done");
+    }
+
+    private void deleteTempFile(){
+        File file = new File(tempFileName);
+        if(file.exists())
+            file.delete();
     }
 
     public Properties setConnectionSettings() {

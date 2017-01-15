@@ -35,7 +35,7 @@
               <div class="col-md-2">
                 <div class="form-group">
                   <label>Start</label>
-                  <my-date-picker #start [options]="myDatePickerOptions"
+                  <my-date-picker id="start" #start [options]="myDatePickerOptions"
                                   [selDate]="selectedDate || _today"
                                   (dateChanged)="onDateChanged($event,'start')"></my-date-picker>
                 </div>
@@ -43,7 +43,7 @@
               <div class="col-md-2">
                 <div class="form-group">
                   <label>End</label>
-                  <my-date-picker #end [options]="myDatePickerOptions"
+                  <my-date-picker id="end" #end [options]="myDatePickerOptions"
                                   [selDate]="selectedDate || _tomorrow"
                                   (dateChanged)="onDateChanged($event,'end')"></my-date-picker>
                 </div>
