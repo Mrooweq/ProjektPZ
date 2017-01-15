@@ -2,6 +2,7 @@ package com.malinki.pz.lib;
 
 
 public class TicketRequestDTO {
+    private int id;
     private int flightNumber;
     private String flightClass;
     private String username;
@@ -14,6 +15,14 @@ public class TicketRequestDTO {
         this.username = builder.username;
         this.airlineShortcut = builder.airlineShortcut;
         this.numberOfPlaces = builder.numberOfPlaces;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getFlightNumber() {

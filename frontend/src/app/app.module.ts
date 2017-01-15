@@ -23,6 +23,7 @@ import {UserAccount} from "./components/user_account/user_account.component";
 import {DatePipe} from "@angular/common";
 import {TicketHistory} from "./components/user_account/ticket_history/ticket_history.component";
 import {Ng2TableModule} from 'ng2-table/ng2-table';
+import {EditAccount} from "./components/user_account/edit_account/edit_account.component";
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {Ng2TableModule} from 'ng2-table/ng2-table';
     SearchResults,
     UserAccount,
     TicketHistory,
-    EqualValidator
+    EqualValidator,
+    EditAccount
   ],
   providers: [AuthenticationService, SearchService, TicketService, AuthGuard, DatePipe],
   bootstrap: [AppComponent]

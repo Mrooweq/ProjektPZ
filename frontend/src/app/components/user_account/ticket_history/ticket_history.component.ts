@@ -36,8 +36,7 @@ export class TicketHistory implements OnInit,AfterViewInit {
     this.length = this.data.length;
   }
 
-  historyClicked() {
-    console.log('hi');
+  clicked() {
     $('.history-content').slideToggle('slow');
   }
 

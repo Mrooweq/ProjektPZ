@@ -12,11 +12,6 @@ public class FlightRepository {
         return fetchingFlights.performAction();
     }
 
-    public MalinkiSimpleResponse addTicket(TicketRequestDTO ticket) {
-        TicketBuying ticketBuying = new TicketBuying(ticket);
-        return ticketBuying.performAction();
-    }
-
     public MalinkiSimpleResponse getPossibleDestinations(String src){
         FetchingOfPossibleDestinations fetchingOfPossibleDestinations = new FetchingOfPossibleDestinations(src);
         return fetchingOfPossibleDestinations.performAction();
@@ -30,10 +25,5 @@ public class FlightRepository {
     public MalinkiSimpleResponse getClasses(){
         FetchingOfClasses fetchingOfClasses = new FetchingOfClasses();
         return fetchingOfClasses.performAction();
-    }
-
-    public MalinkiComplexResponse getArchivalTickets(String username){
-        FetchingArchivalTickets fetchingArchivalTickets = new FetchingArchivalTickets(username);
-        return fetchingArchivalTickets.performAction();
     }
 }

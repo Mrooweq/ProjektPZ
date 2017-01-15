@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {Http} from "@angular/http";
+import {Http, Response} from "@angular/http";
 import {Flight} from "../_mocks/flight";
 import {User} from "../_mocks/user";
 import {AuthenticationService} from "./authentication.service";
@@ -19,7 +19,7 @@ export class TicketService {
     let body = JSON.stringify({'flight': flight, 'user': user});
 
     return this.http.post(this.buyTicketsUrl, body, this.authService.requestOptions())
-    //.map(res => res.json())
+      .map((res: Response) => res.json().pdf)
       .catch(this.handleError.bind(this));
   }
 

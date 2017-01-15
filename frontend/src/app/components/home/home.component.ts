@@ -84,7 +84,6 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
   onDateChanged(value: any, name: String) {
     if (name == 'start') {
       this.searchForm.controls['start'].setValue(value.formatted);
-      console.log(value);
     }
     if (name == 'end') {
       this.searchForm.controls['end'].setValue(value.formatted);

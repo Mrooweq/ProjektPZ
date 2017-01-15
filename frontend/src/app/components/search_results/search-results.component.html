@@ -1,5 +1,6 @@
 <div class="container body form-bordered">
   <div class="container" style="padding: 10px">
+    <div *ngIf="_isLink"><div id="click" style="color: white">Click me</div></div>
     <div *ngIf="_flights?.length > 0">
       <div id="flight" *ngFor="let flight of _flights" class="container content">
         <div class="row main-info">

@@ -1,13 +1,14 @@
 package com.malinki.pz.dal;
 
 import com.malinki.pz.lib.UserDTO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface UserMapper {
+public interface UserMapper extends Mapper {
 	@Select("INSERT INTO \"User\" VALUES (seq_User.NEXTVAL, #{username}, #{password}, #{firstname}, #{lastname}, #{email})")
 	UserDTO registerUser(UserDTO user);
 

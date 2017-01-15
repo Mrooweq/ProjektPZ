@@ -1,6 +1,8 @@
 package com.malinki.pz.dal.operations;
 
-import com.malinki.pz.dal.DatabaseSearcherOperation;
+import com.malinki.pz.dal.DatabaseSimpleResponseOperation;
+import com.malinki.pz.dal.FlightMapper;
+import com.malinki.pz.dal.UserMapper;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 import com.malinki.pz.lib.MalinkiSimpleResponse;
 import org.apache.log4j.Level;
@@ -9,12 +11,13 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 
-public class FetchingOfPossibleSources extends DatabaseSearcherOperation {
+public class FetchingOfPossibleSources extends DatabaseSimpleResponseOperation {
     private Logger logger = Logger.getLogger(UserRegistration.class);
 
     private String dest;
 
     public FetchingOfPossibleSources(String dest) {
+        super(FlightMapper.class);
         this.dest = dest;
     }
 
@@ -24,9 +27,9 @@ public class FetchingOfPossibleSources extends DatabaseSearcherOperation {
 
         try{
             if(dest.isEmpty())
-                possibleAirports = flightMapper.getPossibleSources();
+                possibleAirports = ((FlightMapper)mapper).getPossibleSources();
             else
-                possibleAirports = flightMapper.getPossibleSourcesWithParam(dest);
+                possibleAirports = ((FlightMapper)mapper).getPossibleSourcesWithParam(dest);
 
             databaseOperationResultEnum = DatabaseOperationResultEnum.POSSIBLE_AIRPORTS_FETCHED_SUCCESSFULLY;
         } catch (Exception e){
