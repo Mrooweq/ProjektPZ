@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import { TableData } from './table-data';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {TableData} from './table-data';
+declare var $: JQueryStatic;
 
 @Component({
   selector: 'ticket-history',
   templateUrl: 'ticket_history.component.html',
 })
-export class TicketHistory implements OnInit {
+export class TicketHistory implements OnInit,AfterViewInit {
   public rows: Array<any> = [];
   public columns: Array<any> = [
     {title: 'Id', name: 'id', sort: 'asc'},
@@ -17,7 +18,7 @@ export class TicketHistory implements OnInit {
   ];
   public TableData: Array<any> = [];
   public page: number = 1;
-  public itemsPerPage: number = 10;
+  public itemsPerPage: number = 5;
   public maxSize: number = 5;
   public numPages: number = 1;
   public length: number = 0;
@@ -33,6 +34,15 @@ export class TicketHistory implements OnInit {
 
   public constructor() {
     this.length = this.data.length;
+  }
+
+  historyClicked() {
+    console.log('hi');
+    $('.history-content').slideToggle('slow');
+  }
+
+  ngAfterViewInit(): void {
+    $('.history-content').hide()
   }
 
   public ngOnInit(): void {

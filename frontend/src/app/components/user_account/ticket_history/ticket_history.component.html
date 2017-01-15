@@ -1,4 +1,6 @@
-<h4 id="#formHeader" class=" dropdown-toggle pointer" style="padding-bottom: 15px">History</h4>
+<h4 style="padding-bottom: 15px">
+  <span id="#formHeader" class="pointer dropdown-toggle" (click)="historyClicked()">History</span></h4>
+<div class="history-content">
   <div class="row">
     <div class="col-md-4">
       <input *ngIf="config.filtering" placeholder="Filter all columns"
@@ -25,3 +27,5 @@
   <!--(numPages)="numPages = $event">-->
   <!--</pagination>-->
   <!--<pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>-->
+
+</div>
