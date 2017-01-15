@@ -105,6 +105,10 @@ public class SendPDFByEmail {
 
 			System.out.println("Done");
 
+//			File file = new File("ticketNumber.pdf");
+//			if(file.exists())
+//				file.delete();
+
 		} catch (MessagingException e) {
 			logger.log(Level.ERROR, e.toString());
 		}

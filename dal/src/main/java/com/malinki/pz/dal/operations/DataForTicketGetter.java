@@ -3,8 +3,10 @@ package com.malinki.pz.dal.operations;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import com.malinki.pz.dal.constants.Strings;
 import com.malinki.pz.lib.TicketResponseUVM;
 import org.apache.commons.io.IOUtils;
+import org.apache.ibatis.io.Resources;
 import org.apache.log4j.Logger;
 
 import com.itextpdf.io.image.ImageDataFactory;
@@ -25,7 +27,8 @@ public class DataForTicketGetter {
 	}
 
 	public DataForPDFTicket getAllDataForPdfTicket() throws Exception {
-		InputStream is = new FileInputStream("C:\\Users\\Lenovo\\Desktop\\logo.png");
+		InputStream is = Resources.getResourceAsStream("logo.png");
+
 		byte[] bytes = IOUtils.toByteArray(is);
 		Image image = new Image(ImageDataFactory.create(bytes));
 
