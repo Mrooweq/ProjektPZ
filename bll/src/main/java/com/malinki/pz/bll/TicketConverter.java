@@ -50,6 +50,10 @@ public class TicketConverter {
                     .airline(ticket.getAirline())
                     .from(ticket.getFrom())
                     .to(ticket.getTo())
+                    .id(ticket.getId())
+                    .firstname(ticket.getFirstname())
+                    .lastname(ticket.getLastname())
+                    .email(ticket.getEmail())
                     .build();
     }
 
@@ -68,6 +72,10 @@ public class TicketConverter {
                     .airline(ticket.getAirline())
                     .from(ticket.getFrom())
                     .to(ticket.getTo())
+                    .id(ticket.getId())
+                    .firstname(ticket.getFirstname())
+                    .lastname(ticket.getLastname())
+                    .email(ticket.getEmail())
                     .build();
     }
 }

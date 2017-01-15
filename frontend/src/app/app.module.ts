@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule, Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -21,6 +21,8 @@ import {TicketService} from "./_services/tickets.service";
 import {AuthGuard} from "./_services/auth_guard.service";
 import {UserAccount} from "./components/user_account/user_account.component";
 import {DatePipe} from "@angular/common";
+import {TicketHistory} from "./components/user_account/ticket_history/ticket_history.component";
+import {Ng2TableModule} from 'ng2-table/ng2-table';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import {DatePipe} from "@angular/common";
     AppRoutingModule,
     NgbModule.forRoot(),
     MyDatePickerModule,
-    Ng2AutoCompleteModule
+    Ng2AutoCompleteModule,
+    Ng2TableModule
   ],
   declarations: [
     AppComponent,
@@ -41,9 +44,10 @@ import {DatePipe} from "@angular/common";
     Home,
     SearchResults,
     UserAccount,
+    TicketHistory,
     EqualValidator
   ],
-  providers: [AuthenticationService, SearchService, TicketService, AuthGuard,DatePipe],
+  providers: [AuthenticationService, SearchService, TicketService, AuthGuard, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

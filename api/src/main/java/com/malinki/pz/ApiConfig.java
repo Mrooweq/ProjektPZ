@@ -8,11 +8,6 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import(BllConfig.class)
 public class ApiConfig {
-    
-    @Bean
-    public UserOperations userOperations() {
-        return new UserOperations();
-    }
 
     @Bean
     public SessionTable userContext() {
@@ -27,5 +22,10 @@ public class ApiConfig {
     @Bean
     public FlightService flightService() {
         return new FlightService();
+    }
+
+    @Bean
+    public TicketService ticketService() {
+        return new TicketService();
     }
 }

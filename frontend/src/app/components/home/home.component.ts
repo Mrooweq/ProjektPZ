@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterViewInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";
@@ -10,11 +10,10 @@ import {DatePipe} from "@angular/common";
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.css']
 })
-export class Home implements OnInit,OnDestroy {
-
+export class Home implements OnInit,OnDestroy,AfterViewInit {
   private searchForm: FormGroup;
-  _sources: String[];
-  _dest: String[];
+  _sources: String[] = [];
+  _dest: String[] = [];
   _classes: String[];
   _subscriptions: Subscription[] = [];
   _today: String;
@@ -38,7 +37,6 @@ export class Home implements OnInit,OnDestroy {
       dateFormat: 'yyyy-mm-dd',
       firstDayOfWeek: 'mo',
       sunHighlight: true,
-      inputValueRequired: true,
       inline: false,
       showDateFormatPlaceholder: true,
       disableUntil: {
@@ -60,9 +58,8 @@ export class Home implements OnInit,OnDestroy {
   }
 
   submit(value: any) {
-    console.log(value);
     this._subscriptions.push(this.searchService.getFlights(value).subscribe(
-      flights => {
+      () => {
         this.router.navigate(['/results']);
       },
       error => {
@@ -85,8 +82,21 @@ export class Home implements OnInit,OnDestroy {
   }
 
   onDateChanged(value: any, name: String) {
-    if (name == 'start') this.searchForm.controls['start'].setValue(value.formatted);
-    if (name == 'end') this.searchForm.controls['end'].setValue(value.formatted);
+    if (name == 'start') {
+      this.searchForm.controls['start'].setValue(value.formatted);
+      console.log(value);
+    }
+    if (name == 'end') {
+      this.searchForm.controls['end'].setValue(value.formatted);
+    }
+  }
+
+  ngAfterViewInit(): void {
+    $('#end').click(() => {
+      let date = $('#start').text();
+      console.log(date);
+
+    })
   }
 
   ngOnInit(): void {

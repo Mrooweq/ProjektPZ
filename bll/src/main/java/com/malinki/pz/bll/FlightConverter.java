@@ -47,7 +47,6 @@ public class FlightConverter {
                     .airlineShortcut(flightUVM.getAirlineShortcut())
                     .from(flightUVM.getFrom())
                     .to(flightUVM.getTo())
-                    .numberOfPlaces(flightUVM.getNumberOfPlaces())
                     .build();
     }
 
@@ -64,7 +63,6 @@ public class FlightConverter {
                     .airlineShortcut(flightDTO.getAirlineShortcut())
                     .from(flightDTO.getFrom())
                     .to(flightDTO.getTo())
-                    .numberOfPlaces(flightDTO.getNumberOfPlaces())
                     .build();
     }
 }

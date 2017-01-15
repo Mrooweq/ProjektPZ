@@ -12,7 +12,7 @@
 
 @media (max-width: 768px) {
   .wrapper {
-    margin-top: 50px;
+    margin-top: 60px;
     border-radius: 5px;
     color: white;
     padding: 20px;
@@ -39,5 +39,9 @@
 
 .ng-invalid:not(form).ng-touched, .ng-invalid:not(form).ng-dirty {
   border: 1px solid red;
+}
+
+select, input {
+  color: black;
 }
 

@@ -20,9 +20,6 @@ public class FlightService {
     @Autowired
     private FlightOperations flightOperations;
 
-    @Autowired
-    private UserOperations userOperations;
-
     public List<String> getPossibleDestinations(String src, HttpServletResponse response){
         MalinkiSimpleResponse malinkiSimpleResponse = flightOperations.getPossibleDestinations(src);
         response.setStatus(malinkiSimpleResponse.getResult());
@@ -68,86 +65,5 @@ public class FlightService {
         response.setStatus(malinkiComplexResponse.getResult());
 
         return (List<FlightUVM>) malinkiComplexResponse.getUvmResult();
-    }
-
-    public void buyTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
-        String token = request.getHeader("authorization");
-
-        TicketRequestUVM ticket = parseToTicketUVM(requestBody);
-        String username = ticket.getUsername();
-
-        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
-
-        if(isUserValidatedProperly){
-            MalinkiSimpleResponse malinkiSimpleResponse = flightOperations.addTicket(ticket);
-            response.setStatus(malinkiSimpleResponse.getResult());
-        }
-        else{
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        }
-    }
-
-    public List<TicketRequestUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
-        String token = request.getHeader("authorization");
-
-        UserUVM userUVM = parseToUserUVM(requestBody);
-        String username = userUVM.getUsername();
-
-        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
-
-        MalinkiComplexResponse malinkiSimpleResponse;
-
-        if(isUserValidatedProperly){
-            malinkiSimpleResponse = flightOperations.getArchivalTickets(username);
-            response.setStatus(malinkiSimpleResponse.getResult());
-        }
-        else{
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return null;
-        }
-
-        return (List<TicketRequestUVM>) malinkiSimpleResponse.getUvmResult();
-    }
-
-    private TicketRequestUVM parseToTicketUVM(String requestBody) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        BuyTicketResponse buyTicketResponse = null;
-
-        try {
-            buyTicketResponse = mapper.readValue(requestBody, BuyTicketResponse.class);
-        } catch (IOException e) {
-            logger.log(Level.ERROR, e.toString());
-        }
-
-        FlightUVM flightUVM = buyTicketResponse.getFlight();
-        UserUVM userUVM = buyTicketResponse.getUser();
-        FlightClass flightClass = buyTicketResponse.getFlightClass();
-
-        TicketRequestUVM ticketRequestUVM = new TicketRequestUVM.TicketUVMBuilder()
-                .numberOfPlaces(flightUVM.getNumberOfPlaces())
-                .flightNumber(flightUVM.getFlightNumber())
-                .airlineShortcut(flightUVM.getAirlineShortcut())
-                .flightClass("VIP")   // do usuniecia
-                .username(userUVM.getUsername())
-                .build();
-
-        return ticketRequestUVM;
-    }
-
-    private UserUVM parseToUserUVM(String requestBody) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        UserUVM user = null;
-
-        try {
-            user = mapper.readValue(requestBody, UserUVM.class);
-        } catch (IOException e) {
-            logger.log(Level.ERROR, e.toString());
-        }
-
-        return user;
     }
 }

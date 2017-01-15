@@ -1,17 +1,25 @@
 export class Flight {
   airlineName: string;
+  airlineShortcut: string;
   price: number;
-  flightDate: string;
+  departureDate: string;
+  arrivalDate: string;
   flightNumber: number;
   from: string;
   to: string;
+  _class: string;
+  numberOfPlaces: number;
 
-  constructor(airlineName: string, price: number, flightDate: string, flightNumber: number, from: string, to: string) {
+  constructor(airlineName: string, airlineShortcut: string, price: number, departureDate: string, arrivalDate: string, flightNumber: number, from: string, to: string, _class: string, numberOfPlaces: number) {
     this.airlineName = airlineName;
+    this.airlineShortcut = airlineShortcut;
     this.price = price;
-    this.flightDate = flightDate;
+    this.departureDate = departureDate;
+    this.arrivalDate = arrivalDate;
     this.flightNumber = flightNumber;
     this.from = from;
     this.to = to;
+    this._class = _class;
+    this.numberOfPlaces = numberOfPlaces;
   }
 }

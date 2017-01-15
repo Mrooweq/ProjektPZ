@@ -35,10 +35,6 @@ public class FlightController {
         return flightService.getClasses(response);
     }
 
-    @RequestMapping(value = "/buy", method = RequestMethod.POST)
-    public void buyTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
-        flightService.buyTicket(requestBody, request, response);
-    }
 
     @RequestMapping(value = "/flights", method = RequestMethod.GET)
     public List<FlightUVM> getFlights(HttpServletResponse response,
@@ -50,10 +46,5 @@ public class FlightController {
                                       @RequestParam String numberOfPassengers) {
 
         return flightService.getFlights(response, dateStart, dateEnd, from, to, _class, numberOfPassengers);
-    }
-
-    @RequestMapping(value = "/archival", method = RequestMethod.POST)
-    public List<TicketRequestUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
-        return flightService.getArchivalTickets(requestBody, request, response);
     }
 }

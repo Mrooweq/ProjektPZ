@@ -1,34 +1,33 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {Http, Headers, RequestOptions} from "@angular/http";
+import {Http} from "@angular/http";
 import {Flight} from "../_mocks/flight";
 import {User} from "../_mocks/user";
+import {AuthenticationService} from "./authentication.service";
 
 @Injectable()
 export class TicketService {
-  private buyTickectsUrl = 'api/buy';
+  private buyTicketsUrl = 'api/buy';
 
-  constructor(private http: Http) {
+
+  constructor(private http: Http,
+              private authService: AuthenticationService) {
+    this.authService = authService;
   }
 
   buyTicket(flight: Flight, user: User) {
     let body = JSON.stringify({'flight': flight, 'user': user});
-    console.log(body);
 
-    return this.http.post(this.buyTickectsUrl, body, this.jwt())
-      .map(res => res.json()).catch(this.handleError);
-  }
-
-  private jwt() {
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (currentUser && currentUser.tokenContainer.token) {
-      let headers = new Headers({'Authorization': currentUser.tokenContainer.token});
-      return new RequestOptions({headers: headers});
-    }
+    return this.http.post(this.buyTicketsUrl, body, this.authService.requestOptions())
+    //.map(res => res.json())
+      .catch(this.handleError.bind(this));
   }
 
   private handleError(error: any) {
     let errorMsg;
+    if (error.status === 401) {
+      this.authService.logoutLocal();
+    }
     errorMsg = error.message ||
       `Oops! Error status: ` + error.status;
 
