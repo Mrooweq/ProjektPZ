@@ -6,7 +6,7 @@ CREATE SEQUENCE seq_Ticket;
 CREATE TABLE "User" (ID_User number(10) NOT NULL, Username varchar2(50) NOT NULL, Password varchar2(50) NOT NULL, Firstname varchar2(50) NOT NULL, Lastname varchar2(50) NOT NULL, Email varchar2(50) NOT NULL, PRIMARY KEY (ID_User));
 CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, Number_Of_Places number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
 CREATE TABLE Class (ID_Class number(10) NOT NULL, Name varchar2(50) NOT NULL, ID_Multiplier number(10) NOT NULL, PRIMARY KEY (ID_Class));
-CREATE TABLE Airline (ID_Airline number(10) NOT NULL, Name varchar2(50) NOT NULL, Logo BLOB NOT NULL, Name_Shortcut varchar2(3) NOT NULL, PRIMARY KEY (ID_Airline));
+CREATE TABLE Airline (ID_Airline number(10) NOT NULL, Name varchar2(50) NOT NULL, Name_Shortcut varchar2(3) NOT NULL, PRIMARY KEY (ID_Airline));
 CREATE TABLE Flight (ID_Flight number(10) NOT NULL, Flight_Number varchar2(4) NOT NULL, Departure_Date date NOT NULL, Arrival_Date date NOT NULL, Base_Price number(10) NOT NULL, Free_Places number(10) NOT NULL, ID_Airline number(10) NOT NULL, "From" number(10) NOT NULL, "To" number(10) NOT NULL, PRIMARY KEY (ID_Flight));
 CREATE TABLE Airport (ID_Airport number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Airport));
 CREATE TABLE Multiplier (ID_Multiplier number(10) NOT NULL, Multiplier number(10) NOT NULL, PRIMARY KEY (ID_Multiplier));
@@ -30,7 +30,11 @@ INSERT INTO Airport VALUES (8, 'Rome');
 INSERT INTO Airport VALUES (9, 'Athens');
 INSERT INTO Airport VALUES (10, 'Oslo');
 
-INSERT INTO Airline VALUES (1, 'British Airways', utl_raw.cast_to_raw('C:\Users\Lenovo\Desktop\logo.png'), 'BAW');
+INSERT INTO Airline VALUES (1, 'Enter Air', 'ENT');
+INSERT INTO Airline VALUES (2, 'LOT', 'LOT');
+INSERT INTO Airline VALUES (3, 'Skytaxi', 'IGA');
+INSERT INTO Airline VALUES (4, 'Small Planet Airlines', 'LLC');
+INSERT INTO Airline VALUES (5, 'SprintAir', 'SRN');
 
 INSERT INTO Multiplier VALUES (1, 1);
 INSERT INTO Multiplier VALUES (2, 2);

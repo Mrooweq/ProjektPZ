@@ -1,6 +1,18 @@
 package com.malinki.pz.dal.constants;
 
+import java.util.HashMap;
+
 public class Strings {
+	public static final HashMap<String, String> airlineLogoPathMap = new HashMap<>();
+
+	static {
+		airlineLogoPathMap.put("Enter Air", "enter-air.jpg");
+		airlineLogoPathMap.put("LOT", "LOT_Polish_Airlines.png");
+		airlineLogoPathMap.put("Skytaxi", "Skytaxi.png");
+		airlineLogoPathMap.put("Small Planet Airlines", "small-planet-airlines.jpg");
+		airlineLogoPathMap.put("SprintAir", "sprintair.jpg");
+	}
+
 	public static final String MYBATIS_CONFIG_FILE_NAME = "mybatis-config.xml";
 
 	public static final String NUMBER_OF_PLACES = "Number of Places:";

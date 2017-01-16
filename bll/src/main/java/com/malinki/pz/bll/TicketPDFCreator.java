@@ -2,6 +2,7 @@ package com.malinki.pz.bll;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 import com.itextpdf.barcodes.*;
 
@@ -30,6 +31,10 @@ public class TicketPDFCreator {
 		this.ticket = ticket;
 	}
 
+	private String getLogoPath(String airline){
+		return Strings.airlineLogoPathMap.get(airline);
+	}
+
 	public void generatePDF(ByteArrayOutputStream outputStream) throws IOException {
 		ByteArrayOutputStream out = outputStream;
 		PdfWriter writer = new PdfWriter(out);
@@ -37,7 +42,9 @@ public class TicketPDFCreator {
 		Document document = new Document(pdf);
 		PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
 
-		InputStream is = Resources.getResourceAsStream("logo.png");
+		String logoPath = getLogoPath(ticket.getAirline());
+
+		InputStream is = Resources.getResourceAsStream(logoPath);
 		byte[] bytes = IOUtils.toByteArray(is);
 		Image logo = new Image(ImageDataFactory.create(bytes));
 
