@@ -1,5 +1,6 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {TableData} from './table-data';
+import {TicketService} from "../../../_services/tickets.service";
 declare var $: JQueryStatic;
 
 @Component({
@@ -30,15 +31,33 @@ export class TicketHistory implements OnInit {
 
   private data: Array<any> = TableData;
 
-  public constructor() {
+  public constructor(private ticketService: TicketService) {
     this.length = this.data.length;
   }
 
   clicked() {
     $('.history-content').slideToggle('slow');
   }
+
   public ngOnInit(): void {
-    this.onChangeTable(this.config,this.page);
+    this.ticketService.getArchivalTickets().subscribe(
+      data => {
+        console.log(data);
+        this.ticketService.tickets().subscribe(
+          data => {
+            console.log(data);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+    this.onChangeTable(this.config, this.page);
   }
 
   public changePage(page: any, data: Array<any> = this.data): Array<any> {
