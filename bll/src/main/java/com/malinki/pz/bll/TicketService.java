@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class TicketService {
-    private Logger logger = Logger.getLogger(UserService.class);
+    private final Logger logger = Logger.getLogger(UserService.class);
 
     @Autowired
     private TicketOperations ticketOperations;
@@ -23,22 +23,19 @@ public class TicketService {
     @Autowired
     private UserOperations userOperations;
 
-    @Autowired
-    private SendPDFByEmail sendPDFByEmail;
-
     public PDFResponse addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("authorization");
 
         TicketRequestUVM ticket = parseToTicketUVM(requestBody);
         String username = ticket.getUsername();
         PDFResponse pdfResponse = null;
+        MalinkiComplexResponse malinkiComplexResponse = null;
 
 //        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
         boolean isUserValidatedProperly = true;
 
         if(isUserValidatedProperly){
-            MalinkiComplexResponse malinkiComplexResponse = ticketOperations.addTicket(ticket);
-            response.setStatus(malinkiComplexResponse.getResult());
+            malinkiComplexResponse = ticketOperations.addTicket(ticket);
 
             TicketResponseUVM uvmResult = (TicketResponseUVM) malinkiComplexResponse.getUvmResult();
             pdfResponse = sendPdfByEmail(uvmResult);
@@ -48,7 +45,21 @@ public class TicketService {
             logger.log(Level.ERROR, Strings.USER_NOT_AUTHORIZED);
         }
 
+        if(areBothResultsOk(malinkiComplexResponse, pdfResponse))
+            response.setStatus(HttpServletResponse.SC_OK);
+        else
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
         return pdfResponse;
+    }
+
+    private boolean areBothResultsOk(MalinkiComplexResponse malinkiComplexResponse, PDFResponse pdfResponse){
+        int resultOk = HttpServletResponse.SC_OK;
+
+        return malinkiComplexResponse != null
+                && pdfResponse != null
+                && malinkiComplexResponse.getResult() == resultOk
+                && pdfResponse.getResult() == resultOk;
     }
 
     public List<TicketRequestUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
@@ -117,9 +128,10 @@ public class TicketService {
 
     private PDFResponse sendPdfByEmail(TicketResponseUVM uvmResult){
         PDFResponse pdfResponse = null;
+        SendPDFByEmail sendPDFByEmail = new SendPDFByEmail();
 
         try {
-            pdfResponse = sendPDFByEmail.generareAndSendEmail(uvmResult);
+            pdfResponse = sendPDFByEmail.generateAndSendEmail(uvmResult);
         } catch (Exception e) {
             logger.log(Level.ERROR, e.toString());
         }

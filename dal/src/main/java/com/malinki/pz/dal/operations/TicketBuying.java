@@ -12,7 +12,7 @@ import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 
 public class TicketBuying extends DatabaseComplexResponseOperation {
 
-    private Logger logger = Logger.getLogger(UserRegistration.class);
+    private final Logger logger = Logger.getLogger(UserRegistration.class);
     private TicketRequestDTO ticket;
 
     public TicketBuying(TicketRequestDTO ticket) {

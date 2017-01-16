@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class FlightService {
-    private Logger logger = Logger.getLogger(UserService.class);
+    private final Logger logger = Logger.getLogger(UserService.class);
 
     @Autowired
     private FlightOperations flightOperations;

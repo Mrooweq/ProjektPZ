@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class FetchingOfPossibleDestinations extends DatabaseSimpleResponseOperation {
-    private Logger logger = Logger.getLogger(UserRegistration.class);
+    private final Logger logger = Logger.getLogger(UserRegistration.class);
 
     private String src;
 

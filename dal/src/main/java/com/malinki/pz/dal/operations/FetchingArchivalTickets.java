@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 public class FetchingArchivalTickets extends DatabaseComplexResponseOperation {
-    private Logger logger = Logger.getLogger(UserRegistration.class);
+    private final Logger logger = Logger.getLogger(UserRegistration.class);
     private String username;
 
     public FetchingArchivalTickets(String username){

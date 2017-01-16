@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class SendPDFByEmail {
 
-	@Autowired
-	private EmailAndPdfService emailAndPdfService;
+	public PDFResponse generateAndSendEmail(TicketResponseUVM ticketResponseUVM) throws Exception {
+		String receiverEmail = ticketResponseUVM.getEmail();
+		EmailAndPdfService emailAndPdfService = new EmailAndPdfService();
 
-	public PDFResponse generareAndSendEmail(TicketResponseUVM ticketResponseUVM) throws Exception {
 		ByteArrayOutputStream outputStream = emailAndPdfService.getOutputStream(ticketResponseUVM);
-		MimeBodyPart pdfBodyPart = emailAndPdfService.generatePdf(ticketResponseUVM, outputStream);
-		MimeMessage message = emailAndPdfService.generateEmail(pdfBodyPart);
+		MimeBodyPart pdfBodyPart = emailAndPdfService.generatePdf(outputStream, receiverEmail);
+		MimeMessage message = emailAndPdfService.generateEmail(pdfBodyPart, receiverEmail);
 		emailAndPdfService.sendEmail(message);
 
 		return emailAndPdfService.generateResponse(outputStream);

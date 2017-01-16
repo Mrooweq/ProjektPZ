@@ -23,15 +23,13 @@ import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.io.Resources;
 
 public class TicketPDFCreator {
-	private Color grayColor;
-	private TicketResponseUVM ticketResponseUVM;
+	private final Color grayColor = new DeviceCmyk(0.f, 0.f, 0.f, 0.875f);
+	private TicketResponseUVM ticket;
 
-	public TicketPDFCreator(TicketResponseUVM ticketResponseUVM) {
-		this.grayColor = new DeviceCmyk(0.f, 0.f, 0.f, 0.875f);
-		this.ticketResponseUVM = ticketResponseUVM;
+	public TicketPDFCreator(TicketResponseUVM ticket) {
+		this.ticket = ticket;
 	}
 
-	@SuppressWarnings("resource")
 	public void generatePDF(ByteArrayOutputStream outputStream) throws IOException {
 		ByteArrayOutputStream out = outputStream;
 		PdfWriter writer = new PdfWriter(out);
@@ -62,14 +60,14 @@ public class TicketPDFCreator {
 
 	private Image createBarcode(PdfDocument pdf) {
 		String airlineCountryCode = "59";
-		String ticketCode = String.valueOf(ticketResponseUVM.getFlightNumber());
+		String ticketCode = String.valueOf(ticket.getFlightNumber());
 		while(ticketCode.length()<5) {
 			ticketCode += "0";
 		}
 		if(ticketCode.length()>5){
 			ticketCode = ticketCode.substring(0, 5);
 		}
-		String airlineCode = String.valueOf(ticketResponseUVM.getFlightNumber());
+		String airlineCode = String.valueOf(ticket.getFlightNumber());
 		while(airlineCode.length()<5) {
 			airlineCode += "0";
 		}
@@ -101,7 +99,7 @@ public class TicketPDFCreator {
 	}
 
 	private Document writeAirlineName(Document document, PdfFont font) {
-		document.add(new Paragraph(ticketResponseUVM.getAirline()).setFont(font).setFontSize(40).setFixedPosition(40, 592, 220)
+		document.add(new Paragraph(ticket.getAirline()).setFont(font).setFontSize(40).setFixedPosition(40, 592, 220)
 				.setItalic());
 
 		return document;
@@ -111,7 +109,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph(Strings.FIRSTNAME).setFont(font).setFontSize(15).setFixedPosition(40, 553.5f, 80)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(ticketResponseUVM.getFirstname()).setFont(font).setFontSize(20).setFixedPosition(120, 552, 170));
+		document.add(new Paragraph(ticket.getFirstname()).setFont(font).setFontSize(20).setFixedPosition(120, 552, 170));
 
 		return document;
 	}
@@ -120,7 +118,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph(Strings.LASTNAME).setFont(font).setFontSize(15).setFixedPosition(40, 533.5f, 80)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(ticketResponseUVM.getLastname()).setFont(font).setFontSize(20).setFixedPosition(120, 532, 170));
+		document.add(new Paragraph(ticket.getLastname()).setFont(font).setFontSize(20).setFixedPosition(120, 532, 170));
 
 		return document;
 	}
@@ -129,7 +127,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph(Strings.DOCUMENT_ID).setFont(font).setFontSize(15).setFixedPosition(260, 553.5f, 100)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(String.valueOf(ticketResponseUVM.getId())).setFont(font).setFontSize(20).setFixedPosition(360, 552, 340));
+		document.add(new Paragraph(String.valueOf(ticket.getId())).setFont(font).setFontSize(20).setFixedPosition(360, 552, 340));
 
 		return document;
 	}
@@ -138,7 +136,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph(Strings.DEPARTURE_DATE).setFont(font).setFontSize(15).setFixedPosition(260, 482, 100)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(ticketResponseUVM.getDepartureDate()).setFont(font).setFontSize(20).setFixedPosition(360, 462, 340)
+		document.add(new Paragraph(ticket.getDepartureDate()).setFont(font).setFontSize(20).setFixedPosition(360, 462, 340)
 				.setBold());
 
 		return document;
@@ -148,7 +146,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph(Strings.ARRIVAL_DATE).setFont(font).setFontSize(15).setFixedPosition(260, 442, 100)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(ticketResponseUVM.getArrivalDate()).setFont(font).setFontSize(20).setFixedPosition(360, 422, 340)
+		document.add(new Paragraph(ticket.getArrivalDate()).setFont(font).setFontSize(20).setFixedPosition(360, 422, 340)
 				.setBold());
 
 		return document;
@@ -159,7 +157,7 @@ public class TicketPDFCreator {
 				.setFontColor(grayColor));
 
 		document.add(
-				new Paragraph(ticketResponseUVM.getFrom()).setFont(font).setFontSize(20).setFixedPosition(60, 462, 495));
+				new Paragraph(ticket.getFrom()).setFont(font).setFontSize(20).setFixedPosition(60, 462, 495));
 
 		return document;
 	}
@@ -169,7 +167,7 @@ public class TicketPDFCreator {
 				.setFontColor(grayColor));
 
 		document.add(
-				new Paragraph(ticketResponseUVM.getTo()).setFont(font).setFontSize(20).setFixedPosition(60, 422, 495));
+				new Paragraph(ticket.getTo()).setFont(font).setFontSize(20).setFixedPosition(60, 422, 495));
 
 		return document;
 	}
@@ -178,13 +176,13 @@ public class TicketPDFCreator {
 		document.add(new Paragraph(Strings.CLASS).setFont(font).setFontSize(15).setFixedPosition(40, 383.5f, 120)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(ticketResponseUVM.getFlightClass()).setFont(font).setFontSize(20)
+		document.add(new Paragraph(ticket.getFlightClass()).setFont(font).setFontSize(20)
 				.setFixedPosition(80, 382, 120));
 
 		document.add(new Paragraph(Strings.PRICE).setFont(font).setFontSize(15).setFixedPosition(400, 383.5f, 40)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(String.valueOf(ticketResponseUVM.getPrice()) + Strings.PRICE_END).setFont(font).setFontSize(20)
+		document.add(new Paragraph(String.valueOf(ticket.getPrice()) + Strings.PRICE_END).setFont(font).setFontSize(20)
 				.setFixedPosition(440, 382, 100));
 
 		return document;
@@ -194,7 +192,7 @@ public class TicketPDFCreator {
 		document.add(new Paragraph(Strings.NUMBER_OF_PLACES).setFont(font).setFontSize(15).setFixedPosition(240, 383.5f, 120)
 				.setFontColor(grayColor));
 
-		document.add(new Paragraph(String.valueOf(ticketResponseUVM.getNumberOfPlaces())).setFont(font).setFontSize(20)
+		document.add(new Paragraph(String.valueOf(ticket.getNumberOfPlaces())).setFont(font).setFontSize(20)
 				.setFixedPosition(360, 382, 40));
 		
 		return document;

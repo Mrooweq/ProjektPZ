@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping(value="/api")
 public class TicketController {
 
-    private Logger logger = Logger.getLogger(UserController.class);
+    private final Logger logger = Logger.getLogger(UserController.class);
 
     @Autowired
     private TicketService ticketService;

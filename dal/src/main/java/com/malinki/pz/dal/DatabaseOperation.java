@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class DatabaseOperation {
-    private Logger logger = Logger.getLogger(DatabaseOperation.class);
+    private final Logger logger = Logger.getLogger(DatabaseOperation.class);
 
     protected DatabaseOperationResultEnum databaseOperationResultEnum;
 

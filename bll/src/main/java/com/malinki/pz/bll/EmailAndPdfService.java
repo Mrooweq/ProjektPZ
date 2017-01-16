@@ -8,8 +8,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.stereotype.Service;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -24,22 +22,19 @@ import java.io.*;
 import java.util.Properties;
 
 public class EmailAndPdfService {
-    private Logger logger = Logger.getLogger(EmailAndPdfService.class);
+    private final Logger logger = Logger.getLogger(EmailAndPdfService.class);
 
-    private String senderEmailID = "malinkibooking";
-    private String senderPassword = "znaczek6598";
-    private String emailSMTPserver = "smtp.gmail.com";
-    private String emailServerPort = "465";
-    private String emailSubject = "Your Ticket";
-    private String emailBody = "Hello! \n You just buy ticket from MalinkiBooking. The ticket is attached in this generareAndSendEmail. Have a nice day!";
-    private String senderEmail = "malinkibooking@gmail.com";
+    private final String senderEmailID = Strings.SENDER_EMAIL_ID;
+    private final String senderPassword = Strings.SENDER_PASSWORD;
+    private final String emailSMTPserver = Strings.EMAIL_SMTP_SERVER;
+    private final String emailServerPort = Strings.EMAIL_SERVER_PORT;
+    private final String emailSubject = Strings.EMAIL_SUBJECT;
+    private final String emailBody = Strings.EMAIL_MESSAGE;
+    private final String senderEmail = Strings.SENDER_EMAIL;
+    private final String attachmentFileName = Strings.ATTACHEMENT_FILE_NAME;
+    private final String tempFileName = Strings.TEMP_FILE_NAME;
 
-    private String attachmentFileName = "ticket.pdf";
-    private String tempFileName = "ticketNumber.pdf";
-
-    private String receiverEmail;
-
-    public MimeMessage generateEmail(MimeBodyPart pdfBodyPart){
+    public MimeMessage generateEmail(MimeBodyPart pdfBodyPart, String receiverEmail){
         Properties props = setConnectionSettings();
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -111,6 +106,7 @@ public class EmailAndPdfService {
 
         try {
             pdfBase64String = StringUtils.newStringUtf8(Base64.encodeBase64(outputStream.toByteArray()));
+            pdfResponse.setResult(HttpServletResponse.SC_OK);
         } catch (Exception e) {
             logger.log(Level.ERROR, e.getMessage());
         }
@@ -120,8 +116,7 @@ public class EmailAndPdfService {
         return pdfResponse;
     }
 
-    public MimeBodyPart generatePdf(TicketResponseUVM ticketResponseUVM, ByteArrayOutputStream outputStream){
-        receiverEmail = ticketResponseUVM.getEmail();
+    public MimeBodyPart generatePdf(ByteArrayOutputStream outputStream, String receiverEmail){
         byte[] bytes = outputStream.toByteArray();
 
         DataSource dataSource = new ByteArrayDataSource(bytes, "application/pdf");

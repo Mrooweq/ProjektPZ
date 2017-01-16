@@ -15,5 +15,15 @@ public class Strings {
 	public static final String FIRSTNAME = "Firstname";
 	public static final String LASTNAME = "Lastname";
 
+	public static final String EMAIL_MESSAGE = "Hello!\nYou just buy ticket from MalinkiBooking. The ticket is attached in this generareAndSendEmail. Have a nice day!";
+	public static final String EMAIL_SUBJECT = "Your ticket";
+	public static final String SENDER_EMAIL_ID = "malinkibooking";
+	public static final String SENDER_PASSWORD = "znaczek6598";
+	public static final String EMAIL_SMTP_SERVER = "smtp.gmail.com";
+	public static final String EMAIL_SERVER_PORT = "465";
+	public static final String SENDER_EMAIL = "malinkibooking@gmail.com";
+	public static final String ATTACHEMENT_FILE_NAME = "ticket.pdf";
+	public static final String TEMP_FILE_NAME = "ticketNumber.pdf";
+
 	public static final String USER_NOT_AUTHORIZED = "User not authorized";
 }

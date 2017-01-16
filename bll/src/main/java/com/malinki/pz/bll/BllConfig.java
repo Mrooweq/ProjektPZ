@@ -24,14 +24,4 @@ public class BllConfig {
     public TicketRepository ticketRepository() {
         return new TicketRepository();
     }
-
-    @Bean
-    public EmailAndPdfService emailAndPdfService() {
-        return new EmailAndPdfService();
-    }
-
-    @Bean
-    public SendPDFByEmail sendPDFByEmail() {
-        return new SendPDFByEmail();
-    }
 }
