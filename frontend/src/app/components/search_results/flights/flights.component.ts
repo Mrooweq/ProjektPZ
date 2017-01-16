@@ -1,5 +1,5 @@
 import {
-  Component, Input, SimpleChanges, OnInit, OnDestroy, Output, EventEmitter,
+  Component, Input, OnInit, OnDestroy, Output, EventEmitter,
   AfterViewChecked
 } from '@angular/core';
 import {Flight} from "../../../_mocks/flight";
@@ -7,6 +7,7 @@ import {AuthenticationService} from "../../../_services/authentication.service";
 import {User} from "../../../_mocks/user";
 import {Subscription} from "rxjs";
 import {TicketService} from "../../../_services/tickets.service";
+declare var $: JQueryStatic;
 
 @Component({
   selector: 'flights',
@@ -27,6 +28,8 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
   }
 
   buyTicket(flight: Flight) {
+    $('.buy_button').text('Loading...');
+    $('.buy_button').attr('disabled', 'true');
     this._subscriptions.push(this.ticketService.buyTicket(flight, this.loggedUser).subscribe(
       data => {
         this.isLink.emit(true);

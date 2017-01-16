@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TableData} from './table-data';
 import {TicketService} from "../../../_services/tickets.service";
 declare var $: JQueryStatic;
