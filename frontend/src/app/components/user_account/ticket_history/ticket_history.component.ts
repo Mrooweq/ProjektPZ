@@ -37,6 +37,7 @@ export class TicketHistory implements OnInit {
 
   clicked() {
     $('.history-content').slideToggle('slow');
+    $('.btn-group').toggleClass('dropup');
   }
 
   public ngOnInit(): void {

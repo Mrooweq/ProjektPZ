@@ -17,6 +17,18 @@
   background-size: cover;
 }
 
+.up{
+  background: url(../app/components/user_account/ticket_history/sort-up.svg) center center;
+  background-size: cover;
+  width:10px;
+  height:10px;
+}
+
+.down{
+  background: url(../app/components/user_account/ticket_history/sort-down.svg) center center;
+  background-size: cover;
+}
+
 .close {
   background: url(close.svg);
   width: 30px;

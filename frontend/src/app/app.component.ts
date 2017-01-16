@@ -16,7 +16,6 @@ export class AppComponent implements OnInit,OnDestroy {
   private _subscriptions: Subscription[] = [];
 
   constructor(private authenticationService: AuthenticationService,
-              private ticketService: TicketService,
               private router: Router) {
   }
 
