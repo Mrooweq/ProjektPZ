@@ -39,6 +39,7 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
       firstDayOfWeek: 'mo',
       sunHighlight: true,
       inline: false,
+      showClearDateBtn: false,
       showDateFormatPlaceholder: true,
       disableUntil: {
         year: this._todayDate.getFullYear(),
