@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from "@angular/core";
 import {Observable} from "rxjs";
-import {Http, Response, URLSearchParams} from "@angular/http";
+import {Http, Response, URLSearchParams, Headers} from "@angular/http";
 import {Flight} from "../_mocks/flight";
 import {User} from "../_mocks/user";
 import {AuthenticationService} from "./authentication.service";
@@ -30,31 +30,25 @@ export class TicketService {
       .catch(this.handleError.bind(this));
   }
 
-  getArchivalTickets(): Observable<Flight[]> {
-    let params = new URLSearchParams();
-    let user = JSON.parse(localStorage.getItem('currentUser'));
-    params.set('username', user.user.username);
-    params.set('token', user.tokenContainer.token);
+  getArchivalTickets() {
+    let body = JSON.stringify({'username': JSON.parse(localStorage.getItem('currentUser')).user.username});
 
-    return this.http.get(this.getArchival, {search: params})
+    return this.http.post(this.getArchival, body, this.authService.requestOptions())
       .map(res => {
-          let ticket = res.json();
-          if (res.status === 200)
-            this._archivalTickets = ticket;
-          return ticket;
+        let tickets = res.json();
+        if (res.status === 200) {
+          this._archivalTickets = tickets;
         }
-      )
-      .catch(this.handleError);
+        return tickets;
+      })
+      .catch(this.handleError.bind(this))
   }
 
-  private handleError(error: any) {
+  private
+  handleError(error: any) {
     let errorMsg;
-    if (error.status === 401) {
-      this.authService.logoutLocal();
-    }
     errorMsg = error.message ||
       `Oops! Error status: ` + error.status;
-
     return Observable.throw(errorMsg);
   }
 }

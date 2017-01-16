@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {TicketService} from "../../_services/tickets.service";
 
 @Component({
   selector: 'user-account',
@@ -8,8 +9,7 @@ import {Router} from "@angular/router";
 })
 
 export class UserAccount {
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router){}
 
   goBack(): void {
     this.router.navigate(['/']);
