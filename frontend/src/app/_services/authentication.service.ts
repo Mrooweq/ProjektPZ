@@ -9,6 +9,7 @@ export class AuthenticationService {
   private httpLoginUrl = 'api/login';
   private httpLogoutUrl = 'api/logout';
   private httpRegisterUrl = 'api/register';
+  private httpTokenValidation = 'api/validate';
   private loggedIn: boolean;
   private logger = new Subject<User>();
 
@@ -25,6 +26,14 @@ export class AuthenticationService {
       let headers = new Headers({'Authorization': currentUser.tokenContainer.token});
       return new RequestOptions({headers: headers});
     }
+  }
+
+  tokenValidation() {
+    let body = JSON.stringify({'username': JSON.parse(localStorage.getItem('currentUser')).user.username});
+
+    return this.http.post(this.httpTokenValidation, body, this.requestOptions())
+      .map(res => res.json())
+      .catch(this.handleError)
   }
 
   isCurrentUser() {
@@ -82,6 +91,8 @@ export class AuthenticationService {
 
   private handleError(error: any) {
     let errorMsg;
+    if (error.status === 401)
+      return Observable.throw(error.status);
     if (error.status === 500) {
       errorMsg = error.message ||
         error.status + `Internal Server Error`

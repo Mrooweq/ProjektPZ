@@ -4,6 +4,8 @@ package com.malinki.pz.bll;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.malinki.pz.dal.constants.Strings;
 import com.malinki.pz.lib.TicketResponseUVM;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -18,10 +20,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 public class EmailAndPdfService {
@@ -32,7 +31,7 @@ public class EmailAndPdfService {
     private String emailSMTPserver = "smtp.gmail.com";
     private String emailServerPort = "465";
     private String emailSubject = "Your Ticket";
-    private String emailBody = "Hello! \n You just buy ticket from MalinkiBooking. The ticket is attached in this sendEmail. Have a nice day!";
+    private String emailBody = "Hello! \n You just buy ticket from MalinkiBooking. The ticket is attached in this generareAndSendEmail. Have a nice day!";
     private String senderEmail = "malinkibooking@gmail.com";
 
     private String attachmentFileName = "ticket.pdf";
@@ -53,56 +52,75 @@ public class EmailAndPdfService {
         try {
             textBodyPart.setText(emailBody);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
         MimeMessage message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(senderEmail));
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
         try {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverEmail));
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
         try {
             message.setSubject(emailSubject);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
         MimeMultipart mimeMultipart = new MimeMultipart();
         try {
             mimeMultipart.addBodyPart(textBodyPart);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
         try {
             mimeMultipart.addBodyPart(pdfBodyPart);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
         try {
             message.setContent(mimeMultipart);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
         return message;
     }
 
-    public MimeBodyPart generatePdf(TicketResponseUVM ticketResponseUVM, HttpServletResponse response){
+    public ByteArrayOutputStream getOutputStream(TicketResponseUVM ticketResponseUVM){
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         TicketPDFCreator pdfCreator = new TicketPDFCreator(ticketResponseUVM);
 
         try {
             pdfCreator.generatePDF(outputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
+        return outputStream;
+    }
+
+    public PDFResponse generateResponse(ByteArrayOutputStream outputStream){
+        String pdfBase64String = null;
+        PDFResponse pdfResponse = new PDFResponse();
+
+        try {
+            pdfBase64String = StringUtils.newStringUtf8(Base64.encodeBase64(outputStream.toByteArray()));
+        } catch (Exception e) {
+            logger.log(Level.ERROR, e.getMessage());
+        }
+
+        pdfResponse.setPdf(pdfBase64String);
+
+        return pdfResponse;
+    }
+
+    public MimeBodyPart generatePdf(TicketResponseUVM ticketResponseUVM, ByteArrayOutputStream outputStream){
         receiverEmail = ticketResponseUVM.getEmail();
         byte[] bytes = outputStream.toByteArray();
 
@@ -112,35 +130,32 @@ public class EmailAndPdfService {
         try {
             pdfBodyPart.setDataHandler(new DataHandler(dataSource));
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
         try {
             pdfBodyPart.setFileName(attachmentFileName);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
-
-        SendFileToFront fileToFront = new SendFileToFront(outputStream);
-        fileToFront.doGet(response);
 
         FileOutputStream fos = null;
 
         try {
             fos = new FileOutputStream(new File(tempFileName));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
         try {
             outputStream.writeTo(fos);
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException e) {
+            logger.log(Level.ERROR, e.getMessage());
         } finally {
             try {
                 fos.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.ERROR, e.getMessage());
             }
         }
 
@@ -153,7 +168,7 @@ public class EmailAndPdfService {
         try {
             Transport.send(message);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
         finally {
 //            deleteTempFile();

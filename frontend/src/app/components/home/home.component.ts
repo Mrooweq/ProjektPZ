@@ -60,12 +60,14 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
   }
 
   submit(value: any) {
+    $('#searchButton').text('Searching...');
     this._subscriptions.push(this.searchService.getFlights(value).subscribe(
       () => {
         this.router.navigate(['/results']);
       },
       error => {
         console.log(error);
+        $('#searchButton').text('Search');
         this.makeForm();
         this.searchForm.controls['_class'].setValue(this._classes[0]);
       }
@@ -102,7 +104,6 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
 
   ngOnInit(): void {
     this.makeForm();
-
     this._subscriptions.push(this.searchService.getSourceAirport().subscribe(
       sources => {
         this._sources = sources;

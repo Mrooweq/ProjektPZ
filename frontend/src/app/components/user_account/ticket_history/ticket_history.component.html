@@ -1,5 +1,9 @@
 <h4 style="padding-bottom: 15px">
-  <span id="#formHeader" class="pointer dropdown-toggle" (click)="clicked()">History</span></h4>
+  <div class="btn-group dropup">
+    <span id="#formHeader" class="pointer dropdown-toggle" (click)="clicked()">History</span>
+  </div>
+</h4>
+<span class="halflings halflings-triangle-top"></span>
 <div class="history-content">
   <br>
   <ng-table [config]="config"
@@ -17,17 +21,6 @@
                   [rotate]="false"
                   (pageChange)="onChangeTable(config, $event)">
   </ngb-pagination>
-  <!--<ngb-pagination *ngIf="config.paging"-->
-  <!--class="pagination-sm"-->
-  <!--[(ngModel)]="page"-->
-  <!--[totalItems]="length"-->
-  <!--[itemsPerPage]="itemsPerPage"-->
-  <!--[maxSize]="maxSize"-->
-  <!--[boundaryLinks]="true"-->
-  <!--[rotate]="false"-->
-  <!--(pageChanged)="onChangeTable(config, $event)"-->
-  <!--(numPages)="numPages = $event">-->
-  <!--</ngb-pagination>-->
   <!--<pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>-->
 
 </div>

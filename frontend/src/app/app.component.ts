@@ -3,7 +3,6 @@ import {AuthenticationService} from "./_services/authentication.service";
 import {User} from "./_mocks/user";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
-import {TicketService} from "./_services/tickets.service";
 
 @Component({
   selector: 'my-app',
@@ -16,8 +15,10 @@ export class AppComponent implements OnInit,OnDestroy {
   private _subscriptions: Subscription[] = [];
 
   constructor(private authenticationService: AuthenticationService,
-              private ticketService: TicketService,
               private router: Router) {
+    if (JSON.parse(localStorage.getItem('currentUser'))) {
+      this.isTokenValid();
+    }
   }
 
   logout() {
@@ -31,7 +32,7 @@ export class AppComponent implements OnInit,OnDestroy {
     ));
   }
 
-  ngOnInit(): void {
+  loginUser() {
     if (this.authenticationService.isCurrentUser()) {
       let currentUser = JSON.parse(localStorage.getItem('currentUser'));
       this.activeUser = currentUser.user;
@@ -40,6 +41,22 @@ export class AppComponent implements OnInit,OnDestroy {
     this._subscriptions.push(this.authenticationService.isLoggedIn().subscribe(user => {
       this.activeUser = user;
     }));
+  }
+
+  isTokenValid() {
+    this.authenticationService.tokenValidation().subscribe(
+      () => {
+        this.loginUser();
+      },
+      error => {
+        if (error == 401)
+          this.authenticationService.logoutLocal();
+      }
+    );
+  }
+
+  ngOnInit(): void {
+    this.loginUser();
   }
 
   ngOnDestroy() {

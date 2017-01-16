@@ -26,11 +26,12 @@ public class TicketService {
     @Autowired
     private SendPDFByEmail sendPDFByEmail;
 
-    public void addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+    public PDFResponse addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("authorization");
 
         TicketRequestUVM ticket = parseToTicketUVM(requestBody);
         String username = ticket.getUsername();
+        PDFResponse pdfResponse = null;
 
 //        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
         boolean isUserValidatedProperly = true;
@@ -40,12 +41,14 @@ public class TicketService {
             response.setStatus(malinkiComplexResponse.getResult());
 
             TicketResponseUVM uvmResult = (TicketResponseUVM) malinkiComplexResponse.getUvmResult();
-            sendPdfByEmail(uvmResult, response);
+            pdfResponse = sendPdfByEmail(uvmResult);
         }
         else{
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             logger.log(Level.ERROR, Strings.USER_NOT_AUTHORIZED);
         }
+
+        return pdfResponse;
     }
 
     public List<TicketRequestUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
@@ -112,11 +115,15 @@ public class TicketService {
         return ticketRequestUVM;
     }
 
-    private void sendPdfByEmail(TicketResponseUVM uvmResult, HttpServletResponse response){
+    private PDFResponse sendPdfByEmail(TicketResponseUVM uvmResult){
+        PDFResponse pdfResponse = null;
+
         try {
-            sendPDFByEmail.sendEmail(uvmResult, response);
+            pdfResponse = sendPDFByEmail.generareAndSendEmail(uvmResult);
         } catch (Exception e) {
             logger.log(Level.ERROR, e.toString());
         }
+
+        return pdfResponse;
     }
 }

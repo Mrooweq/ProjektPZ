@@ -22,8 +22,8 @@ public class TicketController {
     private TicketService ticketService;
 
     @RequestMapping(value = "/buy", method = RequestMethod.POST)
-    public void addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
-        ticketService.addTicket(requestBody, request, response);
+    public PDFResponse addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+        return ticketService.addTicket(requestBody, request, response);
     }
 
     @RequestMapping(value = "/archival", method = RequestMethod.POST)

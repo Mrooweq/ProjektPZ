@@ -37,26 +37,25 @@ export class TicketHistory implements OnInit {
 
   clicked() {
     $('.history-content').slideToggle('slow');
+    $('.btn-group').toggleClass('dropup');
   }
 
   public ngOnInit(): void {
     this.ticketService.getArchivalTickets().subscribe(
-      data => {
-        console.log(data);
+      () => {
         this.ticketService.tickets().subscribe(
           data => {
-            console.log(data);
+            console.log(data)
           },
           error => {
             console.log(error);
           }
-        );
+        )
       },
       error => {
         console.log(error);
       }
     );
-
     this.onChangeTable(this.config, this.page);
   }
 
