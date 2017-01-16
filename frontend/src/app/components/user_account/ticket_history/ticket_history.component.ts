@@ -6,7 +6,7 @@ declare var $: JQueryStatic;
   selector: 'ticket-history',
   templateUrl: 'ticket_history.component.html',
 })
-export class TicketHistory implements OnInit,AfterViewInit {
+export class TicketHistory implements OnInit {
   public rows: Array<any> = [];
   public columns: Array<any> = [
     {title: 'Departure Date', name: 'departureDate', sort: 'asc'},
@@ -17,9 +17,8 @@ export class TicketHistory implements OnInit,AfterViewInit {
   ];
   public TableData: Array<any> = [];
   public page: number = 1;
-  public itemsPerPage: number = 5;
+  public itemsPerPage: number = 2;
   public maxSize: number = 5;
-  public numPages: number = 1;
   public length: number = 0;
 
   public config: any = {
@@ -38,18 +37,13 @@ export class TicketHistory implements OnInit,AfterViewInit {
   clicked() {
     $('.history-content').slideToggle('slow');
   }
-
-  ngAfterViewInit(): void {
-    $('.history-content').hide()
-  }
-
   public ngOnInit(): void {
-    this.onChangeTable(this.config);
+    this.onChangeTable(this.config,this.page);
   }
 
   public changePage(page: any, data: Array<any> = this.data): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    let start = (page - 1) * this.itemsPerPage;
+    let end = this.itemsPerPage > -1 ? (start + this.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
