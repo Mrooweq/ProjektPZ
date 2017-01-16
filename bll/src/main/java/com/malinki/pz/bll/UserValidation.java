@@ -5,13 +5,13 @@ import java.util.regex.Pattern;
 import com.malinki.pz.lib.UserUVM;
 
 public class UserValidation {
-	UserUVM user;
+	private UserUVM user;
 
 	public UserValidation(UserUVM user) {
 		this.user = user;
 	}
 
-	public boolean checkUser() {
+	public boolean validateUser() {
 		if (checkUsername(user.getUsername()) == false) {
 			return false;
 		} else if (checkPassword(user.getPassword()) == false) {
@@ -28,27 +28,27 @@ public class UserValidation {
 	}
 
 	private boolean checkUsername(String username) {
-		String patternUsername = "^[\\wąćęłńóśźżĄĘŁŃÓŚŹŻ\\d]{3,20}$";
+		String patternUsername = "^[A-Za-z0-9]{6,20}$";
 		return Pattern.matches(patternUsername, username);
 	}
 
 	private boolean checkPassword(String password) {
-		String patternPassword = "^[\\wąćęłńóśźżĄĘŁŃÓŚŹŻ\\d\\.-_!@#\\$%\\^&\\*()\\-_=\\+\\[\\]\\\\{\\}|;':\\\",./<>?]{3,20}$";
+		String patternPassword = "^[([a-zA-Z0-9]*[0-9]+[a-zA-Z0-9]*[A-Z]+[a-zA-Z0-9]*|[a-zA-Z0-9]*[A-Z]+[a-zA-Z0-9]*[0-9]+[a-zA-Z0-9]*)]{6,20}$";
 		return Pattern.matches(patternPassword, password);
 	}
 
 	private boolean checkFirstname(String firstname) {
-		String patternFirstname = "^[A-ZŁŻ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20}$";
+		String patternFirstname = "^[[A-Z][a-z]*]{1,20}$";
 		return Pattern.matches(patternFirstname, firstname);
 	}
 
 	private boolean checkLastname(String lastnamename) {
-		String patternLastname = "^[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20}((-|\\s)?[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20})?$";
+		String patternLastname = "^[[A-Z][a-z]*]{1,20}$";
 		return Pattern.matches(patternLastname, lastnamename);
 	}
 
 	private boolean checkEmail(String email) {
-		String patternEmail = "^[\\w]+(?:\\.[\\w]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+		String patternEmail = "^[[a-z0-9!#$%&'*+\\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*]{5,50}$";
 		return Pattern.matches(patternEmail, email);
 	}
 }

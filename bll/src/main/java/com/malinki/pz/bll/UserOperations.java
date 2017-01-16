@@ -23,9 +23,12 @@ public class UserOperations implements IUserOperations {
 	public int registerUser(UserUVM user) {
 		UserValidation validation = new UserValidation(user);
 		MalinkiComplexResponse userResponse = new MalinkiComplexResponse();
-		if(validation.checkUser()) {
+
+		boolean isUserPositivelyValidated = validation.validateUser();
+
+		if(isUserPositivelyValidated)
 			userResponse = userRepository.registerUser(UserConverter.fromUserUVMToUserDTO(user));
-		}
+
 		return userResponse.getResult();
 	}
 

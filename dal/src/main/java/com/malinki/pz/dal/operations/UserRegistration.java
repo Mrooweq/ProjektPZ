@@ -39,7 +39,6 @@ public class UserRegistration extends DatabaseComplexResponseOperation {
 		else if(isUserPositivelyValidated) {
 			try{
 				((UserMapper)mapper).registerUser(user);
-				((UserMapper)mapper).commit();
 				databaseOperationResultEnum = DatabaseOperationResultEnum.USER_REGISTERED_SUCCESSFULLY;
 			} catch (Exception e){
 				logger.log(Level.ERROR, e.toString());

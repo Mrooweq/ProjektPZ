@@ -28,7 +28,9 @@ public interface FlightMapper extends Mapper {
 
     @Lang(XMLLanguageDriver.class)
     @Select("<script>" +
-            "SELECT Flight_Number AS flightNumber, departure_date AS departureDate, arrival_date AS arrivalDate, (base_price * Multiplier.Multiplier) AS price, Airline.name AS airlineName, src.Name AS \"From\", dest.Name AS \"To\", free_places AS freePlaces, Airline.name_Shortcut AS airlineShortcut FROM Flight, Airline, Airport src, Airport dest, Multiplier, \"CLASS\" " +
+            "SELECT Flight_Number AS flightNumber, departure_date AS departureDate, arrival_date AS arrivalDate, (base_price * Multiplier.Multiplier * #{numberOfPassengers}) AS price, " +
+            "Airline.name AS airlineName, src.Name AS \"From\", dest.Name AS \"To\", free_places AS freePlaces, Airline.name_Shortcut AS airlineShortcut FROM Flight, " +
+            "Airline, Airport src, Airport dest, Multiplier, \"CLASS\" " +
             "WHERE " +
             "Flight.ID_Airline = Airline.ID_Airline AND Flight.ID_Airline = Airline.ID_Airline " +
             "AND src.ID_AIRPORT = \"From\" AND dest.ID_AIRPORT = \"To\" " +
@@ -40,7 +42,7 @@ public interface FlightMapper extends Mapper {
             "    AND dest.NAME = #{to}" +
             " </if>" +
             "<if test=\"dateStart != null and dateEnd != null\">" +
-            "    AND TO_CHAR (Departure_Date, 'YYYY-MM-DD') BETWEEN #{dateStart} AND #{dateEnd} " +
+            "    AND TO_CHAR (Departure_Date, 'YYYY-MM-DD') >= #{dateStart} AND TO_CHAR (Arrival_Date, 'YYYY-MM-DD') &lt;= #{dateEnd} " +
             " </if>" +
             "<if test=\"_class != null\">" +
             "   AND \"CLASS\".Name = #{_class}" +
@@ -53,8 +55,4 @@ public interface FlightMapper extends Mapper {
 
     @Select("SELECT Name FROM Class")
     ArrayList<String> getClasses();
-
-
-    @Select("COMMIT")
-    void commit();
 }

@@ -21,7 +21,7 @@ public interface TicketMapper extends Mapper {
     int addTicket(TicketRequestDTO ticket);
 
     @Select("select Name_Shortcut as airlineShortcut, Flight_number as flightNumber, departure_date as departureDate, arrival_date as arrivalDate, " +
-            "(base_price * multiplier) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, Airline.Name as airline, src.Name as \"from\", dest.Name as \"to\" " +
+            "(base_price * multiplier * Number_Of_Places) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, Airline.Name as airline, src.Name as \"from\", dest.Name as \"to\" " +
             "from Ticket, Flight, Class, \"User\", Airline, Multiplier, Airport src, Airport dest " +
             "where Ticket.ID_FLIGHT = Flight.ID_FLIGHT " +
             "and Ticket.ID_CLASS = Class.ID_CLASS  " +
@@ -33,20 +33,18 @@ public interface TicketMapper extends Mapper {
             "and Username = #{username}")
     List <TicketResponseDTO> getArchivalTickets(String username);
 
-    @Select("select Name_Shortcut as airlineShortcut, Flight_number as flightNumber, departure_date as departureDate, arrival_date as arrivalDate, " +
-            "(base_price * multiplier) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, Airline.Name as airline, src.Name as \"from\", dest.Name as \"to\" " +
-            "from Ticket, Flight, Class, \"User\", Airline, Multiplier, Airport src, Airport dest " +
-            "where Ticket.ID_FLIGHT = Flight.ID_FLIGHT " +
-            "and Ticket.ID_CLASS = Class.ID_CLASS  " +
-            "and Ticket.ID_USER = \"User\".ID_USER " +
-            "and Flight.ID_AIRLINE = Airline.ID_AIRLINE " +
-            "and Multiplier.ID_MULTIPLIER = Class.ID_MULTIPLIER " +
-            "and Flight.\"From\" = src.ID_AIRPORT " +
-            "and Flight.\"To\" = dest.ID_AIRPORT " +
-            "and ID_Ticket = #{id}")
+    @Select("    select ID_Ticket as id, Airline.Name as airline, Name_Shortcut as airlineShortcut, Flight_number as flightNumber,\n" +
+            "    src.Name as \"from\", dest.Name as \"to\",\n" +
+            "    departure_date as departureDate, arrival_date as arrivalDate,\n" +
+            "    (base_price * multiplier * Number_Of_Places) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, firstname, lastname, email\n" +
+            "    from Ticket, Flight, Class, \"User\", Airline, Multiplier, Airport src, Airport dest\n" +
+            "    where Ticket.ID_FLIGHT = Flight.ID_FLIGHT\n" +
+            "    and Ticket.ID_CLASS = Class.ID_CLASS\n" +
+            "    and Ticket.ID_USER = \"User\".ID_USER\n" +
+            "    and Flight.ID_AIRLINE = Airline.ID_AIRLINE\n" +
+            "    and Multiplier.ID_MULTIPLIER = Class.ID_MULTIPLIER\n" +
+            "    and Flight.\"From\" = src.ID_AIRPORT\n" +
+            "    and Flight.\"To\" = dest.ID_AIRPORT\n" +
+            "    and ID_Ticket = #{id}")
     TicketResponseDTO getTicketByID(int id);
-
-
-    @Select("COMMIT")
-    void commit();
 }

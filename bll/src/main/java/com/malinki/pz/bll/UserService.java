@@ -8,6 +8,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -38,6 +39,18 @@ public class UserService {
 
     public void logout(String requestBody){
         userOperations.logoutUser(parseToUserUVM(requestBody));
+    }
+
+    public void validateUserByToken(String requestBody, HttpServletRequest request, HttpServletResponse response){
+        UserUVM userUVM = parseToUserUVM(requestBody);
+        String token = request.getHeader("authorization");
+
+        boolean result = userOperations.validateUserByToken(userUVM.getUsername(), token);
+
+        if(result)
+            response.setStatus(HttpServletResponse.SC_OK);
+        else
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 
     private UserUVM parseToUserUVM(String requestBody) {

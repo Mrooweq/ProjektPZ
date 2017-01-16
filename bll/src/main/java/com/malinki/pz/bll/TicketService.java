@@ -54,7 +54,8 @@ public class TicketService {
         UserUVM userUVM = parseToUserUVM(requestBody);
         String username = userUVM.getUsername();
 
-        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
+//        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
+        boolean isUserValidatedProperly = true;
 
         MalinkiComplexResponse malinkiSimpleResponse;
 
@@ -89,22 +90,22 @@ public class TicketService {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        BuyTicketResponse buyTicketResponse = null;
+        BuyTicketRequest buyTicketRequest = null;
 
         try {
-            buyTicketResponse = mapper.readValue(requestBody, BuyTicketResponse.class);
+            buyTicketRequest = mapper.readValue(requestBody, BuyTicketRequest.class);
         } catch (IOException e) {
             logger.log(Level.ERROR, e.toString());
         }
 
-        FlightUVM flightUVM = buyTicketResponse.getFlight();
-        UserUVM userUVM = buyTicketResponse.getUser();
-        FlightClass flightClass = buyTicketResponse.getFlightClass();
+        FlightUVM flightUVM = buyTicketRequest.getFlight();
+        UserUVM userUVM = buyTicketRequest.getUser();
 
         TicketRequestUVM ticketRequestUVM = new TicketRequestUVM.TicketUVMBuilder()
                 .flightNumber(flightUVM.getFlightNumber())
                 .airlineShortcut(flightUVM.getAirlineShortcut())
-                .flightClass("VIP")   // do usuniecia
+                .flightClass(flightUVM.get_class())
+                .numberOfPlaces(flightUVM.getNumberOfPlaces())
                 .username(userUVM.getUsername())
                 .build();
 

@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 
 public abstract class DatabaseSimpleResponseOperation <T extends Mapper> extends DatabaseOperation {
-    private Logger logger = Logger.getLogger(DatabaseSimpleResponseOperation.class);
     protected T mapper;
     private Class<T> mapperType;
 

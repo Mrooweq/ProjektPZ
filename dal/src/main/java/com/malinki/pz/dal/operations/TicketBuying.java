@@ -27,8 +27,6 @@ public class TicketBuying extends DatabaseComplexResponseOperation {
 
         try{
             ((TicketMapper)mapper).addTicket(ticket);
-            ((TicketMapper)mapper).commit();
-
             ticketResponseDTO = ((TicketMapper) mapper).getTicketByID(ticket.getId());
 
             databaseOperationResultEnum = DatabaseOperationResultEnum.TICKET_BOUGHT_SUCCESSFULLY;

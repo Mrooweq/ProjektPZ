@@ -1,5 +1,6 @@
 package com.malinki.pz.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.malinki.pz.bll.*;
@@ -29,5 +30,10 @@ public class UserController {
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public void logout(@RequestBody String requestBody) {
 		userService.logout(requestBody);
+	}
+
+	@RequestMapping(value = "/validate", method = RequestMethod.POST)
+	public void validateUserByToken(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+		userService.validateUserByToken(requestBody, request, response);
 	}
 }

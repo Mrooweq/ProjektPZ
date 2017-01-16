@@ -16,6 +16,9 @@ export class AppComponent implements OnInit,OnDestroy {
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router) {
+    if (JSON.parse(localStorage.getItem('currentUser'))) {
+      this.isTokenValid();
+    }
   }
 
   logout() {
@@ -53,10 +56,7 @@ export class AppComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
-    if (JSON.parse(localStorage.getItem('currentUser')))
-      this.isTokenValid();
-    else
-      this.loginUser();
+    this.loginUser();
   }
 
   ngOnDestroy() {

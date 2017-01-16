@@ -24,6 +24,9 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
 
   constructor(private authenticationService: AuthenticationService,
               private ticketService: TicketService) {
+    if (JSON.parse(localStorage.getItem('currentUser'))) {
+      this.isTokenValid();
+    }
     this.isLink.emit(false);
   }
 
@@ -42,6 +45,29 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
     ))
   }
 
+  loginUser() {
+    if (this.authenticationService.isCurrentUser()) {
+      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.loggedUser = currentUser.user;
+    }
+
+    this._subscriptions.push(this.authenticationService.isLoggedIn().subscribe(user => {
+      this.loggedUser = user;
+    }));
+  }
+
+  isTokenValid() {
+    this.authenticationService.tokenValidation().subscribe(
+      () => {
+        this.loginUser();
+      },
+      error => {
+        if (error == 401)
+          this.authenticationService.logoutLocal();
+      }
+    );
+  }
+
   ngAfterViewChecked() {
     $('.log_in_button').click(function () {
       $('#myModal').modal('show');
@@ -49,13 +75,7 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
   }
 
   ngOnInit(): void {
-    if (this.authenticationService.isCurrentUser()) {
-      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      this.loggedUser = currentUser.user;
-    }
-    this._subscriptions.push(this.authenticationService.isLoggedIn().subscribe(user => {
-      this.loggedUser = user;
-    }));
+    this.loginUser();
   }
 
   ngOnDestroy() {
