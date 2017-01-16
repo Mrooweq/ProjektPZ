@@ -24,9 +24,6 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
 
   constructor(private authenticationService: AuthenticationService,
               private ticketService: TicketService) {
-    if (JSON.parse(localStorage.getItem('currentUser'))) {
-      this.isTokenValid();
-    }
     this.isLink.emit(false);
   }
 
@@ -54,18 +51,6 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
     this._subscriptions.push(this.authenticationService.isLoggedIn().subscribe(user => {
       this.loggedUser = user;
     }));
-  }
-
-  isTokenValid() {
-    this.authenticationService.tokenValidation().subscribe(
-      () => {
-        this.loginUser();
-      },
-      error => {
-        if (error == 401)
-          this.authenticationService.logoutLocal();
-      }
-    );
   }
 
   ngAfterViewChecked() {

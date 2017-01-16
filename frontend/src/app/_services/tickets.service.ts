@@ -47,6 +47,8 @@ export class TicketService {
   private
   handleError(error: any) {
     let errorMsg;
+    if (error.status === 401)
+      this.authService.logoutLocal();
     errorMsg = error.message ||
       `Oops! Error status: ` + error.status;
     return Observable.throw(errorMsg);
