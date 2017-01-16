@@ -15,8 +15,20 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewInit {
   private _isLink: boolean = false;
   private body: string;
   private _subscriptions: Subscription[] = [];
+  private travelers: number;
+  private _class: string;
 
   constructor(private searchService: SearchService) {
+    searchService.travelers().subscribe(
+      travelers => {
+        this.travelers = travelers;
+      }
+    );
+    searchService.class().subscribe(
+      _class => {
+        this._class = _class;
+      }
+    );
   }
 
   ngAfterViewInit(): void {
@@ -34,7 +46,10 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewInit {
   ngOnInit(): void {
     this._flights = [];
     this._subscriptions.push(this.searchService.flights().subscribe(flights => {
-      this._flights = flights;
+      for (let flight of flights) {
+        this._flights.push(new Flight(flight.airlineName, flight.airlineShortcut, flight.price, flight.departureDate,
+          flight.arrivalDate, flight.flightNumber, flight.from, flight.to, this._class, this.travelers));
+      }
     }));
   }
 

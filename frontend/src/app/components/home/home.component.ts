@@ -8,7 +8,8 @@ import {DatePipe} from "@angular/common";
 @Component({
   selector: 'home',
   templateUrl: 'home.component.html',
-  styleUrls: ['home.component.css']
+  styleUrls: ['home.component.css'],
+  providers: [DatePipe]
 })
 export class Home implements OnInit,OnDestroy,AfterViewInit {
   private searchForm: FormGroup;
