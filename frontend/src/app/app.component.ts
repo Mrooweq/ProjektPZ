@@ -29,7 +29,7 @@ export class AppComponent implements OnInit,OnDestroy {
     ));
   }
 
-  ngOnInit(): void {
+  loginUser() {
     if (this.authenticationService.isCurrentUser()) {
       let currentUser = JSON.parse(localStorage.getItem('currentUser'));
       this.activeUser = currentUser.user;
@@ -38,6 +38,25 @@ export class AppComponent implements OnInit,OnDestroy {
     this._subscriptions.push(this.authenticationService.isLoggedIn().subscribe(user => {
       this.activeUser = user;
     }));
+  }
+
+  isTokenValid() {
+    this.authenticationService.tokenValidation().subscribe(
+      () => {
+        this.loginUser();
+      },
+      error => {
+        if (error == 401)
+          this.authenticationService.logoutLocal();
+      }
+    );
+  }
+
+  ngOnInit(): void {
+    if (JSON.parse(localStorage.getItem('currentUser')))
+      this.isTokenValid();
+    else
+      this.loginUser();
   }
 
   ngOnDestroy() {
