@@ -42,7 +42,7 @@ public interface FlightMapper extends Mapper {
             "    AND dest.NAME = #{to}" +
             " </if>" +
             "<if test=\"dateStart != null and dateEnd != null\">" +
-            "    AND TO_CHAR (Departure_Date, 'YYYY-MM-DD') BETWEEN #{dateStart} AND #{dateEnd} " +
+            "    AND TO_CHAR (Departure_Date, 'YYYY-MM-DD') >= #{dateStart} AND TO_CHAR (Arrival_Date, 'YYYY-MM-DD') &lt;= #{dateEnd} " +
             " </if>" +
             "<if test=\"_class != null\">" +
             "   AND \"CLASS\".Name = #{_class}" +
