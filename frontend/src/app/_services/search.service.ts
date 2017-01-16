@@ -5,16 +5,16 @@ import {Flight} from "../_mocks/flight";
 
 @Injectable()
 export class SearchService {
-private flightsUrl = 'api/flights';
-private srcUrl = 'api/src';
-private destUrl = 'api/dest';
-private classesUrl = 'api/classes';
-private _travelers: number;
-private _class: string;
+  private flightsUrl = 'api/flights';
+  private srcUrl = 'api/src';
+  private destUrl = 'api/dest';
+  private classesUrl = 'api/classes';
+  private _travelers: number;
+  private _class: string;
 
-private _flights: Flight[] = [];
+  private _flights: Flight[] = [];
 
-constructor(private http: Http) {
+  constructor(private http: Http) {
   }
 
   travelers(): Observable<number>{
@@ -69,8 +69,8 @@ constructor(private http: Http) {
             this._flights = flights;
           return flights;
         }
-)
-.catch(this.handleError);
+      )
+      .catch(this.handleError);
   }
 
   private handleError(error: any) {

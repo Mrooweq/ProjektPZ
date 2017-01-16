@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {TableData} from './table-data';
 import {TicketService} from "../../../_services/tickets.service";
 declare var $: JQueryStatic;
 
@@ -14,11 +13,11 @@ export class TicketHistory implements OnInit {
     {title: 'Arrival Date', name: 'arrivalDate', sort: false},
     {title: 'From', name: 'from', sort: false},
     {title: 'To', name: 'to', sort: false},
-    {title: 'Ticket', name: 'ticket', sort: false},
+    //{title: 'Ticket', name: 'ticket', sort: false},
   ];
   public TableData: Array<any> = [];
   public page: number = 1;
-  public itemsPerPage: number = 2;
+  public itemsPerPage: number = 5;
   public maxSize: number = 5;
   public length: number = 0;
 
@@ -29,7 +28,7 @@ export class TicketHistory implements OnInit {
     className: ['table-striped', 'table-bordered']
   };
 
-  private data: Array<any> = TableData;
+  private data: Array<any> = this.TableData;
 
   public constructor(private ticketService: TicketService) {
     this.length = this.data.length;
@@ -45,7 +44,14 @@ export class TicketHistory implements OnInit {
       () => {
         this.ticketService.tickets().subscribe(
           data => {
-            console.log(data)
+            for (let ticket of data) {
+              this.TableData.push({
+                "departureDate": ticket.departureDate, "arrivalDate": ticket.arrivalDate,
+                "from": ticket.from, "to": ticket.to
+              });
+              console.log(this.TableData);
+            }
+            this.onChangeTable(this.config, this.page);
           },
           error => {
             console.log(error);
@@ -56,7 +62,6 @@ export class TicketHistory implements OnInit {
         console.log(error);
       }
     );
-    this.onChangeTable(this.config, this.page);
   }
 
   public changePage(page: any, data: Array<any> = this.data): Array<any> {

@@ -7,13 +7,13 @@ import {AuthenticationService} from "./authentication.service";
 
 @Injectable()
 export class TicketService {
-private buyTicketsUrl = 'api/buy';
-private getArchival = 'api/archival';
+  private buyTicketsUrl = 'api/buy';
+  private getArchival = 'api/archival';
 
-private _archivalTickets: Flight[] = [];
+  private _archivalTickets: Flight[] = [];
 
 
-constructor(private http: Http,
+  constructor(private http: Http,
               private authService: AuthenticationService) {
     this.authService = authService;
   }
@@ -47,6 +47,8 @@ constructor(private http: Http,
   private
   handleError(error: any) {
     let errorMsg;
+    if (error.status === 401)
+      this.authService.logoutLocal();
     errorMsg = error.message ||
       `Oops! Error status: ` + error.status;
     return Observable.throw(errorMsg);

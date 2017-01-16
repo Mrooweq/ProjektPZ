@@ -6,14 +6,14 @@ import {User} from "../_mocks/user";
 
 @Injectable()
 export class AuthenticationService {
-private httpLoginUrl = 'api/login';
-private httpLogoutUrl = 'api/logout';
-private httpRegisterUrl = 'api/register';
-private httpTokenValidation = 'api/validate';
-private loggedIn: boolean;
-private logger = new Subject<User>();
+  private httpLoginUrl = 'api/login';
+  private httpLogoutUrl = 'api/logout';
+  private httpRegisterUrl = 'api/register';
+  private httpTokenValidation = 'api/validate';
+  private loggedIn: boolean;
+  private logger = new Subject<User>();
 
-constructor(private http: Http) {
+  constructor(private http: Http) {
     if (localStorage.getItem('currentUser'))
       this.loggedIn = true;
     else
