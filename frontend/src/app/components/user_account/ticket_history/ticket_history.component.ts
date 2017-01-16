@@ -1,15 +1,15 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TableData} from './table-data';
+import {TicketService} from "../../../_services/tickets.service";
 declare var $: JQueryStatic;
 
 @Component({
   selector: 'ticket-history',
   templateUrl: 'ticket_history.component.html',
 })
-export class TicketHistory implements OnInit,AfterViewInit {
+export class TicketHistory implements OnInit {
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    {title: 'Id', name: 'id', sort: 'asc'},
     {title: 'Departure Date', name: 'departureDate', sort: false},
     {title: 'Arrival Date', name: 'arrivalDate', sort: false},
     {title: 'From', name: 'from', sort: false},
@@ -18,9 +18,8 @@ export class TicketHistory implements OnInit,AfterViewInit {
   ];
   public TableData: Array<any> = [];
   public page: number = 1;
-  public itemsPerPage: number = 5;
+  public itemsPerPage: number = 2;
   public maxSize: number = 5;
-  public numPages: number = 1;
   public length: number = 0;
 
   public config: any = {
@@ -32,26 +31,38 @@ export class TicketHistory implements OnInit,AfterViewInit {
 
   private data: Array<any> = TableData;
 
-  public constructor() {
+  public constructor(private ticketService: TicketService) {
     this.length = this.data.length;
   }
 
-  historyClicked() {
-    console.log('hi');
+  clicked() {
     $('.history-content').slideToggle('slow');
   }
 
-  ngAfterViewInit(): void {
-    $('.history-content').hide()
-  }
-
   public ngOnInit(): void {
-    this.onChangeTable(this.config);
+    this.ticketService.getArchivalTickets().subscribe(
+      data => {
+        console.log(data);
+        this.ticketService.tickets().subscribe(
+          data => {
+            console.log(data);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+    this.onChangeTable(this.config, this.page);
   }
 
   public changePage(page: any, data: Array<any> = this.data): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    let start = (page - 1) * this.itemsPerPage;
+    let end = this.itemsPerPage > -1 ? (start + this.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 

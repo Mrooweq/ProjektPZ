@@ -11,7 +11,7 @@ public class UserValidation {
 		this.user = user;
 	}
 
-	public boolean checkUser() {
+	public boolean validateUser() {
 		if (checkUsername(user.getUsername()) == false) {
 			return false;
 		} else if (checkPassword(user.getPassword()) == false) {

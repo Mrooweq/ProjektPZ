@@ -1,21 +1,23 @@
 <h4 style="padding-bottom: 15px">
-  <span id="#formHeader" class="pointer dropdown-toggle" (click)="historyClicked()">History</span></h4>
+  <span id="#formHeader" class="pointer dropdown-toggle" (click)="clicked()">History</span></h4>
 <div class="history-content">
-  <div class="row">
-    <div class="col-md-4">
-      <input *ngIf="config.filtering" placeholder="Filter all columns"
-             [ngTableFiltering]="config.filtering"
-             class="form-control"
-             (tableChanged)="onChangeTable(config)"/>
-    </div>
-  </div>
   <br>
   <ng-table [config]="config"
             (tableChanged)="onChangeTable(config)"
             (cellClicked)="onCellClick($event)"
             [rows]="rows" [columns]="columns">
   </ng-table>
-  <!--<pagination *ngIf="config.paging"-->
+  <ngb-pagination *ngIf="config.paging"
+                  class="pagination-sm"
+                  [(page)]="page"
+                  [collectionSize]="length"
+                  [maxSize]="maxSize"
+                  [pageSize]="itemsPerPage"
+                  [boundaryLinks]="true"
+                  [rotate]="false"
+                  (pageChange)="onChangeTable(config, $event)">
+  </ngb-pagination>
+  <!--<ngb-pagination *ngIf="config.paging"-->
   <!--class="pagination-sm"-->
   <!--[(ngModel)]="page"-->
   <!--[totalItems]="length"-->
@@ -25,7 +27,7 @@
   <!--[rotate]="false"-->
   <!--(pageChanged)="onChangeTable(config, $event)"-->
   <!--(numPages)="numPages = $event">-->
-  <!--</pagination>-->
+  <!--</ngb-pagination>-->
   <!--<pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>-->
 
 </div>

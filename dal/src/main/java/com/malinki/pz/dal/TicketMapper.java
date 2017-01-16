@@ -21,7 +21,7 @@ public interface TicketMapper extends Mapper {
     int addTicket(TicketRequestDTO ticket);
 
     @Select("select Name_Shortcut as airlineShortcut, Flight_number as flightNumber, departure_date as departureDate, arrival_date as arrivalDate, " +
-            "(base_price * multiplier) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, Airline.Name as airline, src.Name as \"from\", dest.Name as \"to\" " +
+            "(base_price * multiplier * Number_Of_Places) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, Airline.Name as airline, src.Name as \"from\", dest.Name as \"to\" " +
             "from Ticket, Flight, Class, \"User\", Airline, Multiplier, Airport src, Airport dest " +
             "where Ticket.ID_FLIGHT = Flight.ID_FLIGHT " +
             "and Ticket.ID_CLASS = Class.ID_CLASS  " +
@@ -36,7 +36,7 @@ public interface TicketMapper extends Mapper {
     @Select("    select ID_Ticket as id, Airline.Name as airline, Name_Shortcut as airlineShortcut, Flight_number as flightNumber,\n" +
             "    src.Name as \"from\", dest.Name as \"to\",\n" +
             "    departure_date as departureDate, arrival_date as arrivalDate,\n" +
-            "    (base_price * multiplier) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, firstname, lastname, email\n" +
+            "    (base_price * multiplier * Number_Of_Places) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, firstname, lastname, email\n" +
             "    from Ticket, Flight, Class, \"User\", Airline, Multiplier, Airport src, Airport dest\n" +
             "    where Ticket.ID_FLIGHT = Flight.ID_FLIGHT\n" +
             "    and Ticket.ID_CLASS = Class.ID_CLASS\n" +

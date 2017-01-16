@@ -1,9 +1,8 @@
 package com.malinki.pz.lib;
 
-public class BuyTicketResponse {
+public class BuyTicketRequest {
     private FlightUVM flight;
     private UserUVM user;
-    private FlightClass flightClass;
 
     public FlightUVM getFlight() {
         return flight;
@@ -19,13 +18,5 @@ public class BuyTicketResponse {
 
     public void setUser(UserUVM user) {
         this.user = user;
-    }
-
-    public FlightClass getFlightClass() {
-        return flightClass;
-    }
-
-    public void setFlightClass(FlightClass flightClass) {
-        this.flightClass = flightClass;
     }
 }

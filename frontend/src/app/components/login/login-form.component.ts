@@ -1,4 +1,4 @@
-import {Component, OnDestroy, AfterViewInit, AfterViewChecked} from '@angular/core';
+import {Component, OnDestroy, AfterViewInit} from '@angular/core';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";

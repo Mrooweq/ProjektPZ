@@ -8,7 +8,8 @@ import {DatePipe} from "@angular/common";
 @Component({
   selector: 'home',
   templateUrl: 'home.component.html',
-  styleUrls: ['home.component.css']
+  styleUrls: ['home.component.css'],
+  providers: [DatePipe]
 })
 export class Home implements OnInit,OnDestroy,AfterViewInit {
   private searchForm: FormGroup;
@@ -38,6 +39,7 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
       firstDayOfWeek: 'mo',
       sunHighlight: true,
       inline: false,
+      showClearDateBtn: false,
       showDateFormatPlaceholder: true,
       disableUntil: {
         year: this._todayDate.getFullYear(),
@@ -84,7 +86,6 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
   onDateChanged(value: any, name: String) {
     if (name == 'start') {
       this.searchForm.controls['start'].setValue(value.formatted);
-      console.log(value);
     }
     if (name == 'end') {
       this.searchForm.controls['end'].setValue(value.formatted);

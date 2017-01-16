@@ -1,40 +1,10 @@
 <div class="container body form-bordered">
   <div class="container" style="padding: 10px">
-    <div *ngIf="_flights?.length > 0">
-      <div id="flight" *ngFor="let flight of _flights" class="container content">
-        <div class="row main-info">
-          <div class="col-md-2 airline" style="margin-top: 15px">{{flight.airlineName}}</div>
-          <div class="col-md-8" style="margin-top: 15px">
-            <div class="col-xs-4" style="text-align: center">
-              <div class="date">{{flight.departureDate}}</div>
-              <div class="country">{{flight.from}}</div>
-            </div>
-            <div class="col-xs-4" style="text-align: center">
-              <div class="arrow"></div>
-            </div>
-            <div class="col-xs-4" style="text-align: center">
-              <div class="date">{{flight.arrivalDate}}</div>
-              <div class="country">{{flight.to}}</div>
-            </div>
-          </div>
-          <div class="col-md-2"></div>
-        </div>
-        <div class="row float-xs-right price">
-          <span style="margin-right: 5px">Price: {{flight.price}} €</span>
-          <button *ngIf="loggedUser" class="btn btn-primary buy_button" (click)="buyTicket(flight)">
-            Buy
-          </button>
-          <button *ngIf="!loggedUser" class="btn btn-primary log_in_button">
-            Log In to buy
-          </button>
-        </div>
-      </div>
+    <div *ngIf="_isLink">
+      <ticket-info [linkBody]="body"></ticket-info>
     </div>
-    <div class="not_found container" *ngIf="_flights?.length <= 0">
-      <div class="not_found_content">
-        <p style="font-size: 24px">Sorry</p>
-        <p>Results not found !</p>
-      </div>
+    <div *ngIf="!_isLink">
+      <flights [flights]="_flights" (isLink)="_isLink = $event" (body)="body = $event"></flights>
     </div>
   </div>
 </div>

@@ -10,6 +10,8 @@ public class FlightUVM {
     private String airlineShortcut;
     private String from;
     private String to;
+    private String _class;
+    private int numberOfPlaces;
 
     public FlightUVM(){}
 
@@ -22,6 +24,24 @@ public class FlightUVM {
         this.from = builder.from;
         this.to = builder.to;
         this.airlineShortcut = builder.airlineShortcut;
+        this._class = builder._class;
+        this.numberOfPlaces = builder.numberOfPlaces;
+    }
+
+    public String get_class() {
+        return _class;
+    }
+
+    public void set_class(String _class) {
+        this._class = _class;
+    }
+
+    public int getNumberOfPlaces() {
+        return numberOfPlaces;
+    }
+
+    public void setNumberOfPlaces(int numberOfPlaces) {
+        this.numberOfPlaces = numberOfPlaces;
     }
 
     public int getFlightNumber() {
@@ -97,6 +117,8 @@ public class FlightUVM {
         private String from;
         private String to;
         private String airlineShortcut;
+        private String _class;
+        private int numberOfPlaces;
 
         public FlightUVM.FlightUVMBuilder flightNumber(int flightNumber) {
             this.flightNumber = flightNumber;
@@ -128,13 +150,23 @@ public class FlightUVM {
             return this;
         }
 
+        public FlightUVM.FlightUVMBuilder to(String to) {
+            this.to = to;
+            return this;
+        }
+
         public FlightUVM.FlightUVMBuilder airlineShortcut(String airlineShortcut) {
             this.airlineShortcut = airlineShortcut;
             return this;
         }
 
-        public FlightUVM.FlightUVMBuilder to(String to) {
-            this.to = to;
+        public FlightUVM.FlightUVMBuilder _class(String _class) {
+            this._class = _class;
+            return this;
+        }
+
+        public FlightUVM.FlightUVMBuilder numberOfPlaces(int numberOfPlaces) {
+            this.numberOfPlaces = numberOfPlaces;
             return this;
         }
 

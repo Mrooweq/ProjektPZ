@@ -28,7 +28,7 @@ public interface FlightMapper extends Mapper {
 
     @Lang(XMLLanguageDriver.class)
     @Select("<script>" +
-            "SELECT Flight_Number AS flightNumber, departure_date AS departureDate, arrival_date AS arrivalDate, (base_price * Multiplier.Multiplier) AS price, " +
+            "SELECT Flight_Number AS flightNumber, departure_date AS departureDate, arrival_date AS arrivalDate, (base_price * Multiplier.Multiplier * #{numberOfPassengers}) AS price, " +
             "Airline.name AS airlineName, src.Name AS \"From\", dest.Name AS \"To\", free_places AS freePlaces, Airline.name_Shortcut AS airlineShortcut FROM Flight, " +
             "Airline, Airport src, Airport dest, Multiplier, \"CLASS\" " +
             "WHERE " +
