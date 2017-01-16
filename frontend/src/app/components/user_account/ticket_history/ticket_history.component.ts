@@ -9,8 +9,7 @@ declare var $: JQueryStatic;
 export class TicketHistory implements OnInit,AfterViewInit {
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    {title: 'Id', name: 'id', sort: 'asc'},
-    {title: 'Departure Date', name: 'departureDate', sort: false},
+    {title: 'Departure Date', name: 'departureDate', sort: 'asc'},
     {title: 'Arrival Date', name: 'arrivalDate', sort: false},
     {title: 'From', name: 'from', sort: false},
     {title: 'To', name: 'to', sort: false},
