@@ -47,8 +47,4 @@ public interface TicketMapper extends Mapper {
             "    and Flight.\"To\" = dest.ID_AIRPORT\n" +
             "    and ID_Ticket = #{id}")
     TicketResponseDTO getTicketByID(int id);
-
-
-    @Select("COMMIT")
-    void commit();
 }

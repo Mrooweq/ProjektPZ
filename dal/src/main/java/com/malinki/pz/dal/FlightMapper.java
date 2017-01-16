@@ -55,7 +55,4 @@ public interface FlightMapper extends Mapper {
 
     @Select("SELECT Name FROM Class")
     ArrayList<String> getClasses();
-
-    @Select("COMMIT")
-    void commit();
 }
