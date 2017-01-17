@@ -27,10 +27,6 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
     this.isLink.emit(false);
   }
 
-  click(value: any) {
-    console.log("Value:", value);
-  }
-
   buyTicket(flight: Flight) {
     $('.buy_button').text('Loading...');
     $('.buy_button').attr('disabled', 'true');
