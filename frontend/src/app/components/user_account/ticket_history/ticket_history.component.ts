@@ -53,7 +53,6 @@ export class TicketHistory implements OnInit {
                 "to": ticket.to,
                 "ticket": '<a id="ticket" class="pointer" style="text-decoration: underline">ticket.pdf</a>'
               });
-              console.log(this.TableData);
             }
             this.onChangeTable(this.config, this.page);
           },
@@ -160,7 +159,7 @@ export class TicketHistory implements OnInit {
     console.log(data);
     if (data.column == 'ticket') {
       console.log('hi');
-      $('tbody tr').children().text('Loading');
+      $('tbody tr').children().hide();
     }
   }
 }

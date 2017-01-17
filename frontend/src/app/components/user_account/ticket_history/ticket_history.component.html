@@ -3,8 +3,7 @@
     <span id="#formHeader" class="pointer dropdown-toggle" (click)="clicked()">History</span>
   </div>
 </h4>
-<span class="halflings halflings-triangle-top"></span>
-<div class="history-content">
+<div class="history-content" style="margin-top: -20px">
   <br>
   <ng-table [config]="config"
             (tableChanged)="onChangeTable(config)"
