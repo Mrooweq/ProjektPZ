@@ -97,9 +97,8 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
   ngAfterViewInit(): void {
     $('#end').click(() => {
       let date = $('#start').text();
-      console.log(date);
 
-    })
+    });
   }
 
   ngOnInit(): void {

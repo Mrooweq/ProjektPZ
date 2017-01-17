@@ -1,3 +1,6 @@
+body{
+  background-color: #c2c4c6;
+}
 .navbar {
   z-index: 1000;
 }
@@ -32,7 +35,7 @@
 }
 
 .jumbotron {
-  background: #c2c4c6 url(../app/components/home/airplane_background.jpg) no-repeat center center;
+  background: #c2c4c6 url(BlihuYt.jpg) no-repeat center center;
 }
 
 #formHeader {
