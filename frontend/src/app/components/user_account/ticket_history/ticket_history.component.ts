@@ -39,6 +39,8 @@ export class TicketHistory implements OnInit {
   clicked() {
     if (this.TableData.length > 0)
       $('.history-content').slideToggle('slow');
+    else
+      $('.no-results').slideToggle('slow');
     $('.btn-group').toggleClass('dropup');
   }
 
