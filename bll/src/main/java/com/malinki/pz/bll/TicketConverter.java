@@ -54,6 +54,7 @@ public class TicketConverter {
                     .firstname(ticket.getFirstname())
                     .lastname(ticket.getLastname())
                     .email(ticket.getEmail())
+                    .logoPath(ticket.getLogoPath())
                     .build();
     }
 
@@ -76,6 +77,7 @@ public class TicketConverter {
                     .firstname(ticket.getFirstname())
                     .lastname(ticket.getLastname())
                     .email(ticket.getEmail())
+                    .logoPath(ticket.getLogoPath())
                     .build();
     }
 }

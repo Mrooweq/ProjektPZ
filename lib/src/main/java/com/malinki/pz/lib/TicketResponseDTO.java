@@ -16,6 +16,7 @@ public class TicketResponseDTO {
     private String firstname;
     private String lastname;
     private String email;
+    private String logoPath;
 
     public TicketResponseDTO(){}
 
@@ -34,6 +35,7 @@ public class TicketResponseDTO {
         this.firstname = builder.firstname;
         this.lastname = builder.lastname;
         this.email = builder.email;
+        this.logoPath = builder.logoPath;
     }
 
     public static class TicketResponseDTOBuilder {
@@ -51,6 +53,7 @@ public class TicketResponseDTO {
         private String firstname;
         private String lastname;
         private String email;
+        private String logoPath;
 
         public TicketResponseDTO.TicketResponseDTOBuilder id(int id) {
             this.id = id;
@@ -119,6 +122,11 @@ public class TicketResponseDTO {
 
         public TicketResponseDTO.TicketResponseDTOBuilder to(String to) {
             this.to = to;
+            return this;
+        }
+
+        public TicketResponseDTO.TicketResponseDTOBuilder logoPath(String logoPath) {
+            this.logoPath = logoPath;
             return this;
         }
 
@@ -237,5 +245,13 @@ public class TicketResponseDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
     }
 }

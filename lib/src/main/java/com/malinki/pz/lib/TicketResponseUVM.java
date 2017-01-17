@@ -16,6 +16,7 @@ public class TicketResponseUVM {
     private String firstname;
     private String lastname;
     private String email;
+    private String logoPath;
 
     public TicketResponseUVM(){}
 
@@ -34,6 +35,7 @@ public class TicketResponseUVM {
         this.firstname = builder.firstname;
         this.lastname = builder.lastname;
         this.email = builder.email;
+        this.logoPath = builder.logoPath;
     }
 
     public static class TicketResponseUVMBuilder {
@@ -51,6 +53,7 @@ public class TicketResponseUVM {
         private String firstname;
         private String lastname;
         private String email;
+        private String logoPath;
 
         public TicketResponseUVM.TicketResponseUVMBuilder id(int id) {
             this.id = id;
@@ -119,6 +122,11 @@ public class TicketResponseUVM {
 
         public TicketResponseUVM.TicketResponseUVMBuilder to(String to) {
             this.to = to;
+            return this;
+        }
+
+        public TicketResponseUVM.TicketResponseUVMBuilder logoPath(String logoPath) {
+            this.logoPath = logoPath;
             return this;
         }
 
@@ -237,5 +245,13 @@ public class TicketResponseUVM {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
     }
 }

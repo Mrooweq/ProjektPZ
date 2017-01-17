@@ -12,7 +12,7 @@ import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 public class UserRegistration extends DatabaseComplexResponseOperation {
 
 	private UserDTO user;
-	private Logger logger = Logger.getLogger(UserRegistration.class);
+	private final Logger logger = Logger.getLogger(UserRegistration.class);
 
 	private boolean isUserPositivelyValidated;
 	private boolean isLoginAlreadyUsed;

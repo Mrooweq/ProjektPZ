@@ -36,4 +36,13 @@ public class TicketOperations implements ITicketOperations {
         malinkiComplexResponse.setUvmResult(uvmResultList);
         return malinkiComplexResponse;
     }
+
+    @Override
+    public MalinkiComplexResponse getTicketByID(int id) {
+        MalinkiComplexResponse malinkiComplexResponse = ticketRepository.getTicketByID(id);
+        TicketResponseDTO dtoResult = (TicketResponseDTO) malinkiComplexResponse.getDtoResult();
+        TicketResponseUVM uvmResult = TicketConverter.fromTicketResponseDTOToTicketResponseUVM(dtoResult);
+        malinkiComplexResponse.setUvmResult(uvmResult);
+        return malinkiComplexResponse;
+    }
 }

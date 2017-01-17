@@ -25,6 +25,7 @@ import {Ng2TableModule} from 'ng2-table/ng2-table';
 import {EditAccount} from "./components/user_account/edit_account/edit_account.component";
 import {Flights} from "./components/search_results/flights/flights.component";
 import {TicketInfo} from "./components/search_results/ticket_info/tickets_info.component";
+import {PasswordValidator} from "./_validators/password.validator";
 
 @NgModule({
   imports: [

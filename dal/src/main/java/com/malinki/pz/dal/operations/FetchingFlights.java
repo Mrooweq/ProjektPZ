@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 public class FetchingFlights extends DatabaseComplexResponseOperation {
-    private Logger logger = Logger.getLogger(UserRegistration.class);
+    private final Logger logger = Logger.getLogger(UserRegistration.class);
     private FlightRequest flightRequest;
 
     public FetchingFlights(FlightRequest flightRequest){

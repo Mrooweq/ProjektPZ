@@ -27,7 +27,7 @@
                 <p *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
                   Password
                   is required</p>
-                <p *ngIf="loginForm.get('password').hasError('pattern') && loginForm.get('password').dirty">
+                <p *ngIf="loginForm.get('password').hasError('invalidPassword') && loginForm.get('password').dirty">
                   Invalid password</p>
               </div>
             </div>

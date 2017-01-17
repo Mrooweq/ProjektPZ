@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class DatabaseOperation {
-    private Logger logger = Logger.getLogger(DatabaseOperation.class);
+    private final Logger logger = Logger.getLogger(DatabaseOperation.class);
 
     protected DatabaseOperationResultEnum databaseOperationResultEnum;
 
@@ -112,6 +112,13 @@ public class DatabaseOperation {
                 result = HttpServletResponse.SC_OK;
                 break;
             case TICKETS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR:
+                result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+                break;
+
+            case TICKET_FOR_PDF_FETCHED_SUCCESSFULLY:
+                result = HttpServletResponse.SC_OK;
+                break;
+            case TICKET_FOR_PDF_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR:
                 result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
                 break;
 

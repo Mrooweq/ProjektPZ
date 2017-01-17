@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class UserService {
-    private Logger logger = Logger.getLogger(UserService.class);
+    private final Logger logger = Logger.getLogger(UserService.class);
 
     @Autowired
     private UserOperations userOperations;

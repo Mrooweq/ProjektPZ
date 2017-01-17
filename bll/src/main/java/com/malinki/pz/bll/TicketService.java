@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class TicketService {
-    private Logger logger = Logger.getLogger(UserService.class);
+    private final Logger logger = Logger.getLogger(UserService.class);
 
     @Autowired
     private TicketOperations ticketOperations;
@@ -23,32 +23,46 @@ public class TicketService {
     @Autowired
     private UserOperations userOperations;
 
-    @Autowired
-    private SendPDFByEmail sendPDFByEmail;
-
-    public void addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+    public PDFResponse addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("authorization");
 
-        TicketRequestUVM ticket = parseToTicketUVM(requestBody);
+        TicketRequestUVM ticket = parseToTicketRequesUVM(requestBody);
         String username = ticket.getUsername();
+        PDFResponse pdfResponse = null;
+        MalinkiComplexResponse malinkiComplexResponse = null;
 
 //        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
         boolean isUserValidatedProperly = true;
 
         if(isUserValidatedProperly){
-            MalinkiComplexResponse malinkiComplexResponse = ticketOperations.addTicket(ticket);
-            response.setStatus(malinkiComplexResponse.getResult());
+            malinkiComplexResponse = ticketOperations.addTicket(ticket);
 
             TicketResponseUVM uvmResult = (TicketResponseUVM) malinkiComplexResponse.getUvmResult();
-            sendPdfByEmail(uvmResult, response);
+            pdfResponse = generatePDF(uvmResult, true);
+
+            if(areBothResultsOk(malinkiComplexResponse, pdfResponse))
+                response.setStatus(HttpServletResponse.SC_OK);
+            else
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         else{
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             logger.log(Level.ERROR, Strings.USER_NOT_AUTHORIZED);
         }
+
+        return pdfResponse;
     }
 
-    public List<TicketRequestUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+    private boolean areBothResultsOk(MalinkiComplexResponse malinkiComplexResponse, PDFResponse pdfResponse){
+        int resultOk = HttpServletResponse.SC_OK;
+
+        return malinkiComplexResponse != null
+                && pdfResponse != null
+                && malinkiComplexResponse.getResult() == resultOk
+                && pdfResponse.getResult() == resultOk;
+    }
+
+    public List<TicketResponseUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("authorization");
 
         UserUVM userUVM = parseToUserUVM(requestBody);
@@ -68,7 +82,40 @@ public class TicketService {
             return null;
         }
 
-        return (List<TicketRequestUVM>) malinkiSimpleResponse.getUvmResult();
+        return (List<TicketResponseUVM>) malinkiSimpleResponse.getUvmResult();
+    }
+
+    public PDFResponse getPdfOfTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+        String token = request.getHeader("authorization");
+
+        FetchPdfForTicketRequest fetchPdfForTicketRequest = parseToTicketResponseUVM(requestBody);
+        String username = fetchPdfForTicketRequest.getUsername();
+
+        MalinkiComplexResponse malinkiComplexResponse;
+        PDFResponse pdfResponse;
+
+//        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
+        boolean isUserValidatedProperly = true;
+
+        if(isUserValidatedProperly){
+            int id = fetchPdfForTicketRequest.getTicket().getId();
+            malinkiComplexResponse = ticketOperations.getTicketByID(id);
+
+            TicketResponseUVM ticketResponseUVM = (TicketResponseUVM) malinkiComplexResponse.getUvmResult();
+
+            pdfResponse = generatePDF(ticketResponseUVM, false);
+
+            if(areBothResultsOk(malinkiComplexResponse, pdfResponse))
+                response.setStatus(HttpServletResponse.SC_OK);
+            else
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+        else{
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return null;
+        }
+
+        return pdfResponse;
     }
 
     private UserUVM parseToUserUVM(String requestBody) {
@@ -86,7 +133,22 @@ public class TicketService {
         return user;
     }
 
-    private TicketRequestUVM parseToTicketUVM(String requestBody) {
+    private FetchPdfForTicketRequest parseToTicketResponseUVM(String requestBody) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        FetchPdfForTicketRequest request = null;
+
+        try {
+            request = mapper.readValue(requestBody, FetchPdfForTicketRequest.class);
+        } catch (IOException e) {
+            logger.log(Level.ERROR, e.toString());
+        }
+
+        return request;
+    }
+
+    private TicketRequestUVM parseToTicketRequesUVM(String requestBody) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
@@ -112,11 +174,16 @@ public class TicketService {
         return ticketRequestUVM;
     }
 
-    private void sendPdfByEmail(TicketResponseUVM uvmResult, HttpServletResponse response){
+    private PDFResponse generatePDF(TicketResponseUVM uvmResult, boolean ifSend){
+        PDFResponse pdfResponse = null;
+        PDFGenerator pdfGenerator = new PDFGenerator();
+
         try {
-            sendPDFByEmail.sendEmail(uvmResult, response);
+            pdfResponse = pdfGenerator.generatePDF(uvmResult, ifSend);
         } catch (Exception e) {
             logger.log(Level.ERROR, e.toString());
         }
+
+        return pdfResponse;
     }
 }

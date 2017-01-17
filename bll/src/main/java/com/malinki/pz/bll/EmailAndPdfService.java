@@ -4,10 +4,10 @@ package com.malinki.pz.bll;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.malinki.pz.dal.constants.Strings;
 import com.malinki.pz.lib.TicketResponseUVM;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.stereotype.Service;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -18,29 +18,23 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 public class EmailAndPdfService {
-    private Logger logger = Logger.getLogger(EmailAndPdfService.class);
+    private final Logger logger = Logger.getLogger(EmailAndPdfService.class);
 
-    private String senderEmailID = "malinkibooking";
-    private String senderPassword = "znaczek6598";
-    private String emailSMTPserver = "smtp.gmail.com";
-    private String emailServerPort = "465";
-    private String emailSubject = "Your Ticket";
-    private String emailBody = "Hello! \n You just buy ticket from MalinkiBooking. The ticket is attached in this sendEmail. Have a nice day!";
-    private String senderEmail = "malinkibooking@gmail.com";
+    private final String senderEmailID = Strings.SENDER_EMAIL_ID;
+    private final String senderPassword = Strings.SENDER_PASSWORD;
+    private final String emailSMTPserver = Strings.EMAIL_SMTP_SERVER;
+    private final String emailServerPort = Strings.EMAIL_SERVER_PORT;
+    private final String emailSubject = Strings.EMAIL_SUBJECT;
+    private final String emailBody = Strings.EMAIL_MESSAGE;
+    private final String senderEmail = Strings.SENDER_EMAIL;
+    private final String attachmentFileName = Strings.ATTACHEMENT_FILE_NAME;
+    private final String tempFileName = Strings.TEMP_FILE_NAME;
 
-    private String attachmentFileName = "ticket.pdf";
-    private String tempFileName = "ticketNumber.pdf";
-
-    private String receiverEmail;
-
-    public MimeMessage generateEmail(MimeBodyPart pdfBodyPart){
+    public MimeMessage generateEmail(MimeBodyPart pdfBodyPart, String receiverEmail){
         Properties props = setConnectionSettings();
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -53,57 +47,76 @@ public class EmailAndPdfService {
         try {
             textBodyPart.setText(emailBody);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
         MimeMessage message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(senderEmail));
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
         try {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverEmail));
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
         try {
             message.setSubject(emailSubject);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
         MimeMultipart mimeMultipart = new MimeMultipart();
         try {
             mimeMultipart.addBodyPart(textBodyPart);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
         try {
             mimeMultipart.addBodyPart(pdfBodyPart);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
         try {
             message.setContent(mimeMultipart);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
         return message;
     }
 
-    public MimeBodyPart generatePdf(TicketResponseUVM ticketResponseUVM, HttpServletResponse response){
+    public ByteArrayOutputStream getOutputStream(TicketResponseUVM ticketResponseUVM){
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         TicketPDFCreator pdfCreator = new TicketPDFCreator(ticketResponseUVM);
 
         try {
             pdfCreator.generatePDF(outputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
-        receiverEmail = ticketResponseUVM.getEmail();
+        return outputStream;
+    }
+
+    public PDFResponse generateResponse(ByteArrayOutputStream outputStream){
+        String pdfBase64String = null;
+        PDFResponse pdfResponse = new PDFResponse();
+
+        try {
+            pdfBase64String = StringUtils.newStringUtf8(Base64.encodeBase64(outputStream.toByteArray()));
+            pdfResponse.setResult(HttpServletResponse.SC_OK);
+        } catch (Exception e) {
+            logger.log(Level.ERROR, e.getMessage());
+        }
+
+        pdfResponse.setPdf(pdfBase64String);
+
+        return pdfResponse;
+    }
+
+    public MimeBodyPart generatePdf(ByteArrayOutputStream outputStream){
         byte[] bytes = outputStream.toByteArray();
 
         DataSource dataSource = new ByteArrayDataSource(bytes, "application/pdf");
@@ -112,57 +125,53 @@ public class EmailAndPdfService {
         try {
             pdfBodyPart.setDataHandler(new DataHandler(dataSource));
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
         try {
             pdfBodyPart.setFileName(attachmentFileName);
         } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-
-        SendFileToFront fileToFront = new SendFileToFront(outputStream);
-        fileToFront.doGet(response);
-
-        FileOutputStream fos = null;
-
-        try {
-            fos = new FileOutputStream(new File(tempFileName));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            outputStream.writeTo(fos);
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            logger.log(Level.ERROR, e.getMessage());
         }
 
         return pdfBodyPart;
     }
 
+    public void createTempFile(ByteArrayOutputStream outputStream){
+        FileOutputStream fos = null;
+
+        try {
+            fos = new FileOutputStream(new File(tempFileName));
+        } catch (FileNotFoundException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        }
+
+        try {
+            outputStream.writeTo(fos);
+        } catch (IOException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                logger.log(Level.ERROR, e.getMessage());
+            }
+        }
+    }
+
     public void sendEmail(MimeMessage message){
-        logger.log(Level.INFO, "Sending");
+        logger.log(Level.INFO, "Sending email with PDF...");
 
         try {
             Transport.send(message);
         } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-        finally {
-//            deleteTempFile();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
-        logger.log(Level.INFO, "Done");
+        logger.log(Level.INFO, "Sending email with PDF finished successfully");
     }
 
-    private void deleteTempFile(){
+    public void deleteTempFile(){
         File file = new File(tempFileName);
         if(file.exists())
             file.delete();
@@ -178,7 +187,7 @@ public class EmailAndPdfService {
         props.put("mail.smtp.socketFactory.port", emailServerPort);
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.socketFactory.fallback", "false");
-        props.put("mail.debug", "true");
+        props.put("mail.debug", "false");
         props.put("mail.smtp.localhost", senderEmailID);
         props.put("mail.store.protocol", "pop3");
         props.put("mail.transport.protocol", "smtp");

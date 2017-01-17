@@ -13,7 +13,7 @@ import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 public class UserLogin extends DatabaseComplexResponseOperation {
 
 	private UserDTO userForLoginValidation;
-	private Logger logger = Logger.getLogger(UserLogin.class);
+	private final Logger logger = Logger.getLogger(UserLogin.class);
 
 	public UserLogin(UserDTO user) {
 		super(UserMapper.class);

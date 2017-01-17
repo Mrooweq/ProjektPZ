@@ -1,6 +1,7 @@
 package com.malinki.pz.dal.operations;
 
 import com.malinki.pz.dal.DatabaseComplexResponseOperation;
+import com.malinki.pz.dal.DatabaseSimpleResponseOperation;
 import com.malinki.pz.dal.TicketMapper;
 import com.malinki.pz.dal.constants.DatabaseOperationResultEnum;
 import com.malinki.pz.lib.*;
@@ -9,25 +10,25 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 
-public class FetchingArchivalTickets extends DatabaseComplexResponseOperation {
+public class FetchingOneTicketByID extends DatabaseComplexResponseOperation {
     private final Logger logger = Logger.getLogger(UserRegistration.class);
-    private String username;
+    private int id;
 
-    public FetchingArchivalTickets(String username){
+    public FetchingOneTicketByID(int id){
         super(TicketMapper.class);
-        this.username = username;
+        this.id = id;
     }
 
     @Override
     protected MalinkiComplexResponse mainAction() {
-        List<TicketResponseDTO> ticketRequestDTOResultList;
+        TicketResponseDTO ticketResponseDTO;
         MalinkiComplexResponse malinkiComplexResponse = new MalinkiComplexResponse();
 
         try{
-            ticketRequestDTOResultList = ((TicketMapper)mapper).getArchivalTickets(username);
-            malinkiComplexResponse.setDtoResult(ticketRequestDTOResultList);
+            ticketResponseDTO = ((TicketMapper)mapper).getTicketByID(id);
+            malinkiComplexResponse.setDtoResult(ticketResponseDTO);
 
-            databaseOperationResultEnum = DatabaseOperationResultEnum.TICKETS_FETCHED_SUCCESSFULLY;
+            databaseOperationResultEnum = DatabaseOperationResultEnum.TICKET_FOR_PDF_FETCHED_SUCCESSFULLY;
         } catch (Exception e){
             logger.log(Level.ERROR, e.toString());
             databaseOperationResultEnum = DatabaseOperationResultEnum.TICKETS_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR;
