@@ -13,7 +13,7 @@ export class TicketHistory implements OnInit {
     {title: 'Arrival Date', name: 'arrivalDate', sort: false},
     {title: 'From', name: 'from', sort: false},
     {title: 'To', name: 'to', sort: false},
-    //{title: 'Ticket', name: 'ticket', sort: false},
+    {title: 'Ticket', name: 'ticket', sort: false},
   ];
   public TableData: Array<any> = [];
   public page: number = 1;
@@ -46,8 +46,12 @@ export class TicketHistory implements OnInit {
           data => {
             for (let ticket of data) {
               this.TableData.push({
-                "departureDate": ticket.departureDate, "arrivalDate": ticket.arrivalDate,
-                "from": ticket.from, "to": ticket.to
+                "id": 1,
+                "departureDate": ticket.departureDate,
+                "arrivalDate": ticket.arrivalDate,
+                "from": ticket.from,
+                "to": ticket.to,
+                "ticket": '<a id="ticket" class="pointer" style="text-decoration: underline">ticket.pdf</a>'
               });
               console.log(this.TableData);
             }
@@ -154,5 +158,9 @@ export class TicketHistory implements OnInit {
 
   public onCellClick(data: any): any {
     console.log(data);
+    if (data.column == 'ticket') {
+      console.log('hi');
+      $('tbody tr').children().text('Loading');
+    }
   }
 }

@@ -1,18 +1,9 @@
-* {
-  padding: 0px;
-  margin: 0px;
-}
-
-body {
-  overflow: hidden;
-}
-
 .page-bg {
   position: absolute;
-  top: -20px;
-  left: -20px;
-  right: -20px;
-  bottom: -20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: url('BlihuYt.jpg') no-repeat center center;
   -webkit-filter: blur(0px);
   z-index: 1001;
@@ -20,10 +11,10 @@ body {
 
 .preloader {
   position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: -webkit-radial-gradient(rgba(0,0,0,0) 50%,rgba(0,0,0,0.8));
   z-index: 1002;
 }

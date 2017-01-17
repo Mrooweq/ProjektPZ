@@ -26,6 +26,9 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
               private ticketService: TicketService) {
     this.isLink.emit(false);
   }
+  click(value : any){
+    console.log()
+  }
 
   buyTicket(flight: Flight) {
     $('.buy_button').text('Loading...');
