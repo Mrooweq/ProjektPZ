@@ -15,12 +15,16 @@ public class PDFGenerator {
 		EmailAndPdfService emailAndPdfService = new EmailAndPdfService();
 
 		ByteArrayOutputStream outputStream = emailAndPdfService.getOutputStream(ticketResponseUVM);
+		emailAndPdfService.createTempFile(outputStream);
 
 		if(ifSend){
-			MimeBodyPart pdfBodyPart = emailAndPdfService.generatePdf(outputStream, receiverEmail);
+			MimeBodyPart pdfBodyPart = emailAndPdfService.generatePdf(outputStream);
 			MimeMessage message = emailAndPdfService.generateEmail(pdfBodyPart, receiverEmail);
 			emailAndPdfService.sendEmail(message);
 		}
+
+		outputStream.close();
+//		emailAndPdfService.deleteTempFile();
 
 		return emailAndPdfService.generateResponse(outputStream);
 	}

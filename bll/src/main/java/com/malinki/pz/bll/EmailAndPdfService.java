@@ -116,7 +116,7 @@ public class EmailAndPdfService {
         return pdfResponse;
     }
 
-    public MimeBodyPart generatePdf(ByteArrayOutputStream outputStream, String receiverEmail){
+    public MimeBodyPart generatePdf(ByteArrayOutputStream outputStream){
         byte[] bytes = outputStream.toByteArray();
 
         DataSource dataSource = new ByteArrayDataSource(bytes, "application/pdf");
@@ -134,6 +134,10 @@ public class EmailAndPdfService {
             logger.log(Level.ERROR, e.getMessage());
         }
 
+        return pdfBodyPart;
+    }
+
+    public void createTempFile(ByteArrayOutputStream outputStream){
         FileOutputStream fos = null;
 
         try {
@@ -153,26 +157,21 @@ public class EmailAndPdfService {
                 logger.log(Level.ERROR, e.getMessage());
             }
         }
-
-        return pdfBodyPart;
     }
 
     public void sendEmail(MimeMessage message){
-        logger.log(Level.INFO, "Sending");
+        logger.log(Level.INFO, "Sending email with PDF...");
 
         try {
             Transport.send(message);
         } catch (MessagingException e) {
             logger.log(Level.ERROR, e.getMessage());
         }
-        finally {
-//            deleteTempFile();
-        }
 
-        logger.log(Level.INFO, "Done");
+        logger.log(Level.INFO, "Sending email with PDF finished successfully");
     }
 
-    private void deleteTempFile(){
+    public void deleteTempFile(){
         File file = new File(tempFileName);
         if(file.exists())
             file.delete();
@@ -188,7 +187,7 @@ public class EmailAndPdfService {
         props.put("mail.smtp.socketFactory.port", emailServerPort);
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.socketFactory.fallback", "false");
-        props.put("mail.debug", "true");
+        props.put("mail.debug", "false");
         props.put("mail.smtp.localhost", senderEmailID);
         props.put("mail.store.protocol", "pop3");
         props.put("mail.transport.protocol", "smtp");

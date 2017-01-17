@@ -39,16 +39,16 @@ public class TicketService {
 
             TicketResponseUVM uvmResult = (TicketResponseUVM) malinkiComplexResponse.getUvmResult();
             pdfResponse = generatePDF(uvmResult, true);
+
+            if(areBothResultsOk(malinkiComplexResponse, pdfResponse))
+                response.setStatus(HttpServletResponse.SC_OK);
+            else
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         else{
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             logger.log(Level.ERROR, Strings.USER_NOT_AUTHORIZED);
         }
-
-        if(areBothResultsOk(malinkiComplexResponse, pdfResponse))
-            response.setStatus(HttpServletResponse.SC_OK);
-        else
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
         return pdfResponse;
     }
@@ -104,16 +104,16 @@ public class TicketService {
             TicketResponseUVM ticketResponseUVM = (TicketResponseUVM) malinkiComplexResponse.getUvmResult();
 
             pdfResponse = generatePDF(ticketResponseUVM, false);
+
+            if(areBothResultsOk(malinkiComplexResponse, pdfResponse))
+                response.setStatus(HttpServletResponse.SC_OK);
+            else
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         else{
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return null;
         }
-
-        if(areBothResultsOk(malinkiComplexResponse, pdfResponse))
-            response.setStatus(HttpServletResponse.SC_OK);
-        else
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
         return pdfResponse;
     }
