@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TicketService} from "../../../_services/tickets.service";
 import {Ticket} from "../../../_mocks/ticket";
+import {User} from "../../../_mocks/user";
 declare var $: JQueryStatic;
 
 @Component({
@@ -10,6 +11,7 @@ declare var $: JQueryStatic;
 })
 export class TicketHistory implements OnInit {
   public rows: Array<any> = [];
+  private _currentUser: User;
   public columns: Array<any> = [
     {title: 'Departure Date', name: 'departureDate', sort: false},
     {title: 'Arrival Date', name: 'arrivalDate', sort: false},
@@ -68,6 +70,7 @@ export class TicketHistory implements OnInit {
             } else {
               $('.no-results').show()
             }
+            this._currentUser = JSON.parse(localStorage.getItem('currentUser')).user
           },
           error => {
             console.log(error);
@@ -196,7 +199,7 @@ export class TicketHistory implements OnInit {
       $('.history-content').hide();
       let ticket = data.row;
       this.ticketService.getPDFToTicket(new Ticket(ticket.id, ticket.departureDate, ticket.arrivalDate,
-        ticket.from, ticket.to)).subscribe(
+        ticket.from, ticket.to), this._currentUser.username).subscribe(
         data => {
           console.log(data);
           //this.initiate_user_download('ticket.pdf', 'application/pdf', this.data);

@@ -46,9 +46,9 @@ export class TicketService {
       .catch(this.handleError.bind(this))
   }
 
-  getPDFToTicket(ticket: Ticket){
+  getPDFToTicket(ticket: Ticket, username:string){
     console.log(ticket);
-    let body = JSON.stringify({"ticket":ticket});
+    let body = JSON.stringify({"username":username,"ticket":ticket});
 
     return this.http.post(this.getPDF,body,this.authService.requestOptions())
       .map(res => res.json())
