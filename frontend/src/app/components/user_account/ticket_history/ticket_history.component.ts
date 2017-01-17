@@ -55,7 +55,7 @@ export class TicketHistory implements OnInit {
           data => {
             for (let ticket of data) {
               this.TableData.push({
-                "id": 1,
+                "id": ticket.id,
                 "departureDate": ticket.departureDate,
                 "arrivalDate": ticket.arrivalDate,
                 "from": ticket.from,
