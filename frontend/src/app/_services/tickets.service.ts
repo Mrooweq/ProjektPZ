@@ -51,7 +51,7 @@ export class TicketService {
     console.log(body);
 
     return this.http.post(this.getPDF, body, this.authService.requestOptions())
-      .map(res => res.json())
+      .map((res: Response) => res.json().pdf)
       .catch(this.handleError.bind(this));
   }
 
