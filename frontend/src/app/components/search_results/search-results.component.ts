@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy, AfterViewInit} from '@angular/core';
 import {Flight} from "../../_mocks/flight";
 import {SearchService} from "../../_services/search.service";
 import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 declare var $: JQueryStatic;
 
@@ -18,7 +19,8 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewInit {
   private travelers: number;
   private _class: string;
 
-  constructor(private searchService: SearchService) {
+  constructor(private searchService: SearchService,
+              private router: Router) {
     searchService.travelers().subscribe(
       travelers => {
         this.travelers = travelers;
@@ -29,6 +31,10 @@ export class SearchResults implements OnInit,OnDestroy,AfterViewInit {
         this._class = _class;
       }
     );
+  }
+
+  goBack(): void {
+    this.router.navigate(['/']);
   }
 
   ngAfterViewInit(): void {

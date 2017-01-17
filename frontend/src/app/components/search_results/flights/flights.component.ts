@@ -35,8 +35,7 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
         this.body.emit(data.toString());
       },
       error => {
-        $('.buy_button').text('Buy');
-        $('.buy_button').attr('disabled', 'false');
+        $('.buy_button').text('Buy').attr('disabled', 'false');
         console.log(error);
         this.isLink.emit(false);
       }

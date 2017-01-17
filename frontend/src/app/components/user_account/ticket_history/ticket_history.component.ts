@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TicketService} from "../../../_services/tickets.service";
+import {Ticket} from "../../../_mocks/ticket";
 declare var $: JQueryStatic;
 
 @Component({
@@ -40,6 +41,7 @@ export class TicketHistory implements OnInit {
   }
 
   public ngOnInit(): void {
+    $('.history-content').hide();
     this.ticketService.getArchivalTickets().subscribe(
       () => {
         this.ticketService.tickets().subscribe(
@@ -55,6 +57,12 @@ export class TicketHistory implements OnInit {
               });
             }
             this.onChangeTable(this.config, this.page);
+            if (this.TableData.length > 0) {
+              $('.loading').hide();
+              $('.history-content').show();
+            } else {
+              $('.loading').text("No results")
+            }
           },
           error => {
             console.log(error);
@@ -155,11 +163,46 @@ export class TicketHistory implements OnInit {
     this.length = sortedData.length;
   }
 
+  initiate_user_download = function (file_name, mime_type, text) {
+    if (undefined === window.navigator.msSaveOrOpenBlob) {
+      let e = document.createElement('a');
+      let href = 'data:' + mime_type + ';base64,' + encodeURIComponent(text);
+      e.setAttribute('href', href);
+      e.setAttribute('download', file_name);
+      document.body.appendChild(e);
+      e.click();
+      document.body.removeChild(e);
+    }
+    else {
+      var binary_string = window.atob(text);
+      var len = binary_string.length;
+      var bytes = new Uint8Array(len);
+      for (let i = 0; i < bytes.length; ++i) {
+        bytes[i] = binary_string.charCodeAt(i);
+      }
+      let blob = new Blob([bytes], {type: mime_type});
+      window.navigator.msSaveOrOpenBlob(blob, file_name);
+    }
+  };
+
   public onCellClick(data: any): any {
-    console.log(data);
     if (data.column == 'ticket') {
-      console.log('hi');
-      $('tbody tr').children().hide();
+      $('.loading').show().text("Processing....");
+      $('.history-content').hide();
+      let ticket = data.row;
+      this.ticketService.getPDFToTicket(new Ticket(ticket.id, ticket.departureDate, ticket.arrivalDate,
+        ticket.from, ticket.to)).subscribe(
+        data => {
+          console.log(data);
+          //this.initiate_user_download('ticket.pdf', 'application/pdf', this.data);
+          $('.loading').hide();
+          $('.history-content').fadeIn("slow");
+        }, error => {
+          $('.loading').hide();
+          $('.history-content').fadeIn("slow");
+          console.log(error);
+        }
+      );
     }
   }
 }

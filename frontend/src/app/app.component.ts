@@ -59,7 +59,7 @@ export class AppComponent implements OnInit,OnDestroy,AfterViewInit {
     setTimeout(() => {
       $('.preloader').hide();
       $('#main-bg').fadeOut('slow');
-    }, 3000)
+    }, 2000)
   }
 
   ngOnInit(): void {

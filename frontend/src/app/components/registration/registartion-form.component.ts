@@ -62,6 +62,8 @@ export class Registration {
           this.registrationForm.controls['conemail'].reset();
           this.registrationForm.controls['password'].reset();
           this.registrationForm.controls['conpassword'].reset();
+        } else {
+          this.errorMessage = 'Upss! Somethings wrong';
         }
       }
     ));

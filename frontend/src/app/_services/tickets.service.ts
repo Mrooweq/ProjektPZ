@@ -1,16 +1,18 @@
-import {Injectable, OnInit} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {Http, Response, URLSearchParams, Headers} from "@angular/http";
+import {Http, Response} from "@angular/http";
 import {Flight} from "../_mocks/flight";
 import {User} from "../_mocks/user";
 import {AuthenticationService} from "./authentication.service";
+import {Ticket} from "../_mocks/ticket";
 
 @Injectable()
 export class TicketService {
   private buyTicketsUrl = 'api/buy';
   private getArchival = 'api/archival';
+  private getPDF = 'api/getpdf';
 
-  private _archivalTickets: Flight[] = [];
+  private _archivalTickets: Ticket[] = [];
 
 
   constructor(private http: Http,
@@ -18,7 +20,7 @@ export class TicketService {
     this.authService = authService;
   }
 
-  tickets(): Observable<Flight[]> {
+  tickets(): Observable<Ticket[]> {
     return Observable.of(this._archivalTickets);
   }
 
@@ -42,6 +44,15 @@ export class TicketService {
         return tickets;
       })
       .catch(this.handleError.bind(this))
+  }
+
+  getPDFToTicket(ticket: Ticket){
+    console.log(ticket);
+    let body = JSON.stringify({"ticket":ticket});
+
+    return this.http.post(this.getPDF,body,this.authService.requestOptions())
+      .map(res => res.json())
+      .catch(this.handleError.bind(this));
   }
 
   private
