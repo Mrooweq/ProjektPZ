@@ -26,8 +26,9 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
               private ticketService: TicketService) {
     this.isLink.emit(false);
   }
-  click(value : any){
-    console.log()
+
+  click(value: any) {
+    console.log("Value:", value);
   }
 
   buyTicket(flight: Flight) {
