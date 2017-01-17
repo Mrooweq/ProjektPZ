@@ -28,7 +28,6 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
   }
 
   buyTicket(flight: Flight) {
-    $('.buy_button').text('Loading...');
     $('.buy_button').attr('disabled', 'true');
     this._subscriptions.push(this.ticketService.buyTicket(flight, this.loggedUser).subscribe(
       data => {
@@ -36,6 +35,7 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
         this.body.emit(data.toString());
       },
       error => {
+        $('.buy_button').text('Buy').attr('disabled', 'false');
         console.log(error);
         this.isLink.emit(false);
       }
@@ -57,6 +57,10 @@ export class Flights implements OnInit,OnDestroy,AfterViewChecked {
     $('.log_in_button').click(function () {
       $('#myModal').modal('show');
     });
+
+    $(".buy_button").click(function () {
+      $(this).text("Processing...")
+    })
   }
 
   ngOnInit(): void {

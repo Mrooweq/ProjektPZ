@@ -16,4 +16,9 @@ public class TicketRepository {
         FetchingArchivalTickets fetchingArchivalTickets = new FetchingArchivalTickets(username);
         return fetchingArchivalTickets.performAction();
     }
+
+    public MalinkiComplexResponse getTicketByID(int id){
+        FetchingOneTicketByID fetchingOneTicketByID = new FetchingOneTicketByID(id);
+        return fetchingOneTicketByID.performAction();
+    }
 }

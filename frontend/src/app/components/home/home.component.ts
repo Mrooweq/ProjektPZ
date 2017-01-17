@@ -78,10 +78,10 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
     this.searchForm = this.fb.group({
       source: [''],
       destination: [''],
-      start: [this._today, Validators.required],
+      start: [this._today, [Validators.required]],
       end: [this._tomorrow, Validators.required],
       _class: ['', Validators.required],
-      travelers: [1, Validators.required]
+      travelers: [1, [Validators.required, Validators.pattern('[1-5]{1}')]]
     });
   }
 
@@ -97,9 +97,8 @@ export class Home implements OnInit,OnDestroy,AfterViewInit {
   ngAfterViewInit(): void {
     $('#end').click(() => {
       let date = $('#start').text();
-      console.log(date);
 
-    })
+    });
   }
 
   ngOnInit(): void {

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.malinki.pz.bll.*;
 import com.malinki.pz.lib.TicketRequestUVM;
+import com.malinki.pz.lib.TicketResponseUVM;
 import com.malinki.pz.lib.TicketUVM;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,12 @@ public class TicketController {
     }
 
     @RequestMapping(value = "/archival", method = RequestMethod.POST)
-    public List<TicketRequestUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+    public List<TicketResponseUVM> getArchivalTickets(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         return ticketService.getArchivalTickets(requestBody, request, response);
+    }
+
+    @RequestMapping(value = "/getpdf", method = RequestMethod.POST)
+    public PDFResponse getPdfOfTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+        return ticketService.getPdfOfTicket(requestBody, request, response);
     }
 }

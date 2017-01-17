@@ -115,6 +115,13 @@ public class DatabaseOperation {
                 result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
                 break;
 
+            case TICKET_FOR_PDF_FETCHED_SUCCESSFULLY:
+                result = HttpServletResponse.SC_OK;
+                break;
+            case TICKET_FOR_PDF_NOT_FETCHED_SUCCESSFULLY_DUE_TO_ERROR:
+                result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+                break;
+
             default:
                 break;
         }

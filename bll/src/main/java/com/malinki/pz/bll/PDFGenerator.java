@@ -8,16 +8,19 @@ import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.malinki.pz.lib.TicketResponseUVM;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class SendPDFByEmail {
+public class PDFGenerator {
 
-	public PDFResponse generateAndSendEmail(TicketResponseUVM ticketResponseUVM) throws Exception {
+	public PDFResponse generatePDF(TicketResponseUVM ticketResponseUVM, boolean ifSend) throws Exception {
 		String receiverEmail = ticketResponseUVM.getEmail();
 		EmailAndPdfService emailAndPdfService = new EmailAndPdfService();
 
 		ByteArrayOutputStream outputStream = emailAndPdfService.getOutputStream(ticketResponseUVM);
-		MimeBodyPart pdfBodyPart = emailAndPdfService.generatePdf(outputStream, receiverEmail);
-		MimeMessage message = emailAndPdfService.generateEmail(pdfBodyPart, receiverEmail);
-		emailAndPdfService.sendEmail(message);
+
+		if(ifSend){
+			MimeBodyPart pdfBodyPart = emailAndPdfService.generatePdf(outputStream, receiverEmail);
+			MimeMessage message = emailAndPdfService.generateEmail(pdfBodyPart, receiverEmail);
+			emailAndPdfService.sendEmail(message);
+		}
 
 		return emailAndPdfService.generateResponse(outputStream);
 	}

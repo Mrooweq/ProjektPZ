@@ -17,6 +17,7 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
+        "../src/_css/preloader.css",
         "../node_modules/bootstrap/dist/css/bootstrap.css",
         "../src/_css/auto-complete.styles.css",
         "../src/_css/styles.css"

@@ -1,5 +1,6 @@
 <div class="container body form-bordered">
   <div class="container" style="padding: 10px">
+    <a (click)="goBack()" class="pointer float-xs-right close"></a>
     <div *ngIf="_isLink">
       <ticket-info [linkBody]="body"></ticket-info>
     </div>

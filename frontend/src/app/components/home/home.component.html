@@ -4,7 +4,7 @@
     <div class="col-md-10">
       <div class="wrapper">
         <div id="container">
-          <form [formGroup]="searchForm" (ngSubmit)="submit(searchForm.value);
+          <form novalidate [formGroup]="searchForm" (ngSubmit)="submit(searchForm.value);
           start.clearDate();
           end.clearDate();">
             <div class="row">
@@ -14,6 +14,7 @@
                   <input ng2-auto-complete
                          formControlName="source"
                          [source]="_sources"
+                         [blank-option-text]="'-'"
                          placeholder="Cities"
                          class="form-control"
                          [accept-user-input]=false
@@ -26,6 +27,7 @@
                   <input ng2-auto-complete
                          formControlName="destination"
                          [source]="_dest"
+                         [blank-option-text]="'-'"
                          placeholder="Cities"
                          class="form-control"
                          [accept-user-input]=false
