@@ -6,6 +6,7 @@ declare var $: JQueryStatic;
 @Component({
   selector: 'ticket-history',
   templateUrl: 'ticket_history.component.html',
+  styleUrls: ['ticket_history.component.css']
 })
 export class TicketHistory implements OnInit {
   public rows: Array<any> = [];
@@ -42,6 +43,7 @@ export class TicketHistory implements OnInit {
 
   public ngOnInit(): void {
     $('.history-content').hide();
+    $('.no-results').hide();
     this.ticketService.getArchivalTickets().subscribe(
       () => {
         this.ticketService.tickets().subscribe(
@@ -57,11 +59,11 @@ export class TicketHistory implements OnInit {
               });
             }
             this.onChangeTable(this.config, this.page);
+            $('.loader').hide();
             if (this.TableData.length > 0) {
-              $('.loading').hide();
               $('.history-content').show();
             } else {
-              $('.loading').text("No results")
+              $('.no-results').show()
             }
           },
           error => {
@@ -187,7 +189,7 @@ export class TicketHistory implements OnInit {
 
   public onCellClick(data: any): any {
     if (data.column == 'ticket') {
-      $('.loading').show().text("Processing....");
+      $('.loader').show();
       $('.history-content').hide();
       let ticket = data.row;
       this.ticketService.getPDFToTicket(new Ticket(ticket.id, ticket.departureDate, ticket.arrivalDate,
@@ -195,11 +197,13 @@ export class TicketHistory implements OnInit {
         data => {
           console.log(data);
           //this.initiate_user_download('ticket.pdf', 'application/pdf', this.data);
-          $('.loading').hide();
+          $('.loader').hide();
           $('.history-content').fadeIn("slow");
         }, error => {
-          $('.loading').hide();
-          $('.history-content').fadeIn("slow");
+          setTimeout(() => {
+            $('.loader').hide();
+            $('.history-content').fadeIn("slow");
+          }, 4000);
           console.log(error);
         }
       );

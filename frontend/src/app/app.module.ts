@@ -26,7 +26,6 @@ import {EditAccount} from "./components/user_account/edit_account/edit_account.c
 import {Flights} from "./components/search_results/flights/flights.component";
 import {TicketInfo} from "./components/search_results/ticket_info/tickets_info.component";
 
-
 @NgModule({
   imports: [
     BrowserModule,

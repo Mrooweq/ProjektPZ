@@ -4,7 +4,7 @@
     <div class="col-md-10">
       <div class="wrapper">
         <div id="container">
-          <form [formGroup]="searchForm" (ngSubmit)="submit(searchForm.value);
+          <form novalidate [formGroup]="searchForm" (ngSubmit)="submit(searchForm.value);
           start.clearDate();
           end.clearDate();">
             <div class="row">
