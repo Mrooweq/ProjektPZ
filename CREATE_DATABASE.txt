@@ -30,7 +30,11 @@ INSERT INTO Airport VALUES (8, 'Rome');
 INSERT INTO Airport VALUES (9, 'Athens');
 INSERT INTO Airport VALUES (10, 'Oslo');
 
-INSERT INTO Airline VALUES (1, 'British Airways', 'BAW');
+INSERT INTO Airline VALUES (1, 'Enter Air', 'ENT');
+INSERT INTO Airline VALUES (2, 'LOT', 'LOT');
+INSERT INTO Airline VALUES (3, 'Skytaxi', 'IGA');
+INSERT INTO Airline VALUES (4, 'Small Planet Airlines', 'LLC');
+INSERT INTO Airline VALUES (5, 'SprintAir', 'SRN');
 
 INSERT INTO Multiplier VALUES (1, 1);
 INSERT INTO Multiplier VALUES (2, 2);
@@ -55,9 +59,9 @@ begin
 
 SELECT
    CASE WHEN EXISTS(SELECT 1 FROM "User" where Username = str)
-     THEN 1  
-     ELSE 0  
-   END  
+     THEN 1
+     ELSE 0
+   END
 into v_flag FROM dual;
 
 return v_flag;
@@ -75,9 +79,9 @@ begin
 
 SELECT
    CASE WHEN EXISTS(SELECT 1 FROM "User" where Email = str)
-     THEN 1  
-     ELSE 0  
-   END  
+     THEN 1
+     ELSE 0
+   END
 into v_flag FROM dual;
 
 return v_flag;
@@ -92,7 +96,7 @@ return integer is
 v_flag integer := 0;
 
 begin
-  
+
 SELECT
    CASE WHEN EXISTS(SELECT 1 FROM "User" where Username = v_username and Password = v_password)
      THEN 1
@@ -104,3 +108,14 @@ return v_flag;
 end;
 /
 
+------------------
+
+CREATE OR REPLACE TRIGGER Ticket_trigger
+AFTER INSERT ON Ticket
+FOR EACH ROW
+BEGIN
+
+update Flight set free_places = free_places - :NEW.number_of_places
+where :NEW.ID_Flight = Flight.ID_FLIGHT;
+
+END;

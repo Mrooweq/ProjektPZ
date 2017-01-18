@@ -14,7 +14,7 @@ import {AuthenticationService} from "./_services/authentication.service";
 import {LoginForm} from "./components/login/login-form.component";
 import {Home} from "./components/home/home.component";
 import {Registration} from "./components/registration/registartion-form.component";
-import {EqualValidator} from "./_validators/equal-validator.directive";
+import {EqualValidator} from "./_validators/equal.validator.directive";
 import {SearchService} from "./_services/search.service";
 import {SearchResults} from "./components/search_results/search-results.component";
 import {TicketService} from "./_services/tickets.service";
