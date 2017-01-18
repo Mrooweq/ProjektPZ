@@ -257,3 +257,60 @@ EXECUTE generateFlights;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create or replace package pkg_utl
+as
+  type ticket_record is record (id number(10), airline varchar2(50), airlineShortcut varchar2(3), flightNumber varchar2(4),
+"from" varchar2(50), "to" varchar2(50), departureDate date,  arrivalDate date, price integer, numberOfPlaces integer,
+flightClass varchar2(50), firstname varchar2(50), lastname varchar2(50), email varchar2(50));
+  type ticket_table is table of ticket_record;
+  function getTicket(val integer) return ticket_table pipelined;
+end;
+/
+
+
+create or replace package body pkg_utl
+as
+  function getTicket(val integer) return ticket_table pipelined
+  is
+  begin
+    for item in (
+      select ID_Ticket as id, Airline.Name as airline, Name_Shortcut as airlineShortcut, Flight_number as flightNumber,
+               src.Name as "from", dest.Name as "to",
+               departure_date as departureDate, arrival_date as arrivalDate,
+               (base_price * multiplier * Number_Of_Places) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, firstname, lastname, email
+               from Ticket, Flight, Class, "User", Airline, Multiplier, Airport src, Airport dest
+               where Ticket.ID_FLIGHT = Flight.ID_FLIGHT
+               and Ticket.ID_CLASS = Class.ID_CLASS
+               and Ticket.ID_USER = "User".ID_USER
+               and Flight.ID_AIRLINE = Airline.ID_AIRLINE
+               and Multiplier.ID_MULTIPLIER = Class.ID_MULTIPLIER
+               and Flight."From"= src.ID_AIRPORT
+               and Flight."To"= dest.ID_AIRPORT
+               and ID_Ticket = val
+    )
+
+    loop
+    pipe row (item);
+    end loop;
+
+    return;
+  end getTicket;
+end;
+/
+
