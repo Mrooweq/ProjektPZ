@@ -1,0 +1,46 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-position: center;
+  background-size: cover;
+}
+
+#formHeader {
+  font-size: 15px;
+}
+
+.col-md-10 {
+  background-color: white;
+  min-height: 100vh;
+  padding-left: 40px;
+  padding-right: 20px;
+  margin-top: -30px;
+  padding-top: 80px;
+  border-left: 2px solid #87898a;
+  border-right: 2px solid #87898a;
+}
+
+.error-message {
+  color: #a94442;
+  font-style: italic;
+}
+
+.success-message {
+  color: #42A948;
+  font-style: italic;
+}
+
+.ng-invalid:not(form).ng-touched, .ng-invalid:not(form).ng-dirty {
+  border-left: 6px solid #a94442;
+}
+
+.ng-valid.ng-dirty:not(form) {
+  border-left: 6px solid #42A948;
+}
+
+.btn-primary {
+  margin-left: 15px;
+}

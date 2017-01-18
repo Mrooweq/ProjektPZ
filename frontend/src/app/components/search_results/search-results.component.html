@@ -1,0 +1,11 @@
+<div class="container body form-bordered">
+  <div class="container" style="padding: 10px">
+    <a (click)="goBack()" class="pointer float-xs-right close"></a>
+    <div *ngIf="_isLink">
+      <ticket-info [linkBody]="body"></ticket-info>
+    </div>
+    <div *ngIf="!_isLink">
+      <flights [flights]="_flights" (isLink)="_isLink = $event" (body)="body = $event"></flights>
+    </div>
+  </div>
+</div>

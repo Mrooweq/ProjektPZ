@@ -1,52 +1,49 @@
-CREATE TABLE "User" (ID_User number(10) NOT NULL, Username varchar2(50) NOT NULL, Password varchar2(50) NOT NULL, Firstname varchar2(50) NOT NULL, Lastname varchar2(50) NOT NULL, Email varchar2(50) NOT NULL, PRIMARY KEY (ID_User));
-CREATE TABLE Invoice (ID_Invoice number(10) NOT NULL, Invoice_Date date NOT NULL, Invoice_Value number(7) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Invoice));
-CREATE TABLE Invoice_Pos (ID_Invoice_Pos number(10) NOT NULL, InvoiceID_Invoice number(10) NOT NULL, Amount number(10) NOT NULL, Position_Price number(10) NOT NULL, ID_Ticket number(10) NOT NULL, ID_Flight number(10) NOT NULL, PRIMARY KEY (ID_Invoice_Pos, InvoiceID_Invoice));
-CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
-CREATE TABLE Class (ID_Class number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Class));
-CREATE TABLE Airline (ID_Airline number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Airline));
-CREATE TABLE Flight (ID_Flight number(10) NOT NULL, Flight_Number number(10) NOT NULL, Flight_Date date NOT NULL, Base_Price number(10) NOT NULL, ID_Airline number(10) NOT NULL, "From" number(10) NOT NULL, "To" number(10) NOT NULL, PRIMARY KEY (ID_Flight));
-CREATE TABLE Airport (ID_Airport number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Airport));
+ALTER SESSION SET nls_date_format = 'yyyy-mm-dd hh24:mi:ss';
 
-ALTER TABLE Invoice ADD CONSTRAINT FKInvoice592459 FOREIGN KEY (ID_User) REFERENCES "User" (ID_User);
-ALTER TABLE Invoice_Pos ADD CONSTRAINT FKInvoice_Po101405 FOREIGN KEY (InvoiceID_Invoice) REFERENCES Invoice (ID_Invoice);
+CREATE SEQUENCE seq_User;
+CREATE SEQUENCE seq_Ticket;
+CREATE SEQUENCE seq_Flight;
+
+CREATE TABLE "User" (ID_User number(10) NOT NULL, Username varchar2(50) NOT NULL, Password varchar2(50) NOT NULL, Firstname varchar2(50) NOT NULL, Lastname varchar2(50) NOT NULL, Email varchar2(50) NOT NULL, PRIMARY KEY (ID_User));
+CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, Number_Of_Places number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
+CREATE TABLE Class (ID_Class number(10) NOT NULL, Name varchar2(50) NOT NULL, ID_Multiplier number(10) NOT NULL, PRIMARY KEY (ID_Class));
+CREATE TABLE Airline (ID_Airline number(10) NOT NULL, Name varchar2(50) NOT NULL, Name_Shortcut varchar2(3) NOT NULL, PRIMARY KEY (ID_Airline));
+CREATE TABLE Flight (ID_Flight number(10) NOT NULL, Flight_Number varchar2(4) NOT NULL, Departure_Date date NOT NULL, Arrival_Date date NOT NULL, Base_Price number(10) NOT NULL, Free_Places number(10) NOT NULL, ID_Airline number(10) NOT NULL, "From" number(10) NOT NULL, "To" number(10) NOT NULL, PRIMARY KEY (ID_Flight));
+CREATE TABLE Airport (ID_Airport number(10) NOT NULL, Name varchar2(50) NOT NULL, PRIMARY KEY (ID_Airport));
+CREATE TABLE Multiplier (ID_Multiplier number(10) NOT NULL, Multiplier number(10) NOT NULL, PRIMARY KEY (ID_Multiplier));
+
 ALTER TABLE Flight ADD CONSTRAINT FKFlight238291 FOREIGN KEY (ID_Airline) REFERENCES Airline (ID_Airline);
 ALTER TABLE Ticket ADD CONSTRAINT FKTicket605673 FOREIGN KEY (ID_Flight) REFERENCES Flight (ID_Flight);
 ALTER TABLE Ticket ADD CONSTRAINT FKTicket704378 FOREIGN KEY (ID_Class) REFERENCES Class (ID_Class);
-ALTER TABLE Invoice_Pos ADD CONSTRAINT FKInvoice_Po525157 FOREIGN KEY (ID_Ticket) REFERENCES Ticket (ID_Ticket);
-ALTER TABLE Invoice_Pos ADD CONSTRAINT FKInvoice_Po114019 FOREIGN KEY (ID_Flight) REFERENCES Flight (ID_Flight);
 ALTER TABLE Ticket ADD CONSTRAINT FKTicket572044 FOREIGN KEY (ID_User) REFERENCES "User" (ID_User);
 ALTER TABLE Flight ADD CONSTRAINT FKFlight5365 FOREIGN KEY ("From") REFERENCES Airport (ID_Airport);
 ALTER TABLE Flight ADD CONSTRAINT FKFlight809603 FOREIGN KEY ("To") REFERENCES Airport (ID_Airport);
-------------------------
+ALTER TABLE Class ADD CONSTRAINT FKClass256632 FOREIGN KEY (ID_Multiplier) REFERENCES Multiplier (ID_Multiplier);
 
-create or replace FUNCTION getMinUserID 
-return number is 
+INSERT INTO Airport VALUES (1, 'Warsaw');
+INSERT INTO Airport VALUES (2, 'Geneva');
+INSERT INTO Airport VALUES (3, 'Moscow');
+INSERT INTO Airport VALUES (4, 'Paris');
+INSERT INTO Airport VALUES (5, 'Madrid');
+INSERT INTO Airport VALUES (6, 'London');
+INSERT INTO Airport VALUES (7, 'Berlin');
+INSERT INTO Airport VALUES (8, 'Rome');
+INSERT INTO Airport VALUES (9, 'Athens');
+INSERT INTO Airport VALUES (10, 'Oslo');
 
-cnt number := 0;
-v_flag integer := 1;
+INSERT INTO Airline VALUES (1, 'Enter Air', 'ENT');
+INSERT INTO Airline VALUES (2, 'LOT', 'LOT');
+INSERT INTO Airline VALUES (3, 'Skytaxi', 'IGA');
+INSERT INTO Airline VALUES (4, 'Small Planet Airlines', 'LLC');
+INSERT INTO Airline VALUES (5, 'SprintAir', 'SRN');
 
-begin 
+INSERT INTO Multiplier VALUES (1, 1);
+INSERT INTO Multiplier VALUES (2, 2);
 
-loop 
+INSERT INTO Class VALUES (1, 'Economic', 1);
+INSERT INTO Class VALUES (2, 'VIP', 2);
 
-cnt := cnt + 1;
-
-SELECT 
-   CASE WHEN EXISTS(SELECT 1 FROM "User" where ID_User = cnt)
-     THEN 1  
-     ELSE 0  
-   END  
-into v_flag FROM dual;
-
-
-EXIT when v_flag = 0;                     
-end loop;
- 
-return cnt; 
-end; 
-/
-
-------------------
+-------------
 
 create or replace FUNCTION isLoginAlreadyUsed (str IN VARCHAR2)
 return integer is
@@ -57,9 +54,29 @@ begin
 
 SELECT
    CASE WHEN EXISTS(SELECT 1 FROM "User" where Username = str)
-     THEN 1  
-     ELSE 0  
-   END  
+     THEN 1
+     ELSE 0
+   END
+into v_flag FROM dual;
+
+return v_flag;
+end;
+/
+
+------------------
+
+create or replace FUNCTION isEmailAlreadyUsed (str IN VARCHAR2)
+return integer is
+
+v_flag integer := 0;
+
+begin
+
+SELECT
+   CASE WHEN EXISTS(SELECT 1 FROM "User" where Email = str)
+     THEN 1
+     ELSE 0
+   END
 into v_flag FROM dual;
 
 return v_flag;
@@ -74,7 +91,7 @@ return integer is
 v_flag integer := 0;
 
 begin
-  
+
 SELECT
    CASE WHEN EXISTS(SELECT 1 FROM "User" where Username = v_username and Password = v_password)
      THEN 1
@@ -85,3 +102,215 @@ into v_flag FROM dual;
 return v_flag;
 end;
 /
+
+------------------
+
+CREATE OR REPLACE TRIGGER Ticket_trigger
+AFTER INSERT ON Ticket
+FOR EACH ROW
+BEGIN
+
+update Flight set free_places = free_places - :NEW.number_of_places
+where :NEW.ID_Flight = Flight.ID_FLIGHT;
+
+END;
+
+
+
+-------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create or replace FUNCTION randomizeDate (value IN integer)
+return date is
+
+v_date date;
+
+begin
+
+select current_date + dbms_random.value(value - 1 , value) into v_date FROM dual;
+
+return v_date;
+end;
+/
+
+---------
+
+create or replace FUNCTION randomizeInteger (v_min in integer, v_max in integer)
+return integer is
+
+v_random integer;
+
+begin
+
+select round(v_min+(v_max-v_min)*DBMS_RANDOM.VALUE,0) into v_random FROM dual;
+
+return v_random;
+end;
+/
+
+-------
+
+create or replace FUNCTION getSrc
+return integer is
+
+src_id integer;
+
+begin
+
+  select randomizeInteger (1,10) into src_id from dual;
+
+return src_id;
+end;
+/
+
+
+---------
+
+create or replace FUNCTION getDest (src in integer)
+return integer is
+
+v_los_id integer;
+
+begin
+
+LOOP
+  select randomizeInteger (1,10) into v_los_id from dual;
+   EXIT  WHEN v_los_id !=  src;
+
+END LOOP;
+
+return v_los_id;
+end;
+/
+
+------------------
+
+CREATE or replace PROCEDURE generateFlights IS
+
+v_number_of_iterations integer;
+v_random integer;
+v_departure_date date;
+v_arrival_date date;
+v_price integer;
+v_number_of_places integer;
+v_id integer;
+v_id_mod10000 integer;
+
+v_number_of_airlines integer;
+v_airline_id integer;
+v_src integer;
+v_dest integer;
+
+   BEGIN
+   select randomizeInteger (10,100) into v_number_of_iterations from dual;
+
+     FOR i IN 1..v_number_of_iterations LOOP
+
+
+       select count(*) into v_number_of_airlines from Airline;
+    select randomizeInteger (1,10) into v_random from dual;
+    select randomizeDate (v_random) into v_departure_date from dual;
+    select randomizeDate (v_random+1) into v_arrival_date from dual;
+    select randomizeInteger (100,1000) into v_price from dual;
+     select randomizeInteger (50,200) into v_number_of_places from dual;
+     select count(*) into v_number_of_airlines from Airline;
+     select randomizeInteger (1,v_number_of_airlines) into v_airline_id from dual;
+         select randomizeInteger (1,v_number_of_airlines) into v_src from dual;
+     select randomizeInteger (1,v_number_of_airlines) into v_dest from dual;
+
+     select getSrc () into v_src from dual;
+     select getDest (v_src) into v_dest from dual;
+
+   v_id := seq_Flight.NEXTVAL;
+   SELECT MOD(v_id,10000) into v_id_mod10000 FROM DUAL;
+
+    INSERT INTO Flight VALUES (v_id, v_id_mod10000, v_departure_date, v_arrival_date, v_price, v_number_of_places, v_airline_id, v_src, v_dest);
+
+
+  END LOOP;
+  commit;
+
+   END;
+/
+
+
+
+EXECUTE generateFlights;
+
+
+
+-------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create or replace package pkg_utl
+as
+  type ticket_record is record (id number(10), airline varchar2(50), airlineShortcut varchar2(3), flightNumber varchar2(4),
+"from" varchar2(50), "to" varchar2(50), departureDate date,  arrivalDate date, price integer, numberOfPlaces integer,
+flightClass varchar2(50), firstname varchar2(50), lastname varchar2(50), email varchar2(50));
+  type ticket_table is table of ticket_record;
+  function getTicket(val integer) return ticket_table pipelined;
+end;
+/
+
+
+create or replace package body pkg_utl
+as
+  function getTicket(val integer) return ticket_table pipelined
+  is
+  begin
+    for item in (
+      select ID_Ticket as id, Airline.Name as airline, Name_Shortcut as airlineShortcut, Flight_number as flightNumber,
+               src.Name as "from", dest.Name as "to",
+               departure_date as departureDate, arrival_date as arrivalDate,
+               (base_price * multiplier * Number_Of_Places) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, firstname, lastname, email
+               from Ticket, Flight, Class, "User", Airline, Multiplier, Airport src, Airport dest
+               where Ticket.ID_FLIGHT = Flight.ID_FLIGHT
+               and Ticket.ID_CLASS = Class.ID_CLASS
+               and Ticket.ID_USER = "User".ID_USER
+               and Flight.ID_AIRLINE = Airline.ID_AIRLINE
+               and Multiplier.ID_MULTIPLIER = Class.ID_MULTIPLIER
+               and Flight."From"= src.ID_AIRPORT
+               and Flight."To"= dest.ID_AIRPORT
+               and ID_Ticket = val
+    )
+
+    loop
+    pipe row (item);
+    end loop;
+
+    return;
+  end getTicket;
+end;
+/
+

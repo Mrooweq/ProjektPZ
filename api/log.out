@@ -1,0 +1,156 @@
+Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+Opening JDBC Connection
+Opening JDBC Connection
+Opening JDBC Connection
+Created connection 318565073.
+Created connection 811379653.
+Setting autocommit to false on JDBC Connection [oracle.jdbc.driver.T4CConnection@12fcead1]
+Setting autocommit to false on JDBC Connection [oracle.jdbc.driver.T4CConnection@305cabc5]
+==>  Preparing: SELECT DISTINCT dest.Name FROM Flight, Airport src, Airport dest WHERE "From"=src.ID_Airport AND "To"=dest.ID_Airport 
+==>  Preparing: SELECT DISTINCT src.Name FROM Flight, Airport src, Airport dest WHERE "From"=src.ID_Airport AND "To"=dest.ID_Airport 
+Created connection 1931347657.
+Setting autocommit to false on JDBC Connection [oracle.jdbc.driver.T4CConnection@731e06c9]
+==>  Preparing: SELECT Name FROM Class 
+==> Parameters: 
+==> Parameters: 
+==> Parameters: 
+<==      Total: 10
+Possible airports fetched successfully
+Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@305cabc5]
+Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@305cabc5]
+Returned connection 811379653 to pool.
+<==      Total: 10
+Possible airports fetched successfully
+Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@12fcead1]
+Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@12fcead1]
+Returned connection 318565073 to pool.
+<==      Total: 2
+Classes fetched successfully
+Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@731e06c9]
+Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@731e06c9]
+Returned connection 1931347657 to pool.
+Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+Opening JDBC Connection
+Created connection 1552314295.
+Setting autocommit to false on JDBC Connection [oracle.jdbc.driver.T4CConnection@5c866fb7]
+==>  Preparing: SELECT Flight_Number AS flightNumber, departure_date AS departureDate, arrival_date AS arrivalDate, (base_price * Multiplier.Multiplier * ?) AS price, Airline.name AS airlineName, src.Name AS "From", dest.Name AS "To", free_places AS freePlaces, Airline.name_Shortcut AS airlineShortcut FROM Flight, Airline, Airport src, Airport dest, Multiplier, "CLASS" WHERE Flight.ID_Airline = Airline.ID_Airline AND Flight.ID_Airline = Airline.ID_Airline AND src.ID_AIRPORT = "From" AND dest.ID_AIRPORT = "To" AND Multiplier.ID_Multiplier = "CLASS".ID_Multiplier AND src.NAME = ? AND TO_CHAR (Departure_Date, 'YYYY-MM-DD') >= ? AND TO_CHAR (Arrival_Date, 'YYYY-MM-DD') <= ? AND "CLASS".Name = ? AND free_places >= ? 
+==> Parameters: 2(String), Berlin(String), 2017-01-18(String), 2017-01-31(String), Economic(String), 2(String)
+<==      Total: 8
+Flights fetched successfully
+Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@5c866fb7]
+Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@5c866fb7]
+Returned connection 1552314295 to pool.
+Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+Opening JDBC Connection
+Created connection 57589769.
+Setting autocommit to false on JDBC Connection [oracle.jdbc.driver.T4CConnection@36ec009]
+==>  Preparing: SELECT isUsernameAndPasswordCorrect(?, ?) FROM DUAL 
+==> Parameters: Kaczor(String), Zaq12w(String)
+<==      Total: 1
+==>  Preparing: SELECT * FROM "User" where Username = ? 
+==> Parameters: Kaczor(String)
+<==      Total: 1
+User logged in successfully
+Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@36ec009]
+Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@36ec009]
+Returned connection 57589769 to pool.
+Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+Opening JDBC Connection
+Created connection 790151702.
+Setting autocommit to false on JDBC Connection [oracle.jdbc.driver.T4CConnection@2f18c216]
+==>  Preparing: SELECT isUsernameAndPasswordCorrect(?, ?) FROM DUAL 
+==> Parameters: Kaczor(String), Zaq12w(String)
+<==      Total: 1
+==>  Preparing: SELECT * FROM "User" where Username = ? 
+==> Parameters: Kaczor(String)
+<==      Total: 1
+User logged in successfully
+Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@2f18c216]
+Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@2f18c216]
+Returned connection 790151702 to pool.
+Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+Opening JDBC Connection
+Created connection 624731473.
+Setting autocommit to false on JDBC Connection [oracle.jdbc.driver.T4CConnection@253ca551]
+==>  Preparing: INSERT INTO Ticket VALUES (seq_Ticket.NEXTVAL, ?, (SELECT ID_Flight FROM Flight, Airline WHERE FLIGHT_NUMBER = ? AND Airline.NAME_SHORTCUT = ?), (SELECT ID_Class FROM Class WHERE Name = ?), (SELECT ID_User FROM "User" WHERE Username = ?)) 
+==> Parameters: 2(Integer), 28(Integer), IGA(String), Economic(String), Kaczor(String)
+<==    Updates: 1
+==>  Preparing: select seq_Ticket.CURRVAL from Dual 
+==> Parameters: 
+<==      Total: 1
+==>  Preparing: select * from table(pkg_utl.getTicket(?)) 
+==> Parameters: 3(Integer)
+<==      Total: 1
+Committing JDBC Connection [oracle.jdbc.driver.T4CConnection@253ca551]
+Ticket generated successfully
+Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@253ca551]
+Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@253ca551]
+Returned connection 624731473 to pool.
+Sending email with PDF...
+Sending email with PDF finished successfully
+Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+Opening JDBC Connection
+Created connection 1176570609.
+Setting autocommit to false on JDBC Connection [oracle.jdbc.driver.T4CConnection@46210af1]
+==>  Preparing: select ID_Ticket as id, Airline.Name as airline, Name_Shortcut as airlineShortcut, Flight_number as flightNumber, src.Name as "from", dest.Name as "to", departure_date as departureDate, arrival_date as arrivalDate, (base_price * multiplier * Number_Of_Places) as price, Number_Of_Places as numberOfPlaces, Class.NAME as flightClass, firstname, lastname, email from Ticket, Flight, Class, "User", Airline, Multiplier, Airport src, Airport dest where Ticket.ID_FLIGHT = Flight.ID_FLIGHT and Ticket.ID_CLASS = Class.ID_CLASS and Ticket.ID_USER = "User".ID_USER and Flight.ID_AIRLINE = Airline.ID_AIRLINE and Multiplier.ID_MULTIPLIER = Class.ID_MULTIPLIER and Flight."From" = src.ID_AIRPORT and Flight."To" = dest.ID_AIRPORT and Username = ? 
+==> Parameters: Kaczor(String)
+<==      Total: 3
+Tickets fetched successfully
+Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@46210af1]
+Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@46210af1]
+Returned connection 1176570609 to pool.
+Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+PooledDataSource forcefully closed/removed all connections.
+Opening JDBC Connection
+Created connection 1056124521.
+Setting autocommit to false on JDBC Connection [oracle.jdbc.driver.T4CConnection@3ef32e69]
+==>  Preparing: select * from table(pkg_utl.getTicket(?)) 
+==> Parameters: 3(Integer)
+<==      Total: 1
+Ticket for pdf generation fetched successfully
+Resetting autocommit to true on JDBC Connection [oracle.jdbc.driver.T4CConnection@3ef32e69]
+Closing JDBC Connection [oracle.jdbc.driver.T4CConnection@3ef32e69]
+Returned connection 1056124521 to pool.

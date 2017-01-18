@@ -1,43 +1,51 @@
-import {Component} from '@angular/core';
-import {UserService} from '../_services/user.service';
-import {Router} from "@angular/router";
+import {Component, OnDestroy, AfterViewInit} from '@angular/core';
+import {AuthenticationService} from '../../_services/authentication.service';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {Subscription} from "rxjs";
+import {PasswordValidator} from "../../_validators/password.validator";
+import {UsernameValidator} from "../../_validators/username.validator";
+declare var $: JQueryStatic;
 
 @Component({
   selector: 'login',
   templateUrl: 'login-form.component.html',
   styleUrls: ['login-form.component.css']
 })
-export class LoginForm {
-  errorMessage: string;
+export class LoginForm implements OnDestroy,AfterViewInit {
+  errorMessage: string = null;
   loginForm: FormGroup;
+  _subscriptions: Subscription[] = [];
 
   constructor(private fb: FormBuilder,
-              private router: Router,
-              private userService: UserService) {
+              private authenticationService: AuthenticationService) {
     this.loginForm = fb.group({
-      'username': [null, [Validators.required, Validators.pattern('[a-zA-Z0-9)]+')]],
-      'password': [null, [Validators.required, Validators.pattern('[a-zA-Z0-9)]+')]]
+      'username': [null, [Validators.required, UsernameValidator.usernameValidator]],
+      'password': [null, [Validators.required, PasswordValidator.passwordValidator]]
     });
   }
 
-  goBack(): void {
-    this.router.navigate(['/']);
+  ngAfterViewInit(): void {
+    $('#myModal').on('hidden.bs.modal', () => {
+      this.loginForm.reset();
+      this.errorMessage = null;
+    });
   }
 
   login(loginFormValue: any): void {
     this.errorMessage = null;
-    this.userService.login(loginFormValue.username, loginFormValue.password)
+    this._subscriptions.push(this.authenticationService.login(loginFormValue.username, loginFormValue.password)
       .subscribe(
-        data => {
-          console.log('Data: ' + data);
+        () => {
+          $('#myModal').modal('hide');
           this.loginForm.reset();
-          this.goBack();
         },
         error => {
           this.errorMessage = error;
           this.loginForm.reset();
-        });
+        }));
   }
 
+  ngOnDestroy() {
+    this._subscriptions.forEach(s => s.unsubscribe());
+  }
 }

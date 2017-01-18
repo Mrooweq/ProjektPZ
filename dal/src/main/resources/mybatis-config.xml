@@ -19,7 +19,9 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper class="com.malinki.pz.dal.Mapper"/>
+		<mapper class="com.malinki.pz.dal.mappers.UserMapper"/>
+		<mapper class="com.malinki.pz.dal.mappers.FlightMapper"/>
+		<mapper class="com.malinki.pz.dal.mappers.TicketMapper"/>
 	</mappers>
 
 </configuration>

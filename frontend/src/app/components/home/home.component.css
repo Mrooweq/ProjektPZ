@@ -1,0 +1,47 @@
+.jumbotron {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-position: center;
+  background-size: cover;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    margin-top: 60px;
+    border-radius: 5px;
+    color: white;
+    padding: 20px;
+    background-color: rgba(43, 45, 47, 0.8);
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    margin-top: 22vh;
+    border-radius: 5px;
+    color: white;
+    padding: 20px;
+    background-color: rgba(43, 45, 47, 0.8);
+  }
+}
+
+.form-control {
+  font-weight: 700;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.ng-invalid:not(form).ng-touched, .ng-invalid:not(form).ng-dirty {
+  border: 1px solid red;
+}
+
+select, input {
+  color: black;
+}
+

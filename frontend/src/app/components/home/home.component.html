@@ -1,0 +1,83 @@
+<div class="jumbotron">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="wrapper">
+        <div id="container">
+          <form novalidate [formGroup]="searchForm" (ngSubmit)="submit(searchForm.value);
+          start.clearDate();
+          end.clearDate();">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>From</label>
+                  <input ng2-auto-complete
+                         formControlName="source"
+                         [source]="_sources"
+                         [blank-option-text]="'-'"
+                         placeholder="Cities"
+                         class="form-control"
+                         [accept-user-input]=false
+                         (valueChanged)="callback($event,'source')">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>To</label>
+                  <input ng2-auto-complete
+                         formControlName="destination"
+                         [source]="_dest"
+                         [blank-option-text]="'-'"
+                         placeholder="Cities"
+                         class="form-control"
+                         [accept-user-input]=false
+                         (valueChanged)="callback($event,'destination')">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Start</label>
+                  <my-date-picker id="start" #start [options]="myDatePickerOptions"
+                                  [selDate]="selectedDate || _today"
+                                  (dateChanged)="onDateChanged($event,'start')"></my-date-picker>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>End</label>
+                  <my-date-picker id="end" #end [options]="myDatePickerOptions"
+                                  [selDate]="selectedDate || _tomorrow"
+                                  (dateChanged)="onDateChanged($event,'end')"></my-date-picker>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Class</label>
+                  <select name="class" class="form-control" formControlName="_class">
+                    <option *ngFor="let _class of _classes" [value]="_class">
+                      {{_class}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Travelers</label>
+                  <input type="number" min=1 max=5 step=1 class="form-control" formControlName='travelers'>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button id="searchButton" type="submit" class="btn btn-secondary float-xs-right" [disabled]="!searchForm.valid">
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
