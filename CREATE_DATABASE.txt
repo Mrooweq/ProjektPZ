@@ -2,6 +2,7 @@ ALTER SESSION SET nls_date_format = 'yyyy-mm-dd hh24:mi:ss';
 
 CREATE SEQUENCE seq_User;
 CREATE SEQUENCE seq_Ticket;
+CREATE SEQUENCE seq_Flight;
 
 CREATE TABLE "User" (ID_User number(10) NOT NULL, Username varchar2(50) NOT NULL, Password varchar2(50) NOT NULL, Firstname varchar2(50) NOT NULL, Lastname varchar2(50) NOT NULL, Email varchar2(50) NOT NULL, PRIMARY KEY (ID_User));
 CREATE TABLE Ticket (ID_Ticket number(10) NOT NULL, Number_Of_Places number(10) NOT NULL, ID_Flight number(10) NOT NULL, ID_Class number(10) NOT NULL, ID_User number(10) NOT NULL, PRIMARY KEY (ID_Ticket));
@@ -41,12 +42,6 @@ INSERT INTO Multiplier VALUES (2, 2);
 
 INSERT INTO Class VALUES (1, 'Economic', 1);
 INSERT INTO Class VALUES (2, 'VIP', 2);
-
-INSERT INTO Flight VALUES (1, 1000, '2017-01-12 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 2);
-INSERT INTO Flight VALUES (2, 2000, '2017-01-12 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 2, 3);
-INSERT INTO Flight VALUES (3, 3000, '2017-01-12 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 8, 9);
-INSERT INTO Flight VALUES (4, 4000, '2017-01-12 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 5);
-INSERT INTO Flight VALUES (5, 5000, '2017-01-12 21:02:44', '2016-01-01 23:02:44', 100, 200, 1, 1, 5);
 
 -------------
 
@@ -119,4 +114,143 @@ update Flight set free_places = free_places - :NEW.number_of_places
 where :NEW.ID_Flight = Flight.ID_FLIGHT;
 
 END;
+
+
+
+-------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create or replace FUNCTION randomizeDate (value IN integer)
+return date is
+
+v_date date;
+
+begin
+
+select current_date + dbms_random.value(value - 1 , value) into v_date FROM dual;
+
+return v_date;
+end;
+/
+
+---------
+
+create or replace FUNCTION randomizeInteger (v_min in integer, v_max in integer)
+return integer is
+
+v_random integer;
+
+begin
+
+select round(v_min+(v_max-v_min)*DBMS_RANDOM.VALUE,0) into v_random FROM dual;
+
+return v_random;
+end;
+/
+
+-------
+
+create or replace FUNCTION getSrc
+return integer is
+
+src_id integer;
+
+begin
+
+  select randomizeInteger (1,10) into src_id from dual;
+
+return src_id;
+end;
+/
+
+
+---------
+
+create or replace FUNCTION getDest (src in integer)
+return integer is
+
+v_los_id integer;
+
+begin
+
+LOOP
+  select randomizeInteger (1,10) into v_los_id from dual;
+   EXIT  WHEN v_los_id !=  src;
+
+END LOOP;
+
+return v_los_id;
+end;
+/
+
+------------------
+
+CREATE or replace PROCEDURE generateFlights IS
+
+v_number_of_iterations integer;
+v_random integer;
+v_departure_date date;
+v_arrival_date date;
+v_price integer;
+v_number_of_places integer;
+v_id integer;
+v_id_mod10000 integer;
+
+v_number_of_airlines integer;
+v_airline_id integer;
+v_src integer;
+v_dest integer;
+
+   BEGIN
+   select randomizeInteger (1,10) into v_number_of_iterations from dual;
+
+     FOR i IN 1..v_number_of_iterations LOOP
+
+
+       select count(*) into v_number_of_airlines from Airline;
+    select randomizeInteger (1,10) into v_random from dual;
+    select randomizeDate (v_random) into v_departure_date from dual;
+    select randomizeDate (v_random+1) into v_arrival_date from dual;
+    select randomizeInteger (100,1000) into v_price from dual;
+     select randomizeInteger (50,200) into v_number_of_places from dual;
+     select count(*) into v_number_of_airlines from Airline;
+     select randomizeInteger (1,v_number_of_airlines) into v_airline_id from dual;
+         select randomizeInteger (1,v_number_of_airlines) into v_src from dual;
+     select randomizeInteger (1,v_number_of_airlines) into v_dest from dual;
+
+     select getSrc () into v_src from dual;
+     select getDest (v_src) into v_dest from dual;
+
+   v_id := seq_Flight.NEXTVAL;
+   SELECT MOD(v_id,10000) into v_id_mod10000 FROM DUAL;
+
+    INSERT INTO Flight VALUES (v_id, v_id_mod10000, v_departure_date, v_arrival_date, v_price, v_number_of_places, v_airline_id, v_src, v_dest);
+
+
+  END LOOP;
+
+   END;
+/
+
+
+
+EXECUTE generateFlights;
+
+
+
+
+
 

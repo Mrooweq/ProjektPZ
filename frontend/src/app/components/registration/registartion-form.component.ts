@@ -5,6 +5,7 @@ import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {EmailValidator} from "../../_validators/email-validator";
 import {User} from "../../_mocks/user";
 import {Subscription} from "rxjs";
+import {PasswordValidator} from "../../_validators/password.validator";
 
 @Component({
   selector: 'registartion-form',
@@ -23,11 +24,10 @@ export class Registration {
               private router: Router,
               private authenticationService: AuthenticationService) {
     this.registrationForm = fb.group({
-      'firstname': [null, [Validators.required, Validators.pattern('[A-Z][a-z]*')]],
-      'lastname': [null, [Validators.required, Validators.pattern('[A-Z][a-z]*')]],
-      'username': [null, [Validators.required, Validators.minLength(6), Validators.pattern('[A-Za-z0-9]{6,}')]],
-      'password': [null, [Validators.required, Validators.minLength(6), Validators.maxLength(16), Validators.pattern('([a-zA-Z0-9]*[0-9]+[a-zA-Z0-9]*[A-Z]+[a-zA-Z0-9]*' +
-        '|[a-zA-Z0-9]*[A-Z]+[a-zA-Z0-9]*[0-9]+[a-zA-Z0-9]*)$')]],
+      'firstname': [null, [Validators.required, Validators.pattern('^[A-ZŁŻ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20}$')]],
+      'lastname': [null, [Validators.required, Validators.pattern('^[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20}((-|\\s)?[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20})?$')]],
+      'username': [null, [Validators.required, Validators.minLength(4), Validators.pattern('^[a-zA-Z][\\wąćęłńóśźżĄĘŁŃÓŚŹŻ\\d]{3,20}$')]],
+      'password': [null, [Validators.required, Validators.minLength(6), PasswordValidator.passwordValidator]],
       'conpassword': [null, Validators.required],
       'email': [null, [Validators.required, EmailValidator.emailValidator]],
       'conemail': [null, Validators.required]
@@ -47,7 +47,7 @@ export class Registration {
       data => {
         this.succesMessage = data.message || 'Registration successful';
         this.registrationForm.reset();
-        setTimeout(()=>{
+        setTimeout(() => {
           this.router.navigate(['/']);
         }, 2000)
       },

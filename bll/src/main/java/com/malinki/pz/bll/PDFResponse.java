@@ -3,18 +3,18 @@ package com.malinki.pz.bll;
 import javax.servlet.http.HttpServletResponse;
 
 public class PDFResponse {
-    private String pdf;
+    private PDF pdf;
     private int result;
 
     public PDFResponse(){
         result = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
     }
 
-    public String getPdf() {
+    public PDF getPdf() {
         return pdf;
     }
 
-    public void setPdf(String pdf) {
+    public void setPdf(PDF pdf) {
         this.pdf = pdf;
     }
 

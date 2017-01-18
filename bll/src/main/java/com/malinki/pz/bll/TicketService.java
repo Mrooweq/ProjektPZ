@@ -23,7 +23,7 @@ public class TicketService {
     @Autowired
     private UserOperations userOperations;
 
-    public PDFResponse addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+    public PDF addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("authorization");
 
         TicketRequestUVM ticket = parseToTicketRequesUVM(requestBody);
@@ -31,8 +31,7 @@ public class TicketService {
         PDFResponse pdfResponse = null;
         MalinkiComplexResponse malinkiComplexResponse = null;
 
-//        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
-        boolean isUserValidatedProperly = true;
+        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
 
         if(isUserValidatedProperly){
             malinkiComplexResponse = ticketOperations.addTicket(ticket);
@@ -50,7 +49,7 @@ public class TicketService {
             logger.log(Level.ERROR, Strings.USER_NOT_AUTHORIZED);
         }
 
-        return pdfResponse;
+        return pdfResponse.getPdf();
     }
 
     private boolean areBothResultsOk(MalinkiComplexResponse malinkiComplexResponse, PDFResponse pdfResponse){
@@ -68,8 +67,7 @@ public class TicketService {
         UserUVM userUVM = parseToUserUVM(requestBody);
         String username = userUVM.getUsername();
 
-//        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
-        boolean isUserValidatedProperly = true;
+        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
 
         MalinkiComplexResponse malinkiSimpleResponse;
 
@@ -85,7 +83,7 @@ public class TicketService {
         return (List<TicketResponseUVM>) malinkiSimpleResponse.getUvmResult();
     }
 
-    public PDFResponse getPdfOfTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+    public PDF getPdfOfTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("authorization");
 
         FetchPdfForTicketRequest fetchPdfForTicketRequest = parseToTicketResponseUVM(requestBody);
@@ -94,8 +92,7 @@ public class TicketService {
         MalinkiComplexResponse malinkiComplexResponse;
         PDFResponse pdfResponse;
 
-//        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
-        boolean isUserValidatedProperly = true;
+        boolean isUserValidatedProperly = userOperations.validateUserByToken(username, token);
 
         if(isUserValidatedProperly){
             int id = fetchPdfForTicketRequest.getTicket().getId();
@@ -115,7 +112,7 @@ public class TicketService {
             return null;
         }
 
-        return pdfResponse;
+        return pdfResponse.getPdf();
     }
 
     private UserUVM parseToUserUVM(String requestBody) {

@@ -12,6 +12,13 @@ DROP FUNCTION isUsernameAndPasswordCorrect;
 
 DROP SEQUENCE seq_User;
 DROP SEQUENCE seq_Ticket;
+DROP SEQUENCE seq_Flight;
 
 DROP TRIGGER Ticket_trigger;
 
+DROP PROCEDURE generateFlights;
+
+DROP FUNCTION getDest;
+DROP FUNCTION getSrc;
+DROP FUNCTION randomizeInteger;
+DROP FUNCTION randomizeDate;

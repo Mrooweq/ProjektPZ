@@ -2,6 +2,7 @@ import {Component, OnDestroy, AfterViewInit} from '@angular/core';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
+import {PasswordValidator} from "../../_validators/password.validator";
 declare var $: JQueryStatic;
 
 @Component({
@@ -17,8 +18,8 @@ export class LoginForm implements OnDestroy,AfterViewInit {
   constructor(private fb: FormBuilder,
               private authenticationService: AuthenticationService) {
     this.loginForm = fb.group({
-      'username': [null, [Validators.required, Validators.pattern('[a-zA-Z0-9)]+')]],
-      'password': [null, [Validators.required, Validators.pattern('[a-zA-Z0-9)]+')]]
+      'username': [null, [Validators.required, Validators.pattern('^[\\wąćęłńóśźżĄĘŁŃÓŚŹŻ\\d]{3,20}$')]],
+      'password': [null, [Validators.required, PasswordValidator.passwordValidator]]
     });
   }
 

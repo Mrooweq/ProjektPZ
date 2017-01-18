@@ -202,7 +202,7 @@ export class TicketHistory implements OnInit {
         ticket.from, ticket.to), this._currentUser.username).subscribe(
         data => {
           console.log(data);
-          //this.initiate_user_download('ticket.pdf', 'application/pdf', this.data);
+          this.initiate_user_download('ticket.pdf', 'application/pdf', data.toString());
           $('.loader').hide();
           $('.history-content').fadeIn("slow");
         }, error => {

@@ -111,7 +111,11 @@ public class EmailAndPdfService {
             logger.log(Level.ERROR, e.getMessage());
         }
 
-        pdfResponse.setPdf(pdfBase64String);
+
+        PDF pdf = new PDF();
+        pdf.setEncodedPdf(pdfBase64String);
+
+        pdfResponse.setPdf(pdf);
 
         return pdfResponse;
     }

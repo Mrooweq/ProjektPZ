@@ -15,7 +15,6 @@ public class PDFGenerator {
 		EmailAndPdfService emailAndPdfService = new EmailAndPdfService();
 
 		ByteArrayOutputStream outputStream = emailAndPdfService.getOutputStream(ticketResponseUVM);
-		emailAndPdfService.createTempFile(outputStream);
 
 		if(ifSend){
 			MimeBodyPart pdfBodyPart = emailAndPdfService.generatePdf(outputStream);
@@ -23,8 +22,9 @@ public class PDFGenerator {
 			emailAndPdfService.sendEmail(message);
 		}
 
+		emailAndPdfService.createTempFile(outputStream);
+		//		emailAndPdfService.deleteTempFile();
 		outputStream.close();
-//		emailAndPdfService.deleteTempFile();
 
 		return emailAndPdfService.generateResponse(outputStream);
 	}

@@ -28,27 +28,27 @@ public class UserValidation {
 	}
 
 	private boolean checkUsername(String username) {
-		String patternUsername = "^[A-Za-z0-9]{6,20}$";
+		String patternUsername = "^[a-zA-Z][\\wąćęłńóśźżĄĘŁŃÓŚŹŻ\\d]{3,20}$";
 		return Pattern.matches(patternUsername, username);
 	}
 
 	private boolean checkPassword(String password) {
-		String patternPassword = "^[([a-zA-Z0-9]*[0-9]+[a-zA-Z0-9]*[A-Z]+[a-zA-Z0-9]*|[a-zA-Z0-9]*[A-Z]+[a-zA-Z0-9]*[0-9]+[a-zA-Z0-9]*)]{6,20}$";
+		String patternPassword = "^(?=.*[A-Z])(?=.*[0-9]).{6,20}$";
 		return Pattern.matches(patternPassword, password);
 	}
 
 	private boolean checkFirstname(String firstname) {
-		String patternFirstname = "^[[A-Z][a-z]*]{1,20}$";
+		String patternFirstname = "^[A-ZŁŻ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20}$";
 		return Pattern.matches(patternFirstname, firstname);
 	}
 
 	private boolean checkLastname(String lastnamename) {
-		String patternLastname = "^[[A-Z][a-z]*]{1,20}$";
+		String patternLastname = "^[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20}((-|\\s)?[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20})?$";
 		return Pattern.matches(patternLastname, lastnamename);
 	}
 
 	private boolean checkEmail(String email) {
-		String patternEmail = "^[[a-z0-9!#$%&'*+\\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*]{5,50}$";
+		String patternEmail = "^[[\\w]+(?:\\.[\\w]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}]{6,50}$";
 		return Pattern.matches(patternEmail, email);
 	}
 }

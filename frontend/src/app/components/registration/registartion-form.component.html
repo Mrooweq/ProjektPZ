@@ -29,7 +29,7 @@
               <div class="form-group">
                 <label>Last name: </label>
                 <input type="text" class="form-control" [formControl]="registrationForm.controls['lastname']"
-                       placeholder="Doe" [maxlength]="20">
+                       placeholder="Doe" [maxlength]="41">
                 <div class="error">
                   <p
                     *ngIf="registrationForm.get('lastname').hasError('required') && registrationForm.get('lastname').touched">
@@ -53,7 +53,7 @@
                     Username is required</p>
                   <p
                     *ngIf="registrationForm.get('username').hasError('minlength') && registrationForm.get('username').dirty">
-                    Username minimum length: 6
+                    Username minimum length: 4
                   </p>
                   <p
                     *ngIf="registrationForm.get('username').hasError('pattern') && registrationForm.get('username').dirty && !registrationForm.get('username').hasError('minlength')">
@@ -77,7 +77,7 @@
                     *ngIf="registrationForm.get('password').hasError('minlength') && registrationForm.get('password').dirty">
                     Password minimum length: 6</p>
                   <p
-                    *ngIf="registrationForm.get('password').hasError('pattern') && registrationForm.get('password').dirty">
+                    *ngIf="registrationForm.get('password').hasError('invalidPassword') && registrationForm.get('password').dirty">
                     Password must contain at least one digit and uppercase character
                   </p>
                 </div>

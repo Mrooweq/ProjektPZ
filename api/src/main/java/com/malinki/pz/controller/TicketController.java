@@ -23,7 +23,7 @@ public class TicketController {
     private TicketService ticketService;
 
     @RequestMapping(value = "/buy", method = RequestMethod.POST)
-    public PDFResponse addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+    public PDF addTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         return ticketService.addTicket(requestBody, request, response);
     }
 
@@ -33,7 +33,7 @@ public class TicketController {
     }
 
     @RequestMapping(value = "/getpdf", method = RequestMethod.POST)
-    public PDFResponse getPdfOfTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
+    public PDF getPdfOfTicket(@RequestBody String requestBody, HttpServletRequest request, HttpServletResponse response) {
         return ticketService.getPdfOfTicket(requestBody, request, response);
     }
 }
