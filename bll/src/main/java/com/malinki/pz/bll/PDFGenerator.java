@@ -21,7 +21,7 @@ public class PDFGenerator {
 			emailAndPdfService.sendEmail(message);
 		}
 
-		emailAndPdfService.createTempFile(outputStream);
+//		emailAndPdfService.createTempFile(outputStream);
 		//		emailAndPdfService.deleteTempFile();
 		outputStream.close();
 
