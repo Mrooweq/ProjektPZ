@@ -1,10 +1,10 @@
 package com.malinki.pz.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.malinki.pz.bll.*;
-import com.malinki.pz.lib.*;
+import com.malinki.pz.bll.operations.FlightOperations;
+import com.malinki.pz.bll.services.FlightService;
+import com.malinki.pz.lib.entity.FlightUVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

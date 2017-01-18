@@ -2,10 +2,13 @@ import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../_services/authentication.service";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {EmailValidator} from "../../_validators/email-validator";
+import {EmailValidator} from "../../_validators/email.validator";
 import {User} from "../../_mocks/user";
 import {Subscription} from "rxjs";
 import {PasswordValidator} from "../../_validators/password.validator";
+import {UsernameValidator} from "../../_validators/username.validator";
+import {FirstnameValidator} from "../../_validators/firstname.validator";
+import {LastnameValidator} from "../../_validators/lastname.validator";
 
 @Component({
   selector: 'registartion-form',
@@ -24,9 +27,9 @@ export class Registration {
               private router: Router,
               private authenticationService: AuthenticationService) {
     this.registrationForm = fb.group({
-      'firstname': [null, [Validators.required, Validators.pattern('^[A-ZŁŻ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20}$')]],
-      'lastname': [null, [Validators.required, Validators.pattern('^[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20}((-|\\s)?[A-ZĆŁŚŻŹ][a-ząćęłńóśźżĄĘŁŃÓŚŹŻ]{1,20})?$')]],
-      'username': [null, [Validators.required, Validators.minLength(4), Validators.pattern('^[a-zA-Z][\\wąćęłńóśźżĄĘŁŃÓŚŹŻ\\d]{3,20}$')]],
+      'firstname': [null, [Validators.required, FirstnameValidator.firstnameValidator]],
+      'lastname': [null, [Validators.required, LastnameValidator.lastnameValidator]],
+      'username': [null, [Validators.required, Validators.minLength(3), UsernameValidator.usernameValidator]],
       'password': [null, [Validators.required, Validators.minLength(6), PasswordValidator.passwordValidator]],
       'conpassword': [null, Validators.required],
       'email': [null, [Validators.required, EmailValidator.emailValidator]],

@@ -17,25 +17,27 @@
                        placeholder="John" [maxlength]="20">
                 <div class="error">
                   <p
-                    *ngIf="registrationForm.get('firstname').hasError('required') && registrationForm.get('firstname').touched">
+                    *ngIf="registrationForm.get('firstname').hasError('required') && (registrationForm.get('firstname').dirty ||  registrationForm.get('firstname').touched)">
                     Name is required</p>
                   <p
-                    *ngIf="registrationForm.get('firstname').hasError('pattern') && registrationForm.get('firstname').dirty">
+                    *ngIf="registrationForm.get('firstname').hasError('invalidFirstname') && registrationForm.get('firstname').dirty
+                    && !registrationForm.get('firstname').hasError('required')">
                     Name is invalid</p>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
-                <label>Last name: </label>
-                <input type="text" class="form-control" [formControl]="registrationForm.controls['lastname']"
-                       placeholder="Doe" [maxlength]="41">
-                <div class="error">
+              <label>Last name: </label>
+              <input type="text" class="form-control" [formControl]="registrationForm.controls['lastname']"
+                     placeholder="Doe" [maxlength]="41">
+              <div class="error">
+                <div class="form-group">
                   <p
-                    *ngIf="registrationForm.get('lastname').hasError('required') && registrationForm.get('lastname').touched">
+                    *ngIf="registrationForm.get('lastname').hasError('required') && (registrationForm.get('lastname').dirty || registrationForm.get('lastname').touched)">
                     Last name is required</p>
                   <p
-                    *ngIf="registrationForm.get('lastname').hasError('pattern') && registrationForm.get('lastname').dirty">
+                    *ngIf="registrationForm.get('lastname').hasError('invalidLastname') && registrationForm.get('lastname').dirty
+                    && !registrationForm.get('lastname').hasError('required')">
                     Last name is invalid</p>
                 </div>
               </div>
@@ -49,14 +51,16 @@
                        [maxlength]="20">
                 <div class="error">
                   <p
-                    *ngIf="registrationForm.get('username').hasError('required') && registrationForm.get('username').touched">
+                    *ngIf="registrationForm.get('username').hasError('required') && (registrationForm.get('username').dirty || registrationForm.get('username').touched)">
                     Username is required</p>
                   <p
-                    *ngIf="registrationForm.get('username').hasError('minlength') && registrationForm.get('username').dirty">
-                    Username minimum length: 4
+                    *ngIf="registrationForm.get('username').hasError('minlength') && registrationForm.get('username').dirty
+                    && !registrationForm.get('username').hasError('required')">
+                    Username minimum length: 3
                   </p>
                   <p
-                    *ngIf="registrationForm.get('username').hasError('pattern') && registrationForm.get('username').dirty && !registrationForm.get('username').hasError('minlength')">
+                    *ngIf="registrationForm.get('username').hasError('invalidUsername') && registrationForm.get('username').dirty
+                    && !registrationForm.get('username').hasError('minlength') && !registrationForm.get('username').hasError('required')">
                     Invalid username
                   </p>
                 </div>
@@ -71,13 +75,15 @@
                        [formControl]="registrationForm.controls['password']" validateEqual="conpassword" reverse="true">
                 <div class="error">
                   <p
-                    *ngIf="registrationForm.get('password').hasError('required') && registrationForm.get('password').touched">
+                    *ngIf="registrationForm.get('password').hasError('required') && (registrationForm.get('password').dirty || registrationForm.get('password').touched)">
                     Password is required</p>
                   <p
-                    *ngIf="registrationForm.get('password').hasError('minlength') && registrationForm.get('password').dirty">
+                    *ngIf="registrationForm.get('password').hasError('minlength') && registrationForm.get('password').dirty
+                     && !registrationForm.get('password').hasError('required')">
                     Password minimum length: 6</p>
                   <p
-                    *ngIf="registrationForm.get('password').hasError('invalidPassword') && registrationForm.get('password').dirty">
+                    *ngIf="registrationForm.get('password').hasError('invalidPassword') && registrationForm.get('password').dirty
+                    && !registrationForm.get('password').hasError('required')">
                     Password must contain at least one digit and uppercase character
                   </p>
                 </div>
@@ -95,11 +101,12 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Email: </label>
-                <input [maxlength]="50" type="text" class="form-control" [formControl]="registrationForm.controls['email']"
+                <input [maxlength]="50" type="text" class="form-control"
+                       [formControl]="registrationForm.controls['email']"
                        placeholder="john.doe@example.com" validateEqual="conemail" reverse="true">
                 <div class="error">
                   <p
-                    *ngIf="registrationForm.get('email').hasError('required') && registrationForm.get('email').touched">
+                    *ngIf="registrationForm.get('email').hasError('required') && (registrationForm.get('email').dirty || registrationForm.get('email').touched)">
                     Email is required</p>
                   <p
                     *ngIf="registrationForm.get('email').hasError('invalidEmail')&& registrationForm.get('email').dirty
@@ -109,7 +116,8 @@
               </div>
               <div class="form-group">
                 <label>Confirm email: </label>
-                <input [maxlength]="50" type="text" class="form-control" [formControl]="registrationForm.controls['conemail']"
+                <input [maxlength]="50" type="text" class="form-control"
+                       [formControl]="registrationForm.controls['conemail']"
                        validateEqual="email" reverse="false">
                 <div class="error"
                      *ngIf="registrationForm.get('conemail').invalid && registrationForm.get('conemail').dirty">

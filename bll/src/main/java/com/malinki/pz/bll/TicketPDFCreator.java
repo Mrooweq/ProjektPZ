@@ -2,7 +2,6 @@ package com.malinki.pz.bll;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 
 import com.itextpdf.barcodes.*;
 
@@ -19,7 +18,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.malinki.pz.dal.constants.Strings;
-import com.malinki.pz.lib.TicketResponseUVM;
+import com.malinki.pz.lib.entity.TicketResponseUVM;
 import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.io.Resources;
 

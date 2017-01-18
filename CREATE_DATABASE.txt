@@ -215,7 +215,7 @@ v_src integer;
 v_dest integer;
 
    BEGIN
-   select randomizeInteger (1,10) into v_number_of_iterations from dual;
+   select randomizeInteger (10,100) into v_number_of_iterations from dual;
 
      FOR i IN 1..v_number_of_iterations LOOP
 
@@ -241,6 +241,7 @@ v_dest integer;
 
 
   END LOOP;
+  commit;
 
    END;
 /
@@ -250,6 +251,8 @@ v_dest integer;
 EXECUTE generateFlights;
 
 
+
+-------------------
 
 
 

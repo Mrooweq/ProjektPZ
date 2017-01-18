@@ -4,9 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.malinki.pz.bll.*;
-import com.malinki.pz.lib.TicketRequestUVM;
-import com.malinki.pz.lib.TicketResponseUVM;
-import com.malinki.pz.lib.TicketUVM;
+import com.malinki.pz.bll.services.TicketService;
+import com.malinki.pz.lib.entity.TicketResponseUVM;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

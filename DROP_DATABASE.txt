@@ -6,8 +6,8 @@ DROP TABLE Airline;
 DROP TABLE Multiplier;
 DROP TABLE "User";
 
-DROP FUNCTION getMinUserID;
 DROP FUNCTION isLoginAlreadyUsed;
+DROP FUNCTION isEmailAlreadyUsed;
 DROP FUNCTION isUsernameAndPasswordCorrect;
 
 DROP SEQUENCE seq_User;

@@ -2,11 +2,10 @@ package com.malinki.pz.bll;
 
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.io.source.ByteArrayOutputStream;
-import com.malinki.pz.lib.TicketResponseUVM;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.malinki.pz.bll.services.EmailAndPdfService;
+import com.malinki.pz.lib.entity.TicketResponseUVM;
 
 public class PDFGenerator {
 
