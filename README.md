@@ -1,23 +1,27 @@
-## JAK ŻYĆ ?
-### Wymagania:
+## Malinki Booking System
+
+It is a group, academic project finished in 2017. Web application that allows serching and buying flight tickes. Backend is created with Java language - it uses Spring and MyBatis frameworks, Oracle database and Maven. Frontend uses Angular framework.  
+
+
+### Requirements:
 - git
 - maven
 - node.js
 
-### Eclipse:
-Aby importować projekt do eclipsa `File > Import > Maven > Existing maven projects ` i wybrać lokalizacje backendu.
+### Database:
+With have to perform script in CREATE_DATABASE.txt file in order to create database
 
 ### Backend:
-Aby uruchomić backend należy:
+In order to run backend we have to type:
 ```
 cd backend
 mvn spring-boot:run
 ```
 
 ### Frontend:
-Aby uruchomić frontend należy:
+In order to run frontend we have to type:
 ```
 cd frontend
-npm install //tylko za pierwszym razem
+npm install //only for first time
 npm start
 ```
